@@ -1,0 +1,6 @@
+{
+  "appTitle": "work_spacer",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
