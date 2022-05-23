@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:work_spacer/screens/admin/block/workspace_block_screen.dart';
+import 'package:work_spacer/screens/admin/cancel/reservation_cancel_screen.dart';
+import 'package:work_spacer/screens/admin/roles/role_management_screen.dart';
+import 'package:work_spacer/screens/employee/desks/desk_search_screen.dart';
+import 'package:work_spacer/screens/employee/notifications/notifications_screen.dart';
+import 'package:work_spacer/screens/employee/reservations/employee_reservations_screen.dart';
+import 'package:work_spacer/screens/employee/rooms/room_search_screen.dart';
+import 'package:work_spacer/screens/home/home_screen.dart';
+import 'package:work_spacer/screens/login/login_screen.dart';
 
 import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
@@ -60,6 +69,9 @@ class MyApp extends StatelessWidget {
           darkTheme: ThemeData.dark(),
           themeMode: settingsController.themeMode,
 
+          //Define an initial route based on login status.
+          //TODO initialRoute: userLoggedIn ? HomeView.routeName : LoginView.routeName
+          initialRoute: LoginScreen.routeName,
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
           onGenerateRoute: (RouteSettings routeSettings) {
@@ -67,13 +79,32 @@ class MyApp extends StatelessWidget {
               settings: routeSettings,
               builder: (BuildContext context) {
                 switch (routeSettings.name) {
+                  case LoginScreen.routeName:
+                    return const LoginScreen();
+                  case HomeScreen.routeName:
+                    return const HomeScreen();
+                  case NotificationsScreen.routeName:
+                    return const NotificationsScreen();
+                  case EmployeeReservationsScreen.routeName:
+                    return const EmployeeReservationsScreen();
+                  case DeskSearchScreen.routeName:
+                    return const DeskSearchScreen();
+                  case RoomSearchScreen.routeName:
+                    return const RoomSearchScreen();
+                  case ReservationCancelScreen.routeName:
+                    return const ReservationCancelScreen();
+                  case WorkspaceBlockScreen.routeName:
+                    return const WorkspaceBlockScreen();
+                  case RoleManagementScreen.routeName:
+                    return const RoleManagementScreen();
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
+                  case SampleItemListView.routeName:
+                    return const SampleItemListView();
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
-                  case SampleItemListView.routeName:
                   default:
-                    return const SampleItemListView();
+                    return const LoginScreen();
                 }
               },
             );
