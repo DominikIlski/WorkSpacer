@@ -20,3 +20,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 * SDK version changed from 2.16.1 to 2.17.0 in order to use new syntax for super constructors.
+
+## [0.2.0]  - 2022-06-01
+
+### Added
+* Components package in each of implemented screens which containts Custom Widgets used in those screens
+* Home Screen button widget which is a basic UI element of home screens (both for Employee and Admin)
+* ReservationListItem Widget in admin/cancel package, which is a basic list item for Reservation in CancelReservationScreen
+* Implemented UI for CancelReservationScreen based on Figma mockip - added search (with no functionality yet) TextField and ReservationsList with implementation of cancelling  them - Cancel button invokes confirmation dialog which when confirmed deletes reservation from list
+* Installed intl package which provied DateFromat utilities
+
+### Changed 
+* Adjusted RoomReservation model class to be equivalent to teh DeskReservation class (extends Reservation with proper super calls in constructor)
+* Adjusted ThemeData in app.dart - added colors equivalent to the color palette from Figma mockups
+* Changed UI of home screens to match mockups

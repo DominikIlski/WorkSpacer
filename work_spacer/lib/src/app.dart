@@ -65,7 +65,15 @@ class MyApp extends StatelessWidget {
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the
           // SettingsController to display the correct theme.
-          theme: ThemeData(),
+          theme: ThemeData(
+            primarySwatch: Colors.teal,
+            primaryColorDark: Color(0xFF006D77),
+            primaryColor: Color(0xFF83C5BE),
+            primaryColorLight: Color(0xFFEDF6F9),
+            secondaryHeaderColor: Color(0xFFE29578),
+            dialogBackgroundColor: Color(0xFFEDF6F9),
+            accentColor: Color(0xFFFFDDD2),
+          ),
           darkTheme: ThemeData.dark(),
           themeMode: settingsController.themeMode,
 
@@ -92,7 +100,7 @@ class MyApp extends StatelessWidget {
                   case RoomSearchScreen.routeName:
                     return const RoomSearchScreen();
                   case ReservationCancelScreen.routeName:
-                    return const ReservationCancelScreen();
+                    return ReservationCancelScreen();
                   case WorkspaceBlockScreen.routeName:
                     return const WorkspaceBlockScreen();
                   case RoleManagementScreen.routeName:
