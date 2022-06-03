@@ -34,3 +34,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Adjusted RoomReservation model class to be equivalent to teh DeskReservation class (extends Reservation with proper super calls in constructor)
 * Adjusted ThemeData in app.dart - added colors equivalent to the color palette from Figma mockups
 * Changed UI of home screens to match mockups
+
+## [0.2.1]  - 2022-06-03
+
+### Added
+* Workspace class in models package which is super class for Desk and Room - has id and floor parameters
+* Filter Button widget which is used across all screens for filtering lists/grids 
+* Custom Widgets in admin/block package such as BlockDialog, SearchDialog, DatePickerTile, GridItem which are used to compose a WorkspaceBlockScreen
+* Implemented UI for WorkspaceBlockScreen based on Figma mockip - added filter buttons (with no logic yet - user can provice Id/floor parameters but lists are not filtered) GridView of Wrokspaces with implementation of blocking them - clickicing on itme invokes BlockDialog which enables user to enter dates for blockage (logic of inserting blockage not yet implemented) and BottomNavigationBar which pages beetwen grids of Desks and Rooms
+
+### Changed 
+* Desk and Room classes extend Workspace class
