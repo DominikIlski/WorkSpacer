@@ -102,7 +102,7 @@ class MyApp extends StatelessWidget {
                   case ReservationCancelScreen.routeName:
                     return ReservationCancelScreen();
                   case WorkspaceBlockScreen.routeName:
-                    return const WorkspaceBlockScreen();
+                    return WorkspaceBlockScreen();
                   case RoleManagementScreen.routeName:
                     return const RoleManagementScreen();
                   case SettingsView.routeName:

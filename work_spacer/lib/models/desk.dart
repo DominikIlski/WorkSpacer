@@ -1,14 +1,13 @@
 import 'package:flutter/foundation.dart';
+import 'package:work_spacer/models/workspace.dart';
 
 @immutable
-class Desk {
-  final int id;
-  final int floor;
+class Desk extends Workspace{
   final bool secondMonitor;
 
   const Desk({
-    required this.id,
-    required this.floor,
+    required super.id,
+    required super.floor,
     required this.secondMonitor,
   });
 }
