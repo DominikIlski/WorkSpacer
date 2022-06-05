@@ -22,10 +22,10 @@ class LoginScreen extends StatelessWidget {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.workspaces_rounded,
                     size: 40,
-                    color: Colors.blue,
+                    color: Theme.of(context).primaryColorDark,
                   ),
                   const SizedBox(height: 8),
                   Center(

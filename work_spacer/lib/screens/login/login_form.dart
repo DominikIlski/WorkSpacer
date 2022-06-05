@@ -62,6 +62,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   _loginProcessor() {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState!.validate()) {
       Navigator.restorablePushReplacementNamed(
         context,

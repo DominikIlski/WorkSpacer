@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../../admin/cancel/reservation_cancel_screen.dart';
-
 class HomeScreenButton extends StatelessWidget {
   final Color backgroundColor;
   final Color contentColor;
   final String title;
   final IconData icon;
-  final String navRouteName;
+  final VoidCallback onTap;
   final bool hasBorder;
 
-  const HomeScreenButton(
-      {super.key,
-      required this.backgroundColor,
-      required this.contentColor,
-      required this.icon,
-      required this.title,
-      required this.navRouteName,
-      this.hasBorder = false});
+  const HomeScreenButton({
+    super.key,
+    required this.backgroundColor,
+    required this.contentColor,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    this.hasBorder = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,25 +31,24 @@ class HomeScreenButton extends StatelessWidget {
               )
             : BorderSide.none,
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-        child: ListTile(
-          leading: Icon(
-            icon,
-            color: contentColor,
-            size: 28,
-          ),
-          title: Text(
-            title,
-            style: TextStyle(color: contentColor, fontSize: 20),
-          ),
-          onTap: () {
-            Navigator.restorablePushNamed(
-              context,
-              navRouteName,
-            );
-          },
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
         ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+        leading: Icon(
+          icon,
+          color: contentColor,
+          size: 28,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(color: contentColor, fontSize: 20),
+        ),
+        onTap: onTap,
       ),
     );
   }
