@@ -6,7 +6,7 @@ import 'package:work_spacer/screens/login/login_screen.dart';
 import 'package:work_spacer/src/settings/settings_view.dart';
 
 //TODO implement distinguishing between user and admin when logging in
-const isAdmin = true;
+const isAdmin = false;
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
