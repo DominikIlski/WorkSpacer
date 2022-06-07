@@ -10,7 +10,6 @@ In order to run your application, type:
 ```
 To start backend run:
 
-
 ```
     $ cd backend
     $ yarn develop
