@@ -73,39 +73,6 @@ class _RoleManagementScreenState extends State<RoleManagementScreen> {
     });
   }
 
-  void _showSearchDialog(SearchParameter searchParameter) {
-    showDialog(
-      context: context,
-      builder: (context) => SearchDialog(
-        parameter: searchParameter.name,
-        onConfirm: (value) => _setSearchParameter(value, searchParameter),
-      ),
-    ).then((result) {
-      setState(() {
-        if (result == 'confirm') {
-          if (_searchType == SearchParameter.Name) {
-            _searchId = false;
-            _searchSurname = false;
-            _searchName = true;
-          } else if (_searchType == SearchParameter.ID) {
-            _searchId = true;
-            _searchSurname = false;
-            _searchName = false;
-          } else if (_searchType == SearchParameter.Surname) {
-            _searchId = false;
-            _searchSurname = true;
-            _searchName = false;
-          }
-        } else if (result == 'cancel') {
-          _searchId = false;
-          _searchSurname = false;
-          _searchName = false;
-          _searchParameter = -1;
-        }
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,21 +95,21 @@ class _RoleManagementScreenState extends State<RoleManagementScreen> {
                   FilterButton(
                     icon: Icons.numbers_rounded,
                     text: SearchParameter.ID.name,
-                    onClicked: () => _showSearchDialog(SearchParameter.ID),
+                    onClicked: () => {},
                     selected: _searchId,
                   ),
                   const SizedBox(width: 8),
                   FilterButton(
                     icon: Icons.looks_one_outlined,
                     text: SearchParameter.Name.name,
-                    onClicked: () => _showSearchDialog(SearchParameter.Name),
+                    onClicked: () => {},
                     selected: _searchName,
                   ),
                   const SizedBox(width: 8),
                   FilterButton(
                     icon: Icons.looks_two_outlined,
                     text: SearchParameter.Surname.name,
-                    onClicked: () => _showSearchDialog(SearchParameter.Surname),
+                    onClicked: () => {},
                     selected: _searchSurname,
                   )
                 ],

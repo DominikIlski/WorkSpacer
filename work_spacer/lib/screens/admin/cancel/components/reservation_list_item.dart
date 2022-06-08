@@ -50,7 +50,7 @@ class ReservationListItem extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -99,13 +99,19 @@ class ReservationListItem extends StatelessWidget {
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                  Colors.red,
+                  Theme.of(context).secondaryHeaderColor,
                 ),
                 padding: MaterialStateProperty.all(
                   const EdgeInsets.symmetric(horizontal: 8),
                 ),
               ),
-              child: const Text('Cancel'),
+              child: Row(
+                children: const [
+                  Icon(Icons.delete_outline_rounded),
+                  SizedBox(width: 4),
+                  Text('Cancel'),
+                ],
+              ),
               onPressed: onCancel,
             ),
           ],
