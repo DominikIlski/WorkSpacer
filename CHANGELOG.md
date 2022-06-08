@@ -41,7 +41,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Workspace class in models package which is super class for Desk and Room - has id and floor parameters
 * Filter Button widget which is used across all screens for filtering lists/grids 
 * Custom Widgets in admin/block package such as BlockDialog, SearchDialog, DatePickerTile, GridItem which are used to compose a WorkspaceBlockScreen
-* Implemented UI for WorkspaceBlockScreen based on Figma mockip - added filter buttons (with no logic yet - user can provice Id/floor parameters but lists are not filtered) GridView of Wrokspaces with implementation of blocking them - clickicing on itme invokes BlockDialog which enables user to enter dates for blockage (logic of inserting blockage not yet implemented) and BottomNavigationBar which pages beetwen grids of Desks and Rooms
+* Implemented UI for WorkspaceBlockScreen based on Figma mockup - added filter buttons (with no logic yet - user can provice Id/floor parameters but lists are not filtered) GridView of Wrokspaces with implementation of blocking them - clickicing on item invokes BlockDialog which enables user to enter dates for blockage (logic of inserting blockage not yet implemented) and BottomNavigationBar which pages beetwen grids of Desks and Rooms
 
 ### Changed 
 * Desk and Room classes extend Workspace class
+
+## [0.2.2]  - 2022-06-08
+
+### Added
+* User class in models package which is data class for User (so Admin can manage their roles) with Role enum
+* Custom Widgets in admin/role package such as ManageRoleDialog and UserListItem which are used to compose a RoleManagementScreen
+* Implemented UI for RoleManagementScreen based on Figma mockup - added filter buttons (with no logic yet - user can provice Id/Name/Surname parameters but lists are not filtered) ListView of User with implementation of managing their roles - clickicing on item invokes ManageRoleDialog which enables admin to choose a new Role and save changes
+
+
+### Changed 
+* Adjusted some Filter Button widget parameters (autofit width to the text length)
+* Adjustem Search Desk/Room Widget to match Figma mockup (colors changed)

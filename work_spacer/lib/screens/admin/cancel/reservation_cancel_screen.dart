@@ -120,7 +120,17 @@ class _ReservationCancelScreenState extends State<ReservationCancelScreen> {
               child: TextField(
                 controller: searchController,
                 decoration: InputDecoration(
+                  fillColor: Theme.of(context).primaryColorLight,
                   contentPadding: EdgeInsets.zero,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 2.0,
+                      color: Theme.of(context).secondaryHeaderColor,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                  ),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 2.0,
@@ -135,14 +145,16 @@ class _ReservationCancelScreenState extends State<ReservationCancelScreen> {
                     color: Theme.of(context).secondaryHeaderColor,
                   ),
                   hintText: "Desk/Room",
+                  hintStyle:
+                      TextStyle(color: Theme.of(context).secondaryHeaderColor),
                   suffixIcon: IconButton(
                     icon: Icon(
                       Icons.arrow_forward,
                       color: Theme.of(context).secondaryHeaderColor,
                     ),
-                    onPressed: 
-                    //TODO: implement searching functionality
-                      () => {},
+                    onPressed:
+                        //TODO: implement searching functionality
+                        () => {},
                   ),
                 ),
               ),

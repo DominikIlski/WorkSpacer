@@ -34,9 +34,8 @@ class FilterButton extends StatelessWidget {
             : Theme.of(context).primaryColorLight,
         child: Container(
           alignment: Alignment.center,
-          width: 86,
           padding: const EdgeInsets.symmetric(
-            horizontal: 8,
+            horizontal: 16,
             vertical: 4,
           ),
           child: Row(
