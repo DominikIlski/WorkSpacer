@@ -34,24 +34,38 @@ yarn build
 
 ## ⚙️ Deployment
 
-Strapi gives you many possible deployment options for your project. Find the one that suits you on the [deployment section of the documentation](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment.html).
+### Prerequires
+* heroku CLI
 
-## 📚 Learn more
+Changes to structute of the strapi db start server locally
+and make changes there.
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://docs.strapi.io) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+After that login to heroku with
+`cd ./backend`
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+`heroku login`
 
-## ✨ Community
+`git add .`
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+`git commit -m "<commit msg>"`
 
----
+`git push heroku HEAD:main`
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+wait for server to rebuild
+
+Strapi should be available at
+`https://work-spacer.herokuapp.com/`
+
+### Adding Data
+
+To add data enter
+`https://work-spacer.herokuapp.com/`
+login to an admin account and add data there
+
+
+### Using API
+
+Strapi API will be available at 
+`https://work-spacer.herokuapp.com/api/<content-type-name>`
+Remember to add `s` at the end of name of ct while making a request
+and to add API KEY as Bearer Token, that can be generated in settings tab

@@ -1,32 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:work_spacer/models/desk.dart';
-import 'package:work_spacer/models/room.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:work_spacer/misc/keyboard_hide_wrapper.dart';
+import 'package:work_spacer/models/reservation.dart';
+import 'package:work_spacer/stores/cancel_store.dart';
 import 'components/reservation_list_item.dart';
-import '../../../models/reservation.dart';
-import '../../../models/desk_reservation.dart';
-import '../../../models/room_reservation.dart';
 
-class ReservationCancelScreen extends StatefulWidget {
+class ReservationCancelScreen extends StatelessWidget {
   static const routeName = '/cancel';
 
-  ReservationCancelScreen({super.key});
+  const ReservationCancelScreen({super.key});
 
   @override
-  State<ReservationCancelScreen> createState() =>
-      _ReservationCancelScreenState();
-}
+  Widget build(BuildContext context) {
+    final cancelStore = Provider.of<CancelStore>(context);
 
-class _ReservationCancelScreenState extends State<ReservationCancelScreen> {
-  final TextEditingController searchController = TextEditingController();
+    return KeyboardHideWrapper(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Cancel a reservation'),
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(16),
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 48),
+                child: _WorkspaceSearchTextField(
+                  value: cancelStore.searchWorkspaceId,
+                  onChanged: cancelStore.setSearchWorkspaceId,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Divider(
+                height: 0,
+                thickness: 1,
+                color: Theme.of(context).secondaryHeaderColor,
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: Observer(
+                  builder: (_) => cancelStore.inProgress
+                      ? const Center(child: CircularProgressIndicator())
+                      : ListView.builder(
+                          itemCount: cancelStore.filteredReservations.length,
+                          itemBuilder: (context, index) => ReservationListItem(
+                            reservation:
+                                cancelStore.filteredReservations[index],
+                            onCancel: () => _cancelReservation(
+                              context,
+                              cancelStore.cancel,
+                              cancelStore.filteredReservations[index],
+                            ),
+                          ),
+                        ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-  void _removeAtIndex(int index) {
+  void _cancelReservation(
+    context,
+    Function(Reservation) cancel,
+    Reservation reservation,
+  ) {
+    FocusManager.instance.primaryFocus?.unfocus();
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Do you want to cancel?',
-            style: TextStyle(
-              color: Theme.of(context).primaryColorDark,
-            )),
+        title: Text(
+          'Do you want to cancel?',
+          style: TextStyle(
+            color: Theme.of(context).primaryColorDark,
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -46,136 +98,64 @@ class _ReservationCancelScreenState extends State<ReservationCancelScreen> {
       ),
     ).then((result) {
       if (result == 'confirm') {
-        setState(() {
-          reservations.removeAt(index);
-        });
+        cancel(reservation);
       }
     });
   }
+}
 
-  final List<Reservation> reservations = [
-    DeskReservation(
-      desk: const Desk(
-        id: 23,
-        floor: 2,
-        secondMonitor: false,
-      ),
-      startDate: DateTime.now(),
-      duration: 3,
-      idEmployee: 21,
-    ),
-    RoomReservation(
-      room: const Room(
-        id: 15,
-        floor: 1,
-        capacity: 21,
-        hasProjector: true,
-        hasWhiteboard: false,
-        hasTeleconference: false,
-      ),
-      startDate: DateTime.now().subtract(const Duration(days: 12)),
-      duration: 2,
-      idEmployee: 11,
-    ),
-    DeskReservation(
-      desk: const Desk(
-        id: 2,
-        floor: 2,
-        secondMonitor: false,
-      ),
-      startDate: DateTime.now().subtract(const Duration(days: 2)),
-      duration: 7,
-      idEmployee: 21,
-    ),
-    RoomReservation(
-      room: const Room(
-        id: 111,
-        floor: 1,
-        capacity: 21,
-        hasProjector: true,
-        hasWhiteboard: false,
-        hasTeleconference: false,
-      ),
-      startDate: DateTime.now().subtract(const Duration(days: 5)),
-      duration: 4,
-      idEmployee: 11,
-    ),
-  ];
+class _WorkspaceSearchTextField extends StatefulWidget {
+  const _WorkspaceSearchTextField({
+    Key? key,
+    required this.value,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final String value;
+  final void Function(String value) onChanged;
+
+  @override
+  State<_WorkspaceSearchTextField> createState() =>
+      _WorkspaceSearchTextFieldState();
+}
+
+class _WorkspaceSearchTextFieldState extends State<_WorkspaceSearchTextField> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cancel a reservation'),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(16),
-        alignment: Alignment.center,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 200,
-              height: 40,
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  fillColor: Theme.of(context).primaryColorLight,
-                  contentPadding: EdgeInsets.zero,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 2.0,
-                      color: Theme.of(context).secondaryHeaderColor,
-                    ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(8),
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 2.0,
-                      color: Theme.of(context).secondaryHeaderColor,
-                    ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(8),
-                    ),
-                  ),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Theme.of(context).secondaryHeaderColor,
-                  ),
-                  hintText: "Desk/Room",
-                  hintStyle:
-                      TextStyle(color: Theme.of(context).secondaryHeaderColor),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      Icons.arrow_forward,
-                      color: Theme.of(context).secondaryHeaderColor,
-                    ),
-                    onPressed:
-                        //TODO: implement searching functionality
-                        () => {},
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Divider(
-              height: 1,
-              thickness: 0.6,
-              color: Theme.of(context).secondaryHeaderColor,
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ListView.builder(
-                itemCount: reservations.length,
-                itemBuilder: (context, index) => ReservationListItem(
-                  reservation: reservations[index],
-                  onCancelClicked: () => _removeAtIndex(index),
-                ),
-              ),
-            )
-          ],
+    setState(() {
+      _controller.text = widget.value;
+    });
+    return Observer(
+      builder: (_) => TextField(
+        controller: _controller,
+        keyboardType: TextInputType.number,
+        onChanged: (value) => widget.onChanged.call(value),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(
+                color: Theme.of(context).secondaryHeaderColor,
+              )),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(
+                color: Theme.of(context).secondaryHeaderColor,
+              )),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).secondaryHeaderColor,
+          ),
+          hintText: "Workspace ID",
+          hintStyle: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
       ),
     );

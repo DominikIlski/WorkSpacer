@@ -1,17 +1,17 @@
 {
-  "kind": "singleType",
+  "kind": "collectionType",
   "collectionName": "tests",
   "info": {
     "singularName": "test",
     "pluralName": "tests",
-    "displayName": "Test"
+    "displayName": "test"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "Test": {
+    "test": {
       "type": "string"
     }
   }
