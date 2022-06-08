@@ -21,16 +21,14 @@ abstract class _CancelStore with Store {
 
   @computed
   ObservableList<Reservation> get filteredReservations {
-    return ObservableList.of((_reservations ?? []).where((reservation) {
-      String idAsString = reservation is DeskReservation
-          ? reservation.desk.id.toString()
-          : (reservation as RoomReservation).room.id.toString();
-      return idAsString.contains(searchWorkspaceId);
-    }).toList()
-      ..sort(
-        (reservation1, reservation2) =>
-            reservation1.startDate.compareTo(reservation2.startDate),
-      ));
+    return ObservableList.of(
+      (_reservations ?? []).where((reservation) {
+        String idAsString = reservation is DeskReservation
+            ? reservation.desk.id.toString()
+            : (reservation as RoomReservation).room.id.toString();
+        return idAsString.contains(searchWorkspaceId);
+      }).toList(),
+    );
   }
 
   @action
@@ -38,7 +36,13 @@ abstract class _CancelStore with Store {
     inProgress = true;
     //TODO handle backend
     await Future.delayed(const Duration(milliseconds: 500));
-    _reservations = ObservableList.of(reservationsDummy);
+    _reservations = ObservableList.of(
+      reservationsDummy
+        ..sort(
+          (reservation1, reservation2) =>
+              reservation1.startDate.compareTo(reservation2.startDate),
+        ),
+    );
     inProgress = false;
   }
 

@@ -28,6 +28,7 @@ enum FilterParameter {
 enum FilterDataType {
   number,
   date,
+  time,
   simple,
 }
 
@@ -35,12 +36,12 @@ const Map<FilterParameter, FilterDataType> filterParameterDataTypes = {
   FilterParameter.id: FilterDataType.number,
   FilterParameter.floor: FilterDataType.number,
   FilterParameter.date: FilterDataType.date,
-  FilterParameter.time: FilterDataType.number,
+  FilterParameter.time: FilterDataType.time,
   FilterParameter.secondMonitor: FilterDataType.simple,
   FilterParameter.projector: FilterDataType.simple,
   FilterParameter.whiteboard: FilterDataType.simple,
   FilterParameter.teleconference: FilterDataType.simple,
-  FilterParameter.capacity: FilterDataType.simple,
+  FilterParameter.capacity: FilterDataType.number,
 };
 
 const Map<FilterParameter, String> filterParameterNames = {

@@ -30,43 +30,38 @@ abstract class _BlockStore with Store {
   @computed
   ObservableList<Desk> get desks => ObservableList.of(
         (_desks ?? []).where((desk) {
-          bool result = true;
-          final filterId = filterStore.filters[FilterParameter.id];
-          final filterFloor = filterStore.filters[FilterParameter.floor];
-          if (filterId != null && filterId != desk.id) {
-            result = false;
-          }
-          if (filterFloor != null && filterFloor != desk.floor) {
-            result = false;
-          }
-          return result;
-        }).toList()
-          ..sort((desk1, desk2) => desk1.id.compareTo(desk2.id)),
+          final isIdValid = _checkFilterEqual(FilterParameter.id, desk.id);
+          final isFloorValid =
+              _checkFilterEqual(FilterParameter.floor, desk.floor);
+          return isIdValid && isFloorValid;
+        }).toList(),
       );
 
   @computed
   ObservableList<Room> get rooms => ObservableList.of(
         (_rooms ?? []).where((room) {
-          bool result = true;
-          final filterId = filterStore.filters[FilterParameter.id];
-          final filterFloor = filterStore.filters[FilterParameter.floor];
-          if (filterId != null && filterId != room.id) {
-            result = false;
-          }
-          if (filterFloor != null && filterFloor != room.floor) {
-            result = false;
-          }
-          return result;
-        }).toList()
-          ..sort((room1, room2) => room1.id.compareTo(room2.id)),
+          final isIdValid = _checkFilterEqual(FilterParameter.id, room.id);
+          final isFloorValid =
+              _checkFilterEqual(FilterParameter.floor, room.floor);
+          return isIdValid && isFloorValid;
+        }).toList(),
       );
+
+  bool _checkFilterEqual(FilterParameter filter, dynamic deskAttribute) {
+    final filterValue = filterStore.filters[filter];
+    if (filterValue != null && filterValue != deskAttribute) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   @action
   fetchDesks() async {
     inProgressDesks = true;
     //TODO handle backend
     await Future.delayed(const Duration(milliseconds: 500));
-    _desks = desksDummy;
+    _desks = desksDummy..sort((desk1, desk2) => desk1.id.compareTo(desk2.id));
     inProgressDesks = false;
   }
 
@@ -75,7 +70,7 @@ abstract class _BlockStore with Store {
     inProgressRooms = true;
     //TODO handle backend
     await Future.delayed(const Duration(seconds: 1));
-    _rooms = roomsDummy;
+    _rooms = roomsDummy..sort((room1, room2) => room1.id.compareTo(room2.id));
     inProgressRooms = false;
   }
 

@@ -80,7 +80,7 @@ class ReservationListItem extends StatelessWidget {
                   Icon(Icons.timer_outlined, color: iconColor),
                   const SizedBox(width: 6),
                   Text(
-                    DateFormat.Hm().format(reservation.startDate),
+                    DateFormat.jm().format(reservation.startDate),
                     style: TextStyle(color: Theme.of(context).primaryColorDark),
                   ),
                 ]),

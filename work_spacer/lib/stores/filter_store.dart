@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:work_spacer/models/filter.dart';
@@ -23,7 +24,6 @@ abstract class _FilterStore with Store {
     if (filters.containsKey(parameter)) {
       filters[parameter] = null;
     }
-    print(filters);
   }
 
   @action
@@ -47,6 +47,13 @@ abstract class _FilterStore with Store {
         } else if (filterParameterDataTypes[parameter] == FilterDataType.date) {
           try {
             value = DateFormat('dd.MM.yyyy').parse(valueAsString);
+          } catch (e) {
+            value = null;
+          }
+        } else if (filterParameterDataTypes[parameter] == FilterDataType.time) {
+          try {
+            final dateTime = DateFormat.jm().parse(valueAsString);
+            value = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
           } catch (e) {
             value = null;
           }
