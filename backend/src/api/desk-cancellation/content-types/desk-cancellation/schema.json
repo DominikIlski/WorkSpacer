@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "desk_cancellations",
+  "info": {
+    "singularName": "desk-cancellation",
+    "pluralName": "desk-cancellations",
+    "displayName": "DeskCancellation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "idAdmin": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::admin.admin",
+      "inversedBy": "deskCancellations"
+    },
+    "idDeskReservation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::desk-reservation.desk-reservation",
+      "inversedBy": "idDeskCancellation"
+    }
+  }
+}

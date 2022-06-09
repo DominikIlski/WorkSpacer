@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "conference_room_reservations",
+  "info": {
+    "singularName": "conference-room-reservation",
+    "pluralName": "conference-room-reservations",
+    "displayName": "ConferenceRoomReservation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "startDate": {
+      "type": "datetime"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "idConferenceRoomCancellation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::conference-room-cancellation.conference-room-cancellation",
+      "inversedBy": "idConferenceRoomReservation"
+    },
+    "idConferenceRoom": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::conference-room.conference-room",
+      "inversedBy": "conferenceRoomReservations"
+    },
+    "idEmployee": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::employee.employee",
+      "inversedBy": "conferenceRoomReservations"
+    }
+  }
+}

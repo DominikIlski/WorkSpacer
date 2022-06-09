@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "desks",
+  "info": {
+    "singularName": "desk",
+    "pluralName": "desks",
+    "displayName": "Desk",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "floor": {
+      "type": "integer"
+    },
+    "number": {
+      "type": "integer"
+    },
+    "secondMonitor": {
+      "type": "boolean"
+    },
+    "deskReservations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::desk-reservation.desk-reservation",
+      "mappedBy": "idDesk"
+    },
+    "deskBlockages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::desk-blockage.desk-blockage",
+      "mappedBy": "idDesk"
+    }
+  }
+}

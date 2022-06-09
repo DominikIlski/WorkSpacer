@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "conference_rooms",
+  "info": {
+    "singularName": "conference-room",
+    "pluralName": "conference-rooms",
+    "displayName": "ConferenceRoom",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "floor": {
+      "type": "integer"
+    },
+    "number": {
+      "type": "integer"
+    },
+    "projector": {
+      "type": "boolean"
+    },
+    "whiteboard": {
+      "type": "boolean"
+    },
+    "teleconferenceSystem": {
+      "type": "boolean"
+    },
+    "capacity": {
+      "type": "integer"
+    },
+    "conferenceRoomBlockages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::conference-room-blockage.conference-room-blockage",
+      "mappedBy": "idConferenceRoom"
+    },
+    "conferenceRoomReservations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::conference-room-reservation.conference-room-reservation",
+      "mappedBy": "idConferenceRoom"
+    }
+  }
+}
