@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "desk_blockages",
+  "info": {
+    "singularName": "desk-blockage",
+    "pluralName": "desk-blockages",
+    "displayName": "DeskBlockage",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "idDesk": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::desk.desk",
+      "inversedBy": "deskBlockages"
+    },
+    "idAdmin": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::admin.admin",
+      "inversedBy": "deskBlockages"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "admins",
+  "info": {
+    "singularName": "admin",
+    "pluralName": "admins",
+    "displayName": "Admin",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "login": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "conferenceRoomBlockages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::conference-room-blockage.conference-room-blockage",
+      "mappedBy": "idAdmin"
+    },
+    "conferenceRoomCancellations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::conference-room-cancellation.conference-room-cancellation",
+      "mappedBy": "idAdmin"
+    },
+    "deskBlockages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::desk-blockage.desk-blockage",
+      "mappedBy": "idAdmin"
+    },
+    "deskCancellations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::desk-cancellation.desk-cancellation",
+      "mappedBy": "idAdmin"
+    }
+  }
+}
