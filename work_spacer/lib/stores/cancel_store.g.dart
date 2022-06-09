@@ -54,13 +54,13 @@ mixin _$CancelStore on _CancelStore, Store {
       Atom(name: '_CancelStore._reservations', context: context);
 
   @override
-  List<Reservation>? get _reservations {
+  ObservableList<Reservation>? get _reservations {
     _$_reservationsAtom.reportRead();
     return super._reservations;
   }
 
   @override
-  set _reservations(List<Reservation>? value) {
+  set _reservations(ObservableList<Reservation>? value) {
     _$_reservationsAtom.reportWrite(value, super._reservations, () {
       super._reservations = value;
     });

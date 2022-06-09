@@ -4,14 +4,16 @@ import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/models/room_reservation.dart';
 import 'package:intl/intl.dart';
 
-class EmployeeReservationListItem extends StatelessWidget {
+class ReservationListItem extends StatelessWidget {
   final Reservation reservation;
   final VoidCallback onCancel;
+  final bool showDateOnly;
 
-  const EmployeeReservationListItem({
+  const ReservationListItem({
     super.key,
     required this.reservation,
     required this.onCancel,
+    this.showDateOnly = false,
   });
 
   @override
@@ -27,7 +29,7 @@ class EmployeeReservationListItem extends StatelessWidget {
       icon = Icon(
         Icons.desktop_windows,
         color: iconColor,
-        size: 36,
+        size: 32,
       );
       title = 'Desk #${(reservation as DeskReservation).desk.id}';
     } else {
@@ -36,7 +38,7 @@ class EmployeeReservationListItem extends StatelessWidget {
       icon = Icon(
         Icons.meeting_room_outlined,
         color: iconColor,
-        size: 36,
+        size: 32,
       );
       title = 'Room #${(reservation as RoomReservation).room.id}';
     }
@@ -67,23 +69,32 @@ class EmployeeReservationListItem extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(children: [
-                  Icon(Icons.calendar_month_outlined, color: iconColor),
-                  const SizedBox(width: 6),
-                  Text(
-                    DateFormat('dd.MM.yyyy').format(reservation.startDate),
-                    style: TextStyle(color: Theme.of(context).primaryColorDark),
+                _getIconText(
+                  context,
+                  Icons.calendar_month_outlined,
+                  iconColor,
+                  DateFormat('dd.MM.yyyy').format(reservation.startDate),
+                ),
+                if (!showDateOnly) const SizedBox(height: 8),
+                if (!showDateOnly)
+                  _getIconText(
+                    context,
+                    Icons.timer_outlined,
+                    iconColor,
+                    DateFormat.jm().format(reservation.startDate),
                   ),
-                ]),
+                if (!showDateOnly) const SizedBox(height: 8),
+                if (!showDateOnly)
+                  _getIconText(
+                    context,
+                    Icons.hourglass_empty,
+                    iconColor,
+                    '${reservation.duration} hours',
+                  ),
               ],
             ),
             const Spacer(),
-            ElevatedButton.icon(
-              icon: Icon(
-                Icons.delete_forever_outlined,
-                color: Colors.white,
-                size: 22.0,
-              ),
+            ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
                   Colors.red,
@@ -92,12 +103,25 @@ class EmployeeReservationListItem extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 8),
                 ),
               ),
-              label: const Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: onCancel,
             ),
           ],
         ),
       ),
+    );
+  }
+
+  _getIconText(context, IconData iconData, Color iconColor, String text) {
+    return Row(
+      children: [
+        Icon(iconData, color: iconColor),
+        const SizedBox(width: 6),
+        Text(
+          text,
+          style: TextStyle(color: Theme.of(context).primaryColorDark),
+        ),
+      ],
     );
   }
 }

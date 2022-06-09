@@ -17,12 +17,12 @@ abstract class _CancelStore with Store {
   String searchWorkspaceId = '';
 
   @observable
-  List<Reservation>? _reservations;
+  ObservableList<Reservation>? _reservations;
 
   @computed
   ObservableList<Reservation> get filteredReservations {
     return ObservableList.of(
-      (_reservations ?? []).where((reservation) {
+      (_reservations ?? <Reservation>[]).where((reservation) {
         String idAsString = reservation is DeskReservation
             ? reservation.desk.id.toString()
             : (reservation as RoomReservation).room.id.toString();

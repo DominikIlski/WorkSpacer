@@ -4,6 +4,7 @@ import 'package:work_spacer/screens/employee/desks/desk_search_screen.dart';
 import 'package:work_spacer/screens/employee/reservations/employee_reservations_screen.dart';
 import 'package:work_spacer/screens/employee/rooms/room_search_screen.dart';
 import 'package:work_spacer/stores/desks_store.dart';
+import 'package:work_spacer/stores/reservation_store.dart';
 import 'package:work_spacer/stores/rooms_store.dart';
 import 'components/home_screen_button.dart';
 
@@ -20,6 +21,9 @@ class EmployeeHomeContent extends StatelessWidget {
           HomeScreenButton(
             title: "My reservations",
             onTap: () {
+              final store =
+                  Provider.of<ReservationStore>(context, listen: false);
+              store.fetchReservations();
               Navigator.restorablePushNamed(
                 context,
                 EmployeeReservationsScreen.routeName,

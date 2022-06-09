@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:work_spacer/misc/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
-import 'components/reservation_list_item.dart';
+import '../../widgets/reservation_list_item.dart';
 
 class ReservationCancelScreen extends StatelessWidget {
   static const routeName = '/cancel';
@@ -20,9 +20,8 @@ class ReservationCancelScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Cancel a reservation'),
         ),
-        body: Container(
+        body: Padding(
           padding: const EdgeInsets.all(16),
-          alignment: Alignment.center,
           child: Column(
             children: [
               Padding(
