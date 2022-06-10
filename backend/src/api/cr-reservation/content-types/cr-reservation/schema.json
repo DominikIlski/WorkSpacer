@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cr_reservations",
+  "info": {
+    "singularName": "cr-reservation",
+    "pluralName": "cr-reservations",
+    "displayName": "CRReservation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "startDate": {
+      "type": "datetime"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "idEmployee": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::employee.employee",
+      "inversedBy": "crReservations"
+    },
+    "idCRCancellation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cr-cancellation.cr-cancellation",
+      "inversedBy": "idCRReservation"
+    },
+    "idConferenceRoom": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::conference-room.conference-room",
+      "inversedBy": "crReservations"
+    }
+  }
+}

@@ -30,16 +30,16 @@
     "capacity": {
       "type": "integer"
     },
-    "conferenceRoomBlockages": {
+    "crBlockages": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::conference-room-blockage.conference-room-blockage",
+      "target": "api::cr-blockage.cr-blockage",
       "mappedBy": "idConferenceRoom"
     },
-    "conferenceRoomReservations": {
+    "crReservations": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::conference-room-reservation.conference-room-reservation",
+      "target": "api::cr-reservation.cr-reservation",
       "mappedBy": "idConferenceRoom"
     }
   }

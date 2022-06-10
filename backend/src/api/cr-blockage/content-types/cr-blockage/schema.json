@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cr_blockages",
+  "info": {
+    "singularName": "cr-blockage",
+    "pluralName": "cr-blockages",
+    "displayName": "CRBlockage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "idAdmin": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::admin.admin",
+      "inversedBy": "crBlockages"
+    },
+    "idConferenceRoom": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::conference-room.conference-room",
+      "inversedBy": "crBlockages"
+    }
+  }
+}
