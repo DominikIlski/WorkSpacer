@@ -26,16 +26,16 @@
     "password": {
       "type": "string"
     },
-    "conferenceRoomReservations": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::conference-room-reservation.conference-room-reservation",
-      "mappedBy": "idEmployee"
-    },
     "deskReservations": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::desk-reservation.desk-reservation",
+      "mappedBy": "idEmployee"
+    },
+    "crReservations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cr-reservation.cr-reservation",
       "mappedBy": "idEmployee"
     }
   }

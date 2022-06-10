@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cr_cancellations",
+  "info": {
+    "singularName": "cr-cancellation",
+    "pluralName": "cr-cancellations",
+    "displayName": "CRCancellation"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "idAdmin": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::admin.admin",
+      "inversedBy": "idCRCancellation"
+    },
+    "idCRReservation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cr-reservation.cr-reservation",
+      "inversedBy": "idCRCancellation"
+    }
+  }
+}

@@ -18,18 +18,6 @@
     "password": {
       "type": "string"
     },
-    "conferenceRoomBlockages": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::conference-room-blockage.conference-room-blockage",
-      "mappedBy": "idAdmin"
-    },
-    "conferenceRoomCancellations": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::conference-room-cancellation.conference-room-cancellation",
-      "mappedBy": "idAdmin"
-    },
     "deskBlockages": {
       "type": "relation",
       "relation": "oneToMany",
@@ -41,6 +29,18 @@
       "relation": "oneToMany",
       "target": "api::desk-cancellation.desk-cancellation",
       "mappedBy": "idAdmin"
+    },
+    "crBlockages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cr-blockage.cr-blockage",
+      "mappedBy": "idAdmin"
+    },
+    "idCRCancellation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cr-cancellation.cr-cancellation",
+      "inversedBy": "idAdmin"
     }
   }
 }
