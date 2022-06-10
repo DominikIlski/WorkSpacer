@@ -137,11 +137,24 @@ class _WorkspaceSearchTextFieldState extends State<_WorkspaceSearchTextField> {
         controller: _controller,
         keyboardType: TextInputType.number,
         onChanged: (value) => widget.onChanged.call(value),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.search),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(
+                color: Theme.of(context).secondaryHeaderColor,
+              )),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(
+                color: Theme.of(context).secondaryHeaderColor,
+              )),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).secondaryHeaderColor,
+          ),
           hintText: "Workspace ID",
+          hintStyle: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
       ),
     );

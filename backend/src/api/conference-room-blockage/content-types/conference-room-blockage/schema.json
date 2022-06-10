@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "conference_room_blockages",
+  "info": {
+    "singularName": "conference-room-blockage",
+    "pluralName": "conference-room-blockages",
+    "displayName": "ConferenceRoomBlockage",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "idAdmin": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::admin.admin",
+      "inversedBy": "conferenceRoomBlockages"
+    },
+    "idConferenceRoom": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::conference-room.conference-room",
+      "inversedBy": "conferenceRoomBlockages"
+    }
+  }
+}

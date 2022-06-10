@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "desk_reservations",
+  "info": {
+    "singularName": "desk-reservation",
+    "pluralName": "desk-reservations",
+    "displayName": "DeskReservation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "startDate": {
+      "type": "datetime"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "idDesk": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::desk.desk",
+      "inversedBy": "deskReservations"
+    },
+    "idEmployee": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::employee.employee",
+      "inversedBy": "deskReservations"
+    },
+    "idDeskCancellation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::desk-cancellation.desk-cancellation",
+      "mappedBy": "idDeskReservation"
+    }
+  }
+}

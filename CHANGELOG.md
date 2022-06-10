@@ -5,7 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [0.5.0] - 2022-06-05
+
+# [0.8.0] - 2022-06-09
+### Added
+* Strapi content-types
+
+
+## [0.7.0]  - 2022-06-08
+
+### Added
+* User class in models package which is data class for User (so Admin can manage their roles) with Role enum
+* Custom Widgets in admin/role package such as ManageRoleDialog and UserListItem which are used to compose a RoleManagementScreen
+* Implemented UI for RoleManagementScreen based on Figma mockup - added filter buttons (with no logic yet - user can provice Id/Name/Surname parameters but lists are not filtered) ListView of User with implementation of managing their roles - clickicing on item invokes ManageRoleDialog which enables admin to choose a new Role and save changes
+
+
+### Changed 
+* Adjusted some Filter Button widget parameters (autofit width to the text length)
+* Adjustem Search Desk/Room Widget to match Figma mockup (colors changed)
+
+## [0.6.0] - 2022-06-08
+### Added
+* Strapi remote configuration
+* Strapi remote db configuration
+
+## [0.5.0] - 2022-06-05
+
 ### Added
 * MobX dependency
 * Admin: Workspace blocking & filtering
