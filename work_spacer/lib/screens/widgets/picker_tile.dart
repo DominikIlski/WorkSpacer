@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
-class DatePickerTile extends StatelessWidget {
-  const DatePickerTile({
+enum PickerType { date, time }
+
+class PickerTile extends StatelessWidget {
+  const PickerTile({
     Key? key,
     required this.hintText,
     required this.onTap,
+    required this.pickerType,
   }) : super(key: key);
 
   final String hintText;
   final VoidCallback onTap;
+  final PickerType pickerType;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +30,16 @@ class DatePickerTile extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                Icons.calendar_month_outlined,
+                pickerType == PickerType.date
+                    ? Icons.calendar_month_outlined
+                    : Icons.timer_outlined,
                 color: Theme.of(context).primaryColorDark,
               ),
               const SizedBox(width: 8),
               Text(
                 hintText,
                 style: TextStyle(
+                  fontSize: 16,
                   color: Theme.of(context).primaryColor,
                 ),
               ),

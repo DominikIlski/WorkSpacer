@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:work_spacer/misc/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/filter.dart';
-import 'package:work_spacer/screens/admin/block/components/date_picker_tile.dart';
+import 'package:work_spacer/screens/widgets/picker_tile.dart';
 
-class SearchDialog extends StatefulWidget {
-  const SearchDialog({
+class FilterDialog extends StatefulWidget {
+  const FilterDialog({
     Key? key,
     required this.filter,
     required this.onConfirm,
@@ -19,13 +19,15 @@ class SearchDialog extends StatefulWidget {
   final String? initialText;
 
   @override
-  State<SearchDialog> createState() => _SearchDialogState();
+  State<FilterDialog> createState() => _FilterDialogState();
 }
 
-class _SearchDialogState extends State<SearchDialog> {
+class _FilterDialogState extends State<FilterDialog> {
   final _controller = TextEditingController();
   DateTime? _date;
   String _dateText = 'Select date';
+  TimeOfDay? _time;
+  String _timeText = 'Select start hour';
 
   @override
   void initState() {
@@ -33,11 +35,26 @@ class _SearchDialogState extends State<SearchDialog> {
     final filterDataType = filterParameterDataTypes[widget.filter];
     if (widget.initialText != null) {
       setState(() {
-        if (filterDataType == FilterDataType.number) {
+        if (filterDataType == FilterDataType.number ||
+            filterDataType == FilterDataType.text) {
           _controller.text = widget.initialText!;
         }
         if (filterDataType == FilterDataType.date) {
-          _setDate(DateTime.tryParse(widget.initialText!));
+          try {
+            _setDate(DateFormat('dd.MM.yyyy').parse(widget.initialText!));
+          } catch (e) {
+            //ignore
+          }
+        }
+        if (filterDataType == FilterDataType.time) {
+          try {
+            final dateTime = DateFormat.jm().parse(widget.initialText!);
+            _setTime(
+              TimeOfDay(hour: dateTime.hour, minute: dateTime.minute),
+            );
+          } catch (e) {
+            //ignore
+          }
         }
       });
     }
@@ -63,20 +80,31 @@ class _SearchDialogState extends State<SearchDialog> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (filterDataType == FilterDataType.number)
+            if (filterDataType == FilterDataType.number ||
+                filterDataType == FilterDataType.text)
               TextField(
                 controller: _controller,
+                autofocus: true,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   hintText: filterParameterNames[widget.filter] ?? '',
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: filterDataType == FilterDataType.number
+                    ? TextInputType.number
+                    : TextInputType.text,
               ),
             if (filterDataType == FilterDataType.date)
-              DatePickerTile(
+              PickerTile(
+                pickerType: PickerType.date,
                 hintText: _dateText,
                 onTap: _datePicker,
+              ),
+            if (filterDataType == FilterDataType.time)
+              PickerTile(
+                pickerType: PickerType.time,
+                hintText: _timeText,
+                onTap: _timePicker,
               ),
           ],
         ),
@@ -99,11 +127,15 @@ class _SearchDialogState extends State<SearchDialog> {
           ),
           TextButton(
             onPressed: () {
-              if (filterDataType == FilterDataType.number) {
+              if (filterDataType == FilterDataType.number ||
+                  filterDataType == FilterDataType.text) {
                 widget.onConfirm(widget.filter, _controller.text);
               }
               if (filterDataType == FilterDataType.date) {
                 widget.onConfirm(widget.filter, _dateText);
+              }
+              if (filterDataType == FilterDataType.time) {
+                widget.onConfirm(widget.filter, _timeText);
               }
               Navigator.pop(context);
             },
@@ -129,6 +161,13 @@ class _SearchDialogState extends State<SearchDialog> {
     ).then((date) => _setDate(date));
   }
 
+  void _timePicker() {
+    showTimePicker(
+      context: context,
+      initialTime: _time ?? TimeOfDay.now(),
+    ).then((time) => _setTime(time));
+  }
+
   void _setDate(DateTime? date) {
     if (date == null) {
       return;
@@ -136,6 +175,19 @@ class _SearchDialogState extends State<SearchDialog> {
     setState(() {
       _date = date;
       _dateText = DateFormat('dd.MM.yyyy').format(_date!);
+    });
+  }
+
+  void _setTime(TimeOfDay? time) {
+    if (time == null) {
+      return;
+    }
+    setState(() {
+      final now = DateTime.now();
+      _time = time;
+      _timeText = DateFormat.jm().format(
+        DateTime(now.year, now.month, now.day, time.hour, time.minute),
+      );
     });
   }
 }

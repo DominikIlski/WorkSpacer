@@ -6,9 +6,9 @@ import 'package:work_spacer/models/room.dart';
 class RoomReservation extends Reservation {
   final Room room;
 
-
   const RoomReservation({
     required this.room,
+    required super.id,
     required super.startDate,
     required super.duration,
     required super.idEmployee,

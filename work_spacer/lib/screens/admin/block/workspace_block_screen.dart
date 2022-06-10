@@ -4,12 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/admin/block/components/block_dialog.dart';
-import 'package:work_spacer/screens/admin/block/components/search_dialog.dart';
 import 'package:work_spacer/screens/admin/block/components/workspace_grid.dart';
-import 'package:work_spacer/screens/widgets/filter_button.dart';
+import 'package:work_spacer/screens/widgets/rounded_button.dart';
+import 'package:work_spacer/screens/widgets/filterable_workspace_list.dart';
+import 'package:work_spacer/screens/widgets/filter_dialog.dart';
 import 'package:work_spacer/stores/block_store.dart';
-
-enum SearchParameter { id, floor }
 
 class WorkspaceBlockScreen extends StatefulWidget {
   static const routeName = '/block';
@@ -39,73 +38,50 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 32,
-              child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Center(
-                    child: Observer(
-                      builder: (_) => FilterButton(
-                        filter: FilterParameter.id,
-                        isSelected: blockStore
-                                .filterStore.filters[FilterParameter.id] !=
-                            null,
-                        onTap: () => _showSearchDialog(
-                          FilterParameter.id,
-                          blockStore.filterStore.toggleValueFilter,
-                          blockStore.filterStore.resetFilter,
-                          blockStore.filterStore.filters[FilterParameter.id]
-                              ?.toString(),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Observer(
-                      builder: (_) => FilterButton(
-                        filter: FilterParameter.floor,
-                        isSelected: blockStore
-                                .filterStore.filters[FilterParameter.floor] !=
-                            null,
-                        onTap: () => _showSearchDialog(
-                          FilterParameter.floor,
-                          blockStore.filterStore.toggleValueFilter,
-                          blockStore.filterStore.resetFilter,
-                          blockStore.filterStore.filters[FilterParameter.floor]
-                              ?.toString(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            //_getFilters(),
-            const SizedBox(height: 16),
-            Divider(
-              height: 0,
-              thickness: 1,
-              color: Theme.of(context).secondaryHeaderColor,
-            ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: _getContent(blockStore),
-            ),
-          ],
+        child: FilterableWorkspaceList(
+          observerFilterButtons: _getObserverFilterButtons(blockStore),
+          child: _getContent(blockStore),
         ),
       ),
       bottomNavigationBar: _getNavBar(),
     );
   }
 
+  List<Observer> _getObserverFilterButtons(blockStore) {
+    return [
+      Observer(
+        builder: (_) => RoundedButton(
+          title: filterParameterNames[FilterParameter.id] ?? '',
+          isSelected:
+              blockStore.filterStore.filters[FilterParameter.id] != null,
+          onTap: () => _showFilterDialog(
+            FilterParameter.id,
+            blockStore.filterStore.toggleValueFilter,
+            blockStore.filterStore.resetFilter,
+            blockStore.filterStore.filters[FilterParameter.id]?.toString(),
+          ),
+        ),
+      ),
+      Observer(
+        builder: (_) => RoundedButton(
+          title: filterParameterNames[FilterParameter.floor] ?? '',
+          isSelected:
+              blockStore.filterStore.filters[FilterParameter.floor] != null,
+          onTap: () => _showFilterDialog(
+            FilterParameter.floor,
+            blockStore.filterStore.toggleValueFilter,
+            blockStore.filterStore.resetFilter,
+            blockStore.filterStore.filters[FilterParameter.floor]?.toString(),
+          ),
+        ),
+      ),
+    ];
+  }
+
   Widget _getContent(BlockStore blockStore) {
     return PageView(
       controller: _pageController,
-      onPageChanged: (index) => _onBottomNavItemTapped(
+      onPageChanged: (index) => _onNavBarItemTapped(
         index,
         pageScrolled: true,
       ),
@@ -138,7 +114,13 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
     } else {
       return WorkspaceGrid(
         workspaces: workspaces,
-        onTap: (workspace) => _showBlockDialog(workspace, onBlock),
+        onTap: (workspace) => showDialog(
+          context: context,
+          builder: (context) => BlockDialog(
+            workspace: workspace,
+            onBlock: onBlock,
+          ),
+        ),
       );
     }
   }
@@ -146,7 +128,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
   Widget _getNavBar() {
     return BottomNavigationBar(
       currentIndex: _selectedIndex,
-      onTap: _onBottomNavItemTapped,
+      onTap: _onNavBarItemTapped,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.desktop_windows_outlined),
@@ -163,7 +145,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
     );
   }
 
-  void _onBottomNavItemTapped(int index, {bool pageScrolled = false}) {
+  void _onNavBarItemTapped(int index, {bool pageScrolled = false}) {
     setState(() {
       _selectedIndex = index;
     });
@@ -176,24 +158,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
     }
   }
 
-  void _showBlockDialog(
-    Workspace workspace,
-    Function(Workspace workspace) onBlock,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) => BlockDialog(
-        workspace: workspace,
-        onBlock: onBlock,
-      ),
-    );
-  }
-
-  void _onBlockClicked(DateTime start, DateTime end, Workspace workspace) {
-    //TODO: enter blockage
-  }
-
-  void _showSearchDialog(
+  void _showFilterDialog(
     FilterParameter filter,
     Function(FilterParameter parameter, String valueAsString) onConfirm,
     Function(FilterParameter parameter) onReset,
@@ -201,7 +166,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
   ) {
     showDialog(
       context: context,
-      builder: (context) => SearchDialog(
+      builder: (context) => FilterDialog(
         filter: filter,
         onConfirm: onConfirm,
         onReset: onReset,

@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:work_spacer/models/reservation.dart';
+import 'package:work_spacer/screens/widgets/reservation_list_item.dart';
+import 'package:work_spacer/stores/reservation_store.dart';
 
 class EmployeeReservationsScreen extends StatelessWidget {
   static const routeName = '/my_reservations';
@@ -7,11 +12,76 @@ class EmployeeReservationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<ReservationStore>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('My reservations'),
       ),
-      body: Container(),
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            Expanded(
+              child: Observer(
+                builder: (_) => store.inProgress
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        itemCount: store.reservations.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: ReservationListItem(
+                            reservation: store.reservations[index],
+                            onCancel: () => _cancelReservation(
+                              context,
+                              store.cancel,
+                              store.reservations[index],
+                            ),
+                            showDateOnly: true,
+                          ),
+                        ),
+                      ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _cancelReservation(
+    context,
+    Function(Reservation) onCancel,
+    Reservation reservation,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Do you want to cancel?',
+          style: TextStyle(
+            color: Theme.of(context).primaryColorDark,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              onCancel(reservation);
+            },
+            child: Text(
+              'Yes',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).secondaryHeaderColor,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -7,11 +7,13 @@ import 'package:intl/intl.dart';
 class ReservationListItem extends StatelessWidget {
   final Reservation reservation;
   final VoidCallback onCancel;
+  final bool showDateOnly;
 
   const ReservationListItem({
     super.key,
     required this.reservation,
     required this.onCancel,
+    this.showDateOnly = false,
   });
 
   @override
@@ -27,7 +29,7 @@ class ReservationListItem extends StatelessWidget {
       icon = Icon(
         Icons.desktop_windows,
         color: iconColor,
-        size: 36,
+        size: 28,
       );
       title = 'Desk #${(reservation as DeskReservation).desk.id}';
     } else {
@@ -36,7 +38,7 @@ class ReservationListItem extends StatelessWidget {
       icon = Icon(
         Icons.meeting_room_outlined,
         color: iconColor,
-        size: 36,
+        size: 28,
       );
       title = 'Room #${(reservation as RoomReservation).room.id}';
     }
@@ -50,7 +52,7 @@ class ReservationListItem extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.all(20),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -66,33 +68,29 @@ class ReservationListItem extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                const SizedBox(height: 16),
-                Row(children: [
-                  Icon(Icons.calendar_month_outlined, color: iconColor),
-                  const SizedBox(width: 6),
-                  Text(
-                    DateFormat('dd.MM.yyyy').format(reservation.startDate),
-                    style: TextStyle(color: Theme.of(context).primaryColorDark),
+                const SizedBox(height: 12),
+                _getIconText(
+                  context,
+                  Icons.calendar_month_outlined,
+                  iconColor,
+                  DateFormat('dd.MM.yyyy').format(reservation.startDate),
+                ),
+                if (!showDateOnly) const SizedBox(height: 8),
+                if (!showDateOnly)
+                  _getIconText(
+                    context,
+                    Icons.timer_outlined,
+                    iconColor,
+                    DateFormat.jm().format(reservation.startDate),
                   ),
-                ]),
-                const SizedBox(height: 8),
-                Row(children: [
-                  Icon(Icons.timer_outlined, color: iconColor),
-                  const SizedBox(width: 6),
-                  Text(
-                    DateFormat.Hm().format(reservation.startDate),
-                    style: TextStyle(color: Theme.of(context).primaryColorDark),
-                  ),
-                ]),
-                const SizedBox(height: 8),
-                Row(children: [
-                  Icon(Icons.hourglass_empty, color: iconColor),
-                  const SizedBox(width: 6),
-                  Text(
+                if (!showDateOnly) const SizedBox(height: 8),
+                if (!showDateOnly)
+                  _getIconText(
+                    context,
+                    Icons.hourglass_empty,
+                    iconColor,
                     '${reservation.duration} hours',
-                    style: TextStyle(color: Theme.of(context).primaryColorDark),
                   ),
-                ]),
               ],
             ),
             const Spacer(),
@@ -117,6 +115,19 @@ class ReservationListItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  _getIconText(context, IconData iconData, Color iconColor, String text) {
+    return Row(
+      children: [
+        Icon(iconData, color: iconColor),
+        const SizedBox(width: 6),
+        Text(
+          text,
+          style: TextStyle(color: Theme.of(context).primaryColorDark),
+        ),
+      ],
     );
   }
 }

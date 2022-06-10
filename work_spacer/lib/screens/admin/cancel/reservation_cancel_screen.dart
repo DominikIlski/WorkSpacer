@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:work_spacer/misc/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
-import 'components/reservation_list_item.dart';
+import '../../widgets/reservation_list_item.dart';
 
 class ReservationCancelScreen extends StatelessWidget {
   static const routeName = '/cancel';
@@ -20,9 +20,8 @@ class ReservationCancelScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Cancel a reservation'),
         ),
-        body: Container(
+        body: Padding(
           padding: const EdgeInsets.all(16),
-          alignment: Alignment.center,
           child: Column(
             children: [
               Padding(
@@ -66,7 +65,7 @@ class ReservationCancelScreen extends StatelessWidget {
 
   void _cancelReservation(
     context,
-    Function(Reservation) cancel,
+    Function(Reservation) onCancel,
     Reservation reservation,
   ) {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -85,7 +84,10 @@ class ReservationCancelScreen extends StatelessWidget {
             child: const Text('No'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'confirm'),
+            onPressed: () {
+              onCancel(reservation);
+              Navigator.pop(context);
+            },
             child: Text(
               'Yes',
               style: TextStyle(
@@ -96,11 +98,7 @@ class ReservationCancelScreen extends StatelessWidget {
           ),
         ],
       ),
-    ).then((result) {
-      if (result == 'confirm') {
-        cancel(reservation);
-      }
-    });
+    );
   }
 }
 
@@ -141,12 +139,12 @@ class _WorkspaceSearchTextFieldState extends State<_WorkspaceSearchTextField> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
               borderSide: BorderSide(
                 color: Theme.of(context).secondaryHeaderColor,
               )),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
               borderSide: BorderSide(
                 color: Theme.of(context).secondaryHeaderColor,
               )),

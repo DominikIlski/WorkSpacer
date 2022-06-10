@@ -30,43 +30,38 @@ abstract class _BlockStore with Store {
   @computed
   ObservableList<Desk> get desks => ObservableList.of(
         (_desks ?? []).where((desk) {
-          bool result = true;
-          final filterId = filterStore.filters[FilterParameter.id];
-          final filterFloor = filterStore.filters[FilterParameter.floor];
-          if (filterId != null && filterId != desk.id) {
-            result = false;
-          }
-          if (filterFloor != null && filterFloor != desk.floor) {
-            result = false;
-          }
-          return result;
-        }).toList()
-          ..sort((desk1, desk2) => desk1.id.compareTo(desk2.id)),
+          final isIdValid = _checkFilterEqual(FilterParameter.id, desk.id);
+          final isFloorValid =
+              _checkFilterEqual(FilterParameter.floor, desk.floor);
+          return isIdValid && isFloorValid;
+        }).toList(),
       );
 
   @computed
   ObservableList<Room> get rooms => ObservableList.of(
         (_rooms ?? []).where((room) {
-          bool result = true;
-          final filterId = filterStore.filters[FilterParameter.id];
-          final filterFloor = filterStore.filters[FilterParameter.floor];
-          if (filterId != null && filterId != room.id) {
-            result = false;
-          }
-          if (filterFloor != null && filterFloor != room.floor) {
-            result = false;
-          }
-          return result;
-        }).toList()
-          ..sort((room1, room2) => room1.id.compareTo(room2.id)),
+          final isIdValid = _checkFilterEqual(FilterParameter.id, room.id);
+          final isFloorValid =
+              _checkFilterEqual(FilterParameter.floor, room.floor);
+          return isIdValid && isFloorValid;
+        }).toList(),
       );
+
+  bool _checkFilterEqual(FilterParameter filter, dynamic deskAttribute) {
+    final filterValue = filterStore.filters[filter];
+    if (filterValue != null && filterValue != deskAttribute) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   @action
   fetchDesks() async {
     inProgressDesks = true;
     //TODO handle backend
     await Future.delayed(const Duration(milliseconds: 500));
-    _desks = desksDummy;
+    _desks = desksDummy..sort((desk1, desk2) => desk1.id.compareTo(desk2.id));
     inProgressDesks = false;
   }
 
@@ -75,7 +70,7 @@ abstract class _BlockStore with Store {
     inProgressRooms = true;
     //TODO handle backend
     await Future.delayed(const Duration(seconds: 1));
-    _rooms = roomsDummy;
+    _rooms = roomsDummy..sort((room1, room2) => room1.id.compareTo(room2.id));
     inProgressRooms = false;
   }
 
@@ -98,7 +93,7 @@ final List<Desk> desksDummy = [
   const Desk(
     id: 13,
     floor: 1,
-    secondMonitor: false,
+    secondMonitor: true,
   ),
   const Desk(
     id: 14,
@@ -113,12 +108,12 @@ final List<Desk> desksDummy = [
   const Desk(
     id: 33,
     floor: 1,
-    secondMonitor: false,
+    secondMonitor: true,
   ),
   const Desk(
     id: 57,
     floor: 1,
-    secondMonitor: false,
+    secondMonitor: true,
   ),
   const Desk(
     id: 69,
@@ -138,7 +133,7 @@ final List<Desk> desksDummy = [
   const Desk(
     id: 100,
     floor: 3,
-    secondMonitor: false,
+    secondMonitor: true,
   )
 ];
 
@@ -147,9 +142,9 @@ final List<Room> roomsDummy = [
     id: 1,
     floor: 1,
     capacity: 12,
-    hasProjector: false,
-    hasWhiteboard: false,
-    hasTeleconference: false,
+    hasProjector: true,
+    hasWhiteboard: true,
+    hasTeleconference: true,
   ),
   const Room(
     id: 5,
@@ -157,31 +152,31 @@ final List<Room> roomsDummy = [
     capacity: 16,
     hasProjector: false,
     hasWhiteboard: false,
-    hasTeleconference: false,
+    hasTeleconference: true,
   ),
   const Room(
     id: 3,
     floor: 2,
     capacity: 22,
     hasProjector: false,
-    hasWhiteboard: false,
+    hasWhiteboard: true,
     hasTeleconference: false,
   ),
   const Room(
     id: 61,
     floor: 1,
     capacity: 30,
-    hasProjector: false,
-    hasWhiteboard: false,
+    hasProjector: true,
+    hasWhiteboard: true,
     hasTeleconference: false,
   ),
   const Room(
     id: 12,
     floor: 3,
     capacity: 16,
-    hasProjector: false,
+    hasProjector: true,
     hasWhiteboard: false,
-    hasTeleconference: false,
+    hasTeleconference: true,
   ),
   const Room(
     id: 13,

@@ -8,6 +8,7 @@ class DeskReservation extends Reservation {
 
   const DeskReservation({
     required this.desk,
+    required super.id,
     required super.startDate,
     required super.duration,
     required super.idEmployee,

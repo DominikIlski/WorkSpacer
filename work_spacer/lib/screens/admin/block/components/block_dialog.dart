@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:work_spacer/models/workspace.dart';
-import 'package:work_spacer/screens/admin/block/components/date_picker_tile.dart';
+import 'package:work_spacer/screens/widgets/picker_tile.dart';
 
 class BlockDialog extends StatefulWidget {
   const BlockDialog({
@@ -71,12 +71,14 @@ class _BlockDialogState extends State<BlockDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          DatePickerTile(
+          PickerTile(
+            pickerType: PickerType.date,
             hintText: _startDateText,
             onTap: _startDatePicker,
           ),
           const SizedBox(height: 16),
-          DatePickerTile(
+          PickerTile(
+            pickerType: PickerType.date,
             hintText: _endDateText,
             onTap: _endDatePicker,
           ),
