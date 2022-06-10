@@ -12,57 +12,55 @@ class AdminHomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          HomeScreenButton(
-            title: 'Cancel a reservation',
-            onTap: () {
-              Provider.of<CancelStore>(context, listen: false)
-                  .fetchReservations();
-              Navigator.restorablePushNamed(
-                context,
-                ReservationCancelScreen.routeName,
-              );
-            },
-            icon: Icons.free_cancellation_rounded,
-            backgroundColor: Theme.of(context).secondaryHeaderColor,
-            contentColor: Theme.of(context).colorScheme.onPrimary,
-          ),
-          const SizedBox(height: 32),
-          HomeScreenButton(
-            title: "Block a workspace",
-            onTap: () {
-              final store = Provider.of<BlockStore>(context, listen: false);
-              store.fetchDesks();
-              store.fetchRooms();
-              Navigator.restorablePushNamed(
-                context,
-                WorkspaceBlockScreen.routeName,
-              );
-            },
-            icon: Icons.block,
-            backgroundColor: Theme.of(context).primaryColorLight,
-            contentColor: Theme.of(context).secondaryHeaderColor,
-            hasBorder: true,
-          ),
-          const SizedBox(height: 32),
-          HomeScreenButton(
-            title: "Manage roles",
-            onTap: () {
-              Navigator.restorablePushNamed(
-                context,
-                RoleManagementScreen.routeName,
-              );
-            },
-            icon: Icons.lock_outline,
-            backgroundColor: Theme.of(context).primaryColor,
-            contentColor: Theme.of(context).primaryColorDark,
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        HomeScreenButton(
+          title: 'Cancel a reservation',
+          onTap: () {
+            Provider.of<CancelStore>(context, listen: false)
+                .fetchReservations();
+            Navigator.restorablePushNamed(
+              context,
+              ReservationCancelScreen.routeName,
+            );
+          },
+          icon: Icons.free_cancellation_rounded,
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
+          contentColor: Theme.of(context).colorScheme.onPrimary,
+        ),
+        const SizedBox(height: 32),
+        HomeScreenButton(
+          title: "Block a workspace",
+          onTap: () {
+            final store = Provider.of<BlockStore>(context, listen: false);
+            store.fetchDesks();
+            store.fetchRooms();
+            Navigator.restorablePushNamed(
+              context,
+              WorkspaceBlockScreen.routeName,
+            );
+          },
+          icon: Icons.block,
+          backgroundColor: Theme.of(context).primaryColorLight,
+          contentColor: Theme.of(context).secondaryHeaderColor,
+          hasBorder: true,
+        ),
+        const SizedBox(height: 32),
+        HomeScreenButton(
+          title: "Manage roles",
+          onTap: () {
+            Navigator.restorablePushNamed(
+              context,
+              RoleManagementScreen.routeName,
+            );
+          },
+          icon: Icons.lock_outline,
+          backgroundColor: Theme.of(context).primaryColor,
+          contentColor: Theme.of(context).primaryColorDark,
+        ),
+      ],
     );
   }
 }

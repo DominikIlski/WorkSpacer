@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 import 'package:work_spacer/screens/employee/notifications/notifications_screen.dart';
 import 'package:work_spacer/screens/home/admin_home_content.dart';
 import 'package:work_spacer/screens/home/employee_home_content.dart';
 import 'package:work_spacer/screens/login/login_screen.dart';
 import 'package:work_spacer/src/settings/settings_view.dart';
+import 'package:work_spacer/stores/notification_store.dart';
 
 //TODO implement distinguishing between user and admin when logging in
 const isAdmin = false;
@@ -29,22 +32,10 @@ class HomeScreen extends StatelessWidget {
 
   List<Widget>? _getActions(context) {
     return [
-      if (!isAdmin)
-        IconButton(
-          icon: const Icon(Icons.notifications_rounded),
-          onPressed: () {
-            Navigator.restorablePushNamed(
-              context,
-              NotificationsScreen.routeName,
-            );
-          },
-        ),
+      if (!isAdmin) _getNotificationsButton(context),
       IconButton(
         icon: const Icon(Icons.settings),
         onPressed: () {
-          // Navigate to the settings page. If the user leaves and returns
-          // to the app after it has been killed while running in the
-          // background, the navigation stack is restored.
           Navigator.restorablePushNamed(context, SettingsView.routeName);
         },
       ),
@@ -53,6 +44,56 @@ class HomeScreen extends StatelessWidget {
         onPressed: () => _handleLogout(context),
       ),
     ];
+  }
+
+  Widget _getNotificationsButton(context) {
+    final notifications = Provider.of<NotificationStore>(context);
+    return IconButton(
+      icon: Observer(builder: (_) {
+        final newNotificationsLength = notifications.notifications
+            .where((notification) => notification.isNew)
+            .length;
+        if (newNotificationsLength > 0) {
+          return Stack(
+            children: [
+              const Icon(Icons.notifications_active_outlined),
+              Positioned(
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(1),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).secondaryHeaderColor,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 12,
+                    minHeight: 12,
+                  ),
+                  child: Text(
+                    '$newNotificationsLength',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return const Icon(Icons.notifications_active_outlined);
+        }
+      }),
+      onPressed: () {
+        Navigator.pushNamed(
+          context,
+          NotificationsScreen.routeName,
+        ).then(
+          (_) => notifications.readNotifications(),
+        );
+      },
+    );
   }
 
   _handleLogout(context) {

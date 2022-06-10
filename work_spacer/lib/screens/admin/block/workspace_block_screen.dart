@@ -5,7 +5,7 @@ import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/admin/block/components/block_dialog.dart';
 import 'package:work_spacer/screens/admin/block/components/workspace_grid.dart';
-import 'package:work_spacer/screens/widgets/filter_button.dart';
+import 'package:work_spacer/screens/widgets/rounded_button.dart';
 import 'package:work_spacer/screens/widgets/filterable_workspace_list.dart';
 import 'package:work_spacer/screens/widgets/filter_dialog.dart';
 import 'package:work_spacer/stores/block_store.dart';
@@ -50,8 +50,8 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
   List<Observer> _getObserverFilterButtons(blockStore) {
     return [
       Observer(
-        builder: (_) => FilterButton(
-          filter: FilterParameter.id,
+        builder: (_) => RoundedButton(
+          title: filterParameterNames[FilterParameter.id] ?? '',
           isSelected:
               blockStore.filterStore.filters[FilterParameter.id] != null,
           onTap: () => _showSearchDialog(
@@ -63,8 +63,8 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
         ),
       ),
       Observer(
-        builder: (_) => FilterButton(
-          filter: FilterParameter.floor,
+        builder: (_) => RoundedButton(
+          title: filterParameterNames[FilterParameter.floor] ?? '',
           isSelected:
               blockStore.filterStore.filters[FilterParameter.floor] != null,
           onTap: () => _showSearchDialog(

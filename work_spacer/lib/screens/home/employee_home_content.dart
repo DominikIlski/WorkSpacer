@@ -13,58 +13,55 @@ class EmployeeHomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          HomeScreenButton(
-            title: "My reservations",
-            onTap: () {
-              final store =
-                  Provider.of<ReservationStore>(context, listen: false);
-              store.fetchReservations();
-              Navigator.restorablePushNamed(
-                context,
-                EmployeeReservationsScreen.routeName,
-              );
-            },
-            icon: Icons.event_available_rounded,
-            backgroundColor: Theme.of(context).secondaryHeaderColor,
-            contentColor: Theme.of(context).colorScheme.onPrimary,
-          ),
-          const SizedBox(height: 32),
-          HomeScreenButton(
-            title: "Desks",
-            onTap: () {
-              final store = Provider.of<DesksStore>(context, listen: false);
-              store.fetchDesks();
-              Navigator.restorablePushNamed(
-                context,
-                DeskSearchScreen.routeName,
-              );
-            },
-            icon: Icons.desktop_windows_outlined,
-            backgroundColor: Theme.of(context).primaryColor,
-            contentColor: Theme.of(context).primaryColorDark,
-          ),
-          const SizedBox(height: 32),
-          HomeScreenButton(
-            title: "Conference rooms",
-            onTap: () {
-              final store = Provider.of<RoomsStore>(context, listen: false);
-              store.fetchRooms();
-              Navigator.restorablePushNamed(
-                context,
-                RoomSearchScreen.routeName,
-              );
-            },
-            icon: Icons.meeting_room_outlined,
-            backgroundColor: Theme.of(context).primaryColor,
-            contentColor: Theme.of(context).primaryColorDark,
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        HomeScreenButton(
+          title: "My reservations",
+          onTap: () {
+            final store = Provider.of<ReservationStore>(context, listen: false);
+            store.fetchReservations();
+            Navigator.restorablePushNamed(
+              context,
+              EmployeeReservationsScreen.routeName,
+            );
+          },
+          icon: Icons.event_available_rounded,
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
+          contentColor: Theme.of(context).colorScheme.onPrimary,
+        ),
+        const SizedBox(height: 32),
+        HomeScreenButton(
+          title: "Desks",
+          onTap: () {
+            final store = Provider.of<DesksStore>(context, listen: false);
+            store.fetchDesks();
+            Navigator.restorablePushNamed(
+              context,
+              DeskSearchScreen.routeName,
+            );
+          },
+          icon: Icons.desktop_windows_outlined,
+          backgroundColor: Theme.of(context).primaryColor,
+          contentColor: Theme.of(context).primaryColorDark,
+        ),
+        const SizedBox(height: 32),
+        HomeScreenButton(
+          title: "Conference rooms",
+          onTap: () {
+            final store = Provider.of<RoomsStore>(context, listen: false);
+            store.fetchRooms();
+            Navigator.restorablePushNamed(
+              context,
+              RoomSearchScreen.routeName,
+            );
+          },
+          icon: Icons.meeting_room_outlined,
+          backgroundColor: Theme.of(context).primaryColor,
+          contentColor: Theme.of(context).primaryColorDark,
+        ),
+      ],
     );
   }
 }

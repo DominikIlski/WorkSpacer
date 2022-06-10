@@ -7,7 +7,7 @@ import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/admin/block/components/workspace_grid.dart';
 import 'package:work_spacer/screens/widgets/make_reservation_dialog.dart';
-import 'package:work_spacer/screens/widgets/filter_button.dart';
+import 'package:work_spacer/screens/widgets/rounded_button.dart';
 import 'package:work_spacer/screens/widgets/filterable_workspace_list.dart';
 import 'package:work_spacer/screens/widgets/filter_dialog.dart';
 import 'package:work_spacer/stores/desks_store.dart';
@@ -38,8 +38,8 @@ class DeskSearchScreen extends StatelessWidget {
   List<Observer> _getObserverFilterButtons(DesksStore desksStore) {
     return [
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.floor,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.floor] ?? '',
           isSelected:
               desksStore.filterStore.filters[FilterParameter.floor] != null,
           onTap: () => _showSearchDialog(
@@ -52,8 +52,8 @@ class DeskSearchScreen extends StatelessWidget {
         ),
       ),
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.date,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.date] ?? '',
           isSelected:
               desksStore.filterStore.filters[FilterParameter.date] != null,
           onTap: () {
@@ -72,8 +72,8 @@ class DeskSearchScreen extends StatelessWidget {
         ),
       ),
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.time,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.time] ?? '',
           isSelected:
               desksStore.filterStore.filters[FilterParameter.time] != null,
           onTap: () {
@@ -95,8 +95,8 @@ class DeskSearchScreen extends StatelessWidget {
         ),
       ),
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.secondMonitor,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.secondMonitor] ?? '',
           isSelected:
               desksStore.filterStore.filters[FilterParameter.secondMonitor] !=
                   null,

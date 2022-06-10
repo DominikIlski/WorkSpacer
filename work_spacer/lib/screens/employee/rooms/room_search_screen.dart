@@ -6,7 +6,7 @@ import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/models/room.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/admin/block/components/workspace_grid.dart';
-import 'package:work_spacer/screens/widgets/filter_button.dart';
+import 'package:work_spacer/screens/widgets/rounded_button.dart';
 import 'package:work_spacer/screens/widgets/filterable_workspace_list.dart';
 import 'package:work_spacer/screens/widgets/make_reservation_dialog.dart';
 import 'package:work_spacer/screens/widgets/filter_dialog.dart';
@@ -38,8 +38,8 @@ class RoomSearchScreen extends StatelessWidget {
   List<Observer> _getObserverFilterButtons(RoomsStore roomsStore) {
     return [
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.floor,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.floor] ?? '',
           isSelected:
               roomsStore.filterStore.filters[FilterParameter.floor] != null,
           onTap: () => _showSearchDialog(
@@ -52,8 +52,8 @@ class RoomSearchScreen extends StatelessWidget {
         ),
       ),
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.date,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.date] ?? '',
           isSelected:
               roomsStore.filterStore.filters[FilterParameter.date] != null,
           onTap: () {
@@ -72,8 +72,8 @@ class RoomSearchScreen extends StatelessWidget {
         ),
       ),
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.time,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.time] ?? '',
           isSelected:
               roomsStore.filterStore.filters[FilterParameter.time] != null,
           onTap: () {
@@ -95,8 +95,8 @@ class RoomSearchScreen extends StatelessWidget {
         ),
       ),
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.capacity,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.capacity] ?? '',
           isSelected:
               roomsStore.filterStore.filters[FilterParameter.capacity] != null,
           onTap: () => _showSearchDialog(
@@ -110,8 +110,8 @@ class RoomSearchScreen extends StatelessWidget {
         ),
       ),
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.whiteboard,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.whiteboard] ?? '',
           isSelected:
               roomsStore.filterStore.filters[FilterParameter.whiteboard] !=
                   null,
@@ -120,8 +120,8 @@ class RoomSearchScreen extends StatelessWidget {
         ),
       ),
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.projector,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.projector] ?? '',
           isSelected:
               roomsStore.filterStore.filters[FilterParameter.projector] != null,
           onTap: () => roomsStore.filterStore
@@ -129,8 +129,8 @@ class RoomSearchScreen extends StatelessWidget {
         ),
       ),
       Observer(
-        builder: (context) => FilterButton(
-          filter: FilterParameter.teleconference,
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.teleconference] ?? '',
           isSelected:
               roomsStore.filterStore.filters[FilterParameter.teleconference] !=
                   null,
