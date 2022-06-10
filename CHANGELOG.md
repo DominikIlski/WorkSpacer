@@ -5,8 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [0.9.0] - 2022-06-10
+### Added
+* Implemented all Employee UI & logic: Notifications, User Reservations, Reservation Create.
+### Changed
+* Refactored some widgets to make them more generic and easier to re-use.
+* Redesigned the look of some widgets.
+### Removed
+* Removed dead code.
 
-# [0.8.0] - 2022-06-09
+## [0.8.0] - 2022-06-09
 ### Added
 * Strapi content-types
 
@@ -21,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed 
 * Adjusted some Filter Button widget parameters (autofit width to the text length)
-* Adjustem Search Desk/Room Widget to match Figma mockup (colors changed)
+* Adjusted Search Desk/Room Widget to match Figma mockup (colors changed)
 
 ## [0.6.0] - 2022-06-08
 ### Added
