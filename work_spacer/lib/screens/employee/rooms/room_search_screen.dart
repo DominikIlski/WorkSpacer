@@ -3,8 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:work_spacer/models/filter.dart';
-import 'package:work_spacer/models/room.dart';
-import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/admin/block/components/workspace_grid.dart';
 import 'package:work_spacer/screens/widgets/rounded_button.dart';
 import 'package:work_spacer/screens/widgets/filterable_workspace_list.dart';
@@ -42,7 +40,7 @@ class RoomSearchScreen extends StatelessWidget {
           title: filterParameterNames[FilterParameter.floor] ?? '',
           isSelected:
               roomsStore.filterStore.filters[FilterParameter.floor] != null,
-          onTap: () => _showSearchDialog(
+          onTap: () => _showFilterDialog(
             context,
             FilterParameter.floor,
             roomsStore.filterStore.toggleValueFilter,
@@ -61,7 +59,7 @@ class RoomSearchScreen extends StatelessWidget {
                 roomsStore.filterStore.filters[FilterParameter.date];
             String? valueAsString =
                 value == null ? null : DateFormat('dd.MM.yyyy').format(value);
-            _showSearchDialog(
+            _showFilterDialog(
               context,
               FilterParameter.date,
               roomsStore.filterStore.toggleValueFilter,
@@ -84,7 +82,7 @@ class RoomSearchScreen extends StatelessWidget {
                 ? null
                 : DateFormat.jm().format(DateTime(
                     now.year, now.month, now.day, value.hour, value.minute));
-            _showSearchDialog(
+            _showFilterDialog(
               context,
               FilterParameter.time,
               roomsStore.filterStore.toggleValueFilter,
@@ -99,7 +97,7 @@ class RoomSearchScreen extends StatelessWidget {
           title: filterParameterNames[FilterParameter.capacity] ?? '',
           isSelected:
               roomsStore.filterStore.filters[FilterParameter.capacity] != null,
-          onTap: () => _showSearchDialog(
+          onTap: () => _showFilterDialog(
             context,
             FilterParameter.capacity,
             roomsStore.filterStore.toggleValueFilter,
@@ -143,48 +141,26 @@ class RoomSearchScreen extends StatelessWidget {
 
   Widget _getContent(context, RoomsStore roomsStore) {
     return Observer(
-      builder: (_) => _getGrid(
-        context,
-        roomsStore.inProgress,
-        roomsStore.rooms,
-        roomsStore.reserveRoom,
-      ),
+      builder: (_) {
+        if (roomsStore.inProgress) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return WorkspaceGrid(
+            workspaces: roomsStore.rooms,
+            onTap: (room) => showDialog(
+              context: context,
+              builder: (context) => MakeReservationDialog(
+                workspace: room,
+                onConfirm: roomsStore.reserveRoom,
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 
-  Widget _getGrid(
-    context,
-    bool inProgress,
-    List<Room> rooms,
-    Function(Workspace room, DateTime date, TimeOfDay time, int hours)
-        onConfirm,
-  ) {
-    if (inProgress) {
-      return const Center(child: CircularProgressIndicator());
-    } else {
-      return WorkspaceGrid(
-        workspaces: rooms,
-        onTap: (room) => _showReservationDialog(context, room, onConfirm),
-      );
-    }
-  }
-
-  void _showReservationDialog(
-    context,
-    Workspace room,
-    Function(Workspace room, DateTime date, TimeOfDay time, int hours)
-        onConfirm,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) => MakeReservationDialog(
-        workspace: room,
-        onConfirm: onConfirm,
-      ),
-    );
-  }
-
-  void _showSearchDialog(
+  void _showFilterDialog(
     context,
     FilterParameter filter,
     Function(FilterParameter parameter, String valueAsString) onConfirm,

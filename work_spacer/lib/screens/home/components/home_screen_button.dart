@@ -32,21 +32,22 @@ class HomeScreenButton extends StatelessWidget {
             : BorderSide.none,
       ),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 8,
-        ),
+        contentPadding: const EdgeInsets.all(24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),
         ),
         leading: Icon(
           icon,
           color: contentColor,
-          size: 28,
+          size: 32,
         ),
         title: Text(
           title,
-          style: TextStyle(color: contentColor, fontSize: 20),
+          style: TextStyle(
+            color: contentColor,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         onTap: onTap,
       ),

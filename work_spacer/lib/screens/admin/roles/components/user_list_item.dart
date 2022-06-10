@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:work_spacer/models/desk_reservation.dart';
-import 'package:work_spacer/models/reservation.dart';
-import 'package:work_spacer/models/room_reservation.dart';
-import 'package:intl/intl.dart';
-
-import '../../../../models/user.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:work_spacer/models/user.dart';
 
 class UserListItem extends StatelessWidget {
-  User user;
-  VoidCallback onEditClicked;
+  final User user;
+  final VoidCallback onEditClicked;
 
-  UserListItem({
+  const UserListItem({
     super.key,
     required this.user,
     required this.onEditClicked,
@@ -18,84 +14,74 @@ class UserListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: Theme.of(context).primaryColorLight,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
-          color: Theme.of(context).primaryColorDark,
-          width: 1.5,
+    return Observer(
+      builder: (_) => Card(
+        color: Theme.of(context).primaryColorLight,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: Theme.of(context).primaryColorDark),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.account_circle_outlined,
-                  color: Theme.of(context).primaryColor,
-                  size: 36,
-                ),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      "${user.name} ${user.surname}",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColorDark,
-                        fontSize: 20,
-                      ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.account_circle_outlined,
+                color: Theme.of(context).primaryColor,
+                size: 32,
+              ),
+              const SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    "${user.name} ${user.surname}",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColorDark,
+                      fontSize: 20,
                     ),
-                    SizedBox(height: 8),
-                    Row(children: [
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
                       Icon(
                         Icons.manage_accounts_outlined,
                         color: Theme.of(context).primaryColor,
                         size: 20,
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
-                        user.role.name,
+                        roleNames[user.role]!,
                         style: TextStyle(
                             color: Theme.of(context).primaryColorDark),
                       ),
-                    ]),
-                  ],
-                ),
-              ],
-            ),
-            RaisedButton(
-              color: Theme.of(context).secondaryHeaderColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-              padding: EdgeInsets.all(6),
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.edit_outlined,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    "Edit",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    ],
                   ),
                 ],
               ),
-              onPressed: onEditClicked,
-            ),
-          ],
+              const Spacer(),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    Theme.of(context).secondaryHeaderColor,
+                  ),
+                  padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                ),
+                child: Row(
+                  children: const [
+                    Icon(Icons.edit_outlined),
+                    SizedBox(width: 4),
+                    Text('Edit'),
+                  ],
+                ),
+                onPressed: onEditClicked,
+              ),
+            ],
+          ),
         ),
       ),
     );

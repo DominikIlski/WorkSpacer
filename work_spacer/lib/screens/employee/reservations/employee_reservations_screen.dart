@@ -50,7 +50,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
 
   void _cancelReservation(
     context,
-    Function(Reservation) cancel,
+    Function(Reservation) onCancel,
     Reservation reservation,
   ) {
     showDialog(
@@ -70,7 +70,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              cancel(reservation);
+              onCancel(reservation);
             },
             child: Text(
               'Yes',

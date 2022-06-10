@@ -23,6 +23,8 @@ enum FilterParameter {
   whiteboard,
   teleconference,
   capacity,
+  name,
+  surname,
 }
 
 enum FilterDataType {
@@ -30,6 +32,7 @@ enum FilterDataType {
   date,
   time,
   simple,
+  text,
 }
 
 const Map<FilterParameter, FilterDataType> filterParameterDataTypes = {
@@ -42,6 +45,8 @@ const Map<FilterParameter, FilterDataType> filterParameterDataTypes = {
   FilterParameter.whiteboard: FilterDataType.simple,
   FilterParameter.teleconference: FilterDataType.simple,
   FilterParameter.capacity: FilterDataType.number,
+  FilterParameter.name: FilterDataType.text,
+  FilterParameter.surname: FilterDataType.text,
 };
 
 const Map<FilterParameter, String> filterParameterNames = {
@@ -54,4 +59,6 @@ const Map<FilterParameter, String> filterParameterNames = {
   FilterParameter.whiteboard: 'Whiteboard',
   FilterParameter.teleconference: 'Teleconference system',
   FilterParameter.capacity: 'Capacity',
+  FilterParameter.name: 'Name',
+  FilterParameter.surname: 'Surname',
 };

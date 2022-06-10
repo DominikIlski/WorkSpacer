@@ -29,7 +29,7 @@ class ReservationListItem extends StatelessWidget {
       icon = Icon(
         Icons.desktop_windows,
         color: iconColor,
-        size: 32,
+        size: 28,
       );
       title = 'Desk #${(reservation as DeskReservation).desk.id}';
     } else {
@@ -38,7 +38,7 @@ class ReservationListItem extends StatelessWidget {
       icon = Icon(
         Icons.meeting_room_outlined,
         color: iconColor,
-        size: 32,
+        size: 28,
       );
       title = 'Room #${(reservation as RoomReservation).room.id}';
     }
@@ -52,7 +52,7 @@ class ReservationListItem extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.all(20),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -68,7 +68,7 @@ class ReservationListItem extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 _getIconText(
                   context,
                   Icons.calendar_month_outlined,

@@ -54,7 +54,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
           title: filterParameterNames[FilterParameter.id] ?? '',
           isSelected:
               blockStore.filterStore.filters[FilterParameter.id] != null,
-          onTap: () => _showSearchDialog(
+          onTap: () => _showFilterDialog(
             FilterParameter.id,
             blockStore.filterStore.toggleValueFilter,
             blockStore.filterStore.resetFilter,
@@ -67,7 +67,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
           title: filterParameterNames[FilterParameter.floor] ?? '',
           isSelected:
               blockStore.filterStore.filters[FilterParameter.floor] != null,
-          onTap: () => _showSearchDialog(
+          onTap: () => _showFilterDialog(
             FilterParameter.floor,
             blockStore.filterStore.toggleValueFilter,
             blockStore.filterStore.resetFilter,
@@ -114,7 +114,13 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
     } else {
       return WorkspaceGrid(
         workspaces: workspaces,
-        onTap: (workspace) => _showBlockDialog(workspace, onBlock),
+        onTap: (workspace) => showDialog(
+          context: context,
+          builder: (context) => BlockDialog(
+            workspace: workspace,
+            onBlock: onBlock,
+          ),
+        ),
       );
     }
   }
@@ -152,20 +158,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
     }
   }
 
-  void _showBlockDialog(
-    Workspace workspace,
-    Function(Workspace workspace) onBlock,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) => BlockDialog(
-        workspace: workspace,
-        onBlock: onBlock,
-      ),
-    );
-  }
-
-  void _showSearchDialog(
+  void _showFilterDialog(
     FilterParameter filter,
     Function(FilterParameter parameter, String valueAsString) onConfirm,
     Function(FilterParameter parameter) onReset,

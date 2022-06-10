@@ -35,7 +35,8 @@ class _FilterDialogState extends State<FilterDialog> {
     final filterDataType = filterParameterDataTypes[widget.filter];
     if (widget.initialText != null) {
       setState(() {
-        if (filterDataType == FilterDataType.number) {
+        if (filterDataType == FilterDataType.number ||
+            filterDataType == FilterDataType.text) {
           _controller.text = widget.initialText!;
         }
         if (filterDataType == FilterDataType.date) {
@@ -79,15 +80,19 @@ class _FilterDialogState extends State<FilterDialog> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (filterDataType == FilterDataType.number)
+            if (filterDataType == FilterDataType.number ||
+                filterDataType == FilterDataType.text)
               TextField(
                 controller: _controller,
+                autofocus: true,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   hintText: filterParameterNames[widget.filter] ?? '',
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: filterDataType == FilterDataType.number
+                    ? TextInputType.number
+                    : TextInputType.text,
               ),
             if (filterDataType == FilterDataType.date)
               PickerTile(
@@ -122,7 +127,8 @@ class _FilterDialogState extends State<FilterDialog> {
           ),
           TextButton(
             onPressed: () {
-              if (filterDataType == FilterDataType.number) {
+              if (filterDataType == FilterDataType.number ||
+                  filterDataType == FilterDataType.text) {
                 widget.onConfirm(widget.filter, _controller.text);
               }
               if (filterDataType == FilterDataType.date) {

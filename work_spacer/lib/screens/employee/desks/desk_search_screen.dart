@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:work_spacer/models/desk.dart';
 import 'package:work_spacer/models/filter.dart';
-import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/admin/block/components/workspace_grid.dart';
 import 'package:work_spacer/screens/widgets/make_reservation_dialog.dart';
 import 'package:work_spacer/screens/widgets/rounded_button.dart';
@@ -42,7 +40,7 @@ class DeskSearchScreen extends StatelessWidget {
           title: filterParameterNames[FilterParameter.floor] ?? '',
           isSelected:
               desksStore.filterStore.filters[FilterParameter.floor] != null,
-          onTap: () => _showSearchDialog(
+          onTap: () => _showFilterDialog(
             context,
             FilterParameter.floor,
             desksStore.filterStore.toggleValueFilter,
@@ -61,7 +59,7 @@ class DeskSearchScreen extends StatelessWidget {
                 desksStore.filterStore.filters[FilterParameter.date];
             String? valueAsString =
                 value == null ? null : DateFormat('dd.MM.yyyy').format(value);
-            _showSearchDialog(
+            _showFilterDialog(
               context,
               FilterParameter.date,
               desksStore.filterStore.toggleValueFilter,
@@ -84,7 +82,7 @@ class DeskSearchScreen extends StatelessWidget {
                 ? null
                 : DateFormat.jm().format(DateTime(
                     now.year, now.month, now.day, value.hour, value.minute));
-            _showSearchDialog(
+            _showFilterDialog(
               context,
               FilterParameter.time,
               desksStore.filterStore.toggleValueFilter,
@@ -109,48 +107,26 @@ class DeskSearchScreen extends StatelessWidget {
 
   Widget _getContent(context, DesksStore desksStore) {
     return Observer(
-      builder: (_) => _getGrid(
-        context,
-        desksStore.inProgress,
-        desksStore.desks,
-        desksStore.reserveDesk,
-      ),
+      builder: (_) {
+        if (desksStore.inProgress) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return WorkspaceGrid(
+            workspaces: desksStore.desks,
+            onTap: (desk) => showDialog(
+              context: context,
+              builder: (context) => MakeReservationDialog(
+                workspace: desk,
+                onConfirm: desksStore.reserveDesk,
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 
-  Widget _getGrid(
-    context,
-    bool inProgress,
-    List<Desk> desks,
-    Function(Workspace desk, DateTime date, TimeOfDay time, int hours)
-        onConfirm,
-  ) {
-    if (inProgress) {
-      return const Center(child: CircularProgressIndicator());
-    } else {
-      return WorkspaceGrid(
-        workspaces: desks,
-        onTap: (desk) => _showReservationDialog(context, desk, onConfirm),
-      );
-    }
-  }
-
-  void _showReservationDialog(
-    context,
-    Workspace desk,
-    Function(Workspace desk, DateTime date, TimeOfDay time, int hours)
-        onConfirm,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) => MakeReservationDialog(
-        workspace: desk,
-        onConfirm: onConfirm,
-      ),
-    );
-  }
-
-  void _showSearchDialog(
+  void _showFilterDialog(
     context,
     FilterParameter filter,
     Function(FilterParameter parameter, String valueAsString) onConfirm,

@@ -42,7 +42,10 @@ abstract class _FilterStore with Store {
     if (filters.containsKey(parameter)) {
       if (valueAsString.isNotEmpty) {
         dynamic value;
-        if (filterParameterDataTypes[parameter] == FilterDataType.number) {
+        if (filterParameterDataTypes[parameter] == FilterDataType.text) {
+          value = valueAsString.toLowerCase();
+        } else if (filterParameterDataTypes[parameter] ==
+            FilterDataType.number) {
           value = int.tryParse(valueAsString);
         } else if (filterParameterDataTypes[parameter] == FilterDataType.date) {
           try {
@@ -61,6 +64,5 @@ abstract class _FilterStore with Store {
         filters[parameter] = value;
       }
     }
-    print(filters);
   }
 }

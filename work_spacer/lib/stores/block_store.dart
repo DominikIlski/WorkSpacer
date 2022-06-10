@@ -93,7 +93,7 @@ final List<Desk> desksDummy = [
   const Desk(
     id: 13,
     floor: 1,
-    secondMonitor: false,
+    secondMonitor: true,
   ),
   const Desk(
     id: 14,
@@ -108,12 +108,12 @@ final List<Desk> desksDummy = [
   const Desk(
     id: 33,
     floor: 1,
-    secondMonitor: false,
+    secondMonitor: true,
   ),
   const Desk(
     id: 57,
     floor: 1,
-    secondMonitor: false,
+    secondMonitor: true,
   ),
   const Desk(
     id: 69,
@@ -133,7 +133,7 @@ final List<Desk> desksDummy = [
   const Desk(
     id: 100,
     floor: 3,
-    secondMonitor: false,
+    secondMonitor: true,
   )
 ];
 
@@ -142,9 +142,9 @@ final List<Room> roomsDummy = [
     id: 1,
     floor: 1,
     capacity: 12,
-    hasProjector: false,
-    hasWhiteboard: false,
-    hasTeleconference: false,
+    hasProjector: true,
+    hasWhiteboard: true,
+    hasTeleconference: true,
   ),
   const Room(
     id: 5,
@@ -152,31 +152,31 @@ final List<Room> roomsDummy = [
     capacity: 16,
     hasProjector: false,
     hasWhiteboard: false,
-    hasTeleconference: false,
+    hasTeleconference: true,
   ),
   const Room(
     id: 3,
     floor: 2,
     capacity: 22,
     hasProjector: false,
-    hasWhiteboard: false,
+    hasWhiteboard: true,
     hasTeleconference: false,
   ),
   const Room(
     id: 61,
     floor: 1,
     capacity: 30,
-    hasProjector: false,
-    hasWhiteboard: false,
+    hasProjector: true,
+    hasWhiteboard: true,
     hasTeleconference: false,
   ),
   const Room(
     id: 12,
     floor: 3,
     capacity: 16,
-    hasProjector: false,
+    hasProjector: true,
     hasWhiteboard: false,
-    hasTeleconference: false,
+    hasTeleconference: true,
   ),
   const Room(
     id: 13,

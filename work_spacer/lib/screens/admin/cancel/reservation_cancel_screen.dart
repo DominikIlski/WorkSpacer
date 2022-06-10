@@ -65,7 +65,7 @@ class ReservationCancelScreen extends StatelessWidget {
 
   void _cancelReservation(
     context,
-    Function(Reservation) cancel,
+    Function(Reservation) onCancel,
     Reservation reservation,
   ) {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -84,7 +84,10 @@ class ReservationCancelScreen extends StatelessWidget {
             child: const Text('No'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'confirm'),
+            onPressed: () {
+              onCancel(reservation);
+              Navigator.pop(context);
+            },
             child: Text(
               'Yes',
               style: TextStyle(
@@ -95,11 +98,7 @@ class ReservationCancelScreen extends StatelessWidget {
           ),
         ],
       ),
-    ).then((result) {
-      if (result == 'confirm') {
-        cancel(reservation);
-      }
-    });
+    );
   }
 }
 
@@ -140,12 +139,12 @@ class _WorkspaceSearchTextFieldState extends State<_WorkspaceSearchTextField> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
               borderSide: BorderSide(
                 color: Theme.of(context).secondaryHeaderColor,
               )),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
               borderSide: BorderSide(
                 color: Theme.of(context).secondaryHeaderColor,
               )),

@@ -5,6 +5,7 @@ import 'package:work_spacer/screens/admin/cancel/reservation_cancel_screen.dart'
 import 'package:work_spacer/screens/admin/roles/role_management_screen.dart';
 import 'package:work_spacer/stores/block_store.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
+import 'package:work_spacer/stores/role_management_store.dart';
 import './components/home_screen_button.dart';
 
 class AdminHomeContent extends StatelessWidget {
@@ -51,6 +52,9 @@ class AdminHomeContent extends StatelessWidget {
         HomeScreenButton(
           title: "Manage roles",
           onTap: () {
+            final store =
+                Provider.of<RoleManagementStore>(context, listen: false);
+            store.fetchUsers();
             Navigator.restorablePushNamed(
               context,
               RoleManagementScreen.routeName,

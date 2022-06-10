@@ -17,6 +17,7 @@ import 'package:work_spacer/stores/cancel_store.dart';
 import 'package:work_spacer/stores/desks_store.dart';
 import 'package:work_spacer/stores/notification_store.dart';
 import 'package:work_spacer/stores/reservation_store.dart';
+import 'package:work_spacer/stores/role_management_store.dart';
 import 'package:work_spacer/stores/rooms_store.dart';
 
 import 'sample_feature/sample_item_details_view.dart';
@@ -55,6 +56,8 @@ class MyApp extends StatelessWidget {
             Provider<RoomsStore>(create: (context) => RoomsStore()),
             Provider<NotificationStore>(
                 create: (context) => NotificationStore()),
+            Provider<RoleManagementStore>(
+                create: (context) => RoleManagementStore()),
           ],
           child: MaterialApp(
             // Providing a restorationScopeId allows the Navigator built by the

@@ -9,7 +9,7 @@ import 'package:work_spacer/src/settings/settings_view.dart';
 import 'package:work_spacer/stores/notification_store.dart';
 
 //TODO implement distinguishing between user and admin when logging in
-const isAdmin = false;
+const isAdmin = true;
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
