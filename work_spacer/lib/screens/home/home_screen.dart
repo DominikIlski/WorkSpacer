@@ -6,10 +6,8 @@ import 'package:work_spacer/screens/home/admin_home_content.dart';
 import 'package:work_spacer/screens/home/employee_home_content.dart';
 import 'package:work_spacer/screens/login/login_screen.dart';
 import 'package:work_spacer/src/settings/settings_view.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 import 'package:work_spacer/stores/notification_store.dart';
-
-//TODO implement distinguishing between user and admin when logging in
-const isAdmin = false;
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
@@ -18,21 +16,40 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Company XYZ'),
-        actions: _getActions(context),
-      ),
-      body: const Padding(
-        padding: EdgeInsets.all(16),
-        child: isAdmin ? AdminHomeContent() : EmployeeHomeContent(),
+    final authStore = Provider.of<AuthenticationStore>(context);
+    return Observer(
+      builder: (_) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Company XYZ'),
+          actions: _getActions(context, authStore.isAdmin),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: authStore.isAdmin
+              ? const AdminHomeContent()
+              : const EmployeeHomeContent(),
+        ),
       ),
     );
   }
 
-  List<Widget>? _getActions(context) {
+  List<Widget>? _getActions(context, bool isAdmin) {
     return [
-      if (!isAdmin) _getNotificationsButton(context),
+      if (!isAdmin)
+        IconButton(
+          onPressed: () {
+            Provider.of<NotificationStore>(context, listen: false)
+                .fetchNotifications();
+            Navigator.pushNamed(
+              context,
+              NotificationsScreen.routeName,
+            ).then(
+              (_) => Provider.of<NotificationStore>(context, listen: false)
+                  .readNotifications(),
+            );
+          },
+          icon: const Icon(Icons.notifications_active_outlined),
+        ),
       IconButton(
         icon: const Icon(Icons.settings),
         onPressed: () {
@@ -44,56 +61,6 @@ class HomeScreen extends StatelessWidget {
         onPressed: () => _handleLogout(context),
       ),
     ];
-  }
-
-  Widget _getNotificationsButton(context) {
-    final notifications = Provider.of<NotificationStore>(context);
-    return IconButton(
-      icon: Observer(builder: (_) {
-        final newNotificationsLength = notifications.notifications
-            .where((notification) => notification.isNew)
-            .length;
-        if (newNotificationsLength > 0) {
-          return Stack(
-            children: [
-              const Icon(Icons.notifications_active_outlined),
-              Positioned(
-                right: 0,
-                child: Container(
-                  padding: const EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).secondaryHeaderColor,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 12,
-                    minHeight: 12,
-                  ),
-                  child: Text(
-                    '$newNotificationsLength',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 8,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ],
-          );
-        } else {
-          return const Icon(Icons.notifications_active_outlined);
-        }
-      }),
-      onPressed: () {
-        Navigator.pushNamed(
-          context,
-          NotificationsScreen.routeName,
-        ).then(
-          (_) => notifications.readNotifications(),
-        );
-      },
-    );
   }
 
   _handleLogout(context) {
@@ -108,7 +75,14 @@ class HomeScreen extends StatelessWidget {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'confirm'),
+            onPressed: () {
+              Provider.of<AuthenticationStore>(context, listen: false).logOut();
+              Navigator.pop(context);
+              Navigator.restorablePushReplacementNamed(
+                context,
+                LoginScreen.routeName,
+              );
+            },
             child: const Text(
               'Confirm',
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -116,14 +90,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-    ).then((result) {
-      if (result == 'confirm') {
-        //TODO perform logout
-        Navigator.restorablePushReplacementNamed(
-          context,
-          LoginScreen.routeName,
-        );
-      }
-    });
+    );
   }
 }

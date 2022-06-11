@@ -16,8 +16,8 @@ class NotificationListItem extends StatelessWidget {
   }) : super(key: key);
 
   final custom.Notification notification;
-  final Function(Workspace workspace, DateTime date, TimeOfDay time, int hours)
-      onReplacementConfirm;
+  final Function(int? userId, Workspace workspace, DateTime date,
+      TimeOfDay time, int hours) onReplacementConfirm;
 
   @override
   Widget build(BuildContext context) {

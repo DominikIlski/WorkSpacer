@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:work_spacer/models/desk.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/widgets/number_selector.dart';
 import 'package:work_spacer/screens/widgets/picker_tile.dart';
 import 'package:work_spacer/screens/widgets/workspace_details_list.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 
 class MakeReservationDialog extends StatefulWidget {
   const MakeReservationDialog({
@@ -14,8 +16,8 @@ class MakeReservationDialog extends StatefulWidget {
   }) : super(key: key);
 
   final Workspace workspace;
-  final Function(Workspace workspace, DateTime date, TimeOfDay time, int hours)
-      onConfirm;
+  final Function(int? userId, Workspace workspace, DateTime date,
+      TimeOfDay time, int hours) onConfirm;
 
   @override
   State<MakeReservationDialog> createState() => _MakeReservationDialogState();
@@ -104,7 +106,10 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
           onPressed: _date == null || _time == null
               ? null
               : () {
-                  widget.onConfirm(widget.workspace, _date!, _time!, _hours);
+                  final authStore =
+                      Provider.of<AuthenticationStore>(context, listen: false);
+                  widget.onConfirm(authStore.userId, widget.workspace, _date!,
+                      _time!, _hours);
                   Navigator.pop(context);
                 },
           child: const Text(

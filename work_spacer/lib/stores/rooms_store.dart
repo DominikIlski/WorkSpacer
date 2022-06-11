@@ -127,8 +127,11 @@ abstract class _RoomsStore with Store {
   }
 
   @action
-  reserveRoom(
-      Workspace roomAsWorkspace, DateTime date, TimeOfDay time, int hours) {
+  reserveRoom(int? userId, Workspace roomAsWorkspace, DateTime date,
+      TimeOfDay time, int hours) {
+    if (userId == null) {
+      return;
+    }
     final Room room = roomAsWorkspace as Room;
     //TODO handle backend
   }

@@ -105,8 +105,11 @@ abstract class _DesksStore with Store {
   }
 
   @action
-  reserveDesk(
-      Workspace deskAsWorkspace, DateTime date, TimeOfDay time, int hours) {
+  reserveDesk(int? userId, Workspace deskAsWorkspace, DateTime date,
+      TimeOfDay time, int hours) {
+    if (userId == null) {
+      return;
+    }
     final Desk desk = deskAsWorkspace as Desk;
     //TODO handle backend
     //WE ARE NOT VALIDATING DATE TIME NOR HOURS SO IT NEEDS TO BE DONE AT BACKEND

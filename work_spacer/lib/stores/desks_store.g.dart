@@ -60,12 +60,12 @@ mixin _$DesksStore on _DesksStore, Store {
       ActionController(name: '_DesksStore', context: context);
 
   @override
-  dynamic reserveDesk(
-      Workspace deskAsWorkspace, DateTime date, TimeOfDay time, int hours) {
+  dynamic reserveDesk(int? userId, Workspace deskAsWorkspace, DateTime date,
+      TimeOfDay time, int hours) {
     final _$actionInfo = _$_DesksStoreActionController.startAction(
         name: '_DesksStore.reserveDesk');
     try {
-      return super.reserveDesk(deskAsWorkspace, date, time, hours);
+      return super.reserveDesk(userId, deskAsWorkspace, date, time, hours);
     } finally {
       _$_DesksStoreActionController.endAction(_$actionInfo);
     }

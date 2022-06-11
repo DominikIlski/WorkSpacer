@@ -12,6 +12,7 @@ import 'package:work_spacer/screens/employee/reservations/employee_reservations_
 import 'package:work_spacer/screens/employee/rooms/room_search_screen.dart';
 import 'package:work_spacer/screens/home/home_screen.dart';
 import 'package:work_spacer/screens/login/login_screen.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 import 'package:work_spacer/stores/block_store.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
 import 'package:work_spacer/stores/desks_store.dart';
@@ -49,6 +50,9 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return MultiProvider(
           providers: [
+            Provider<AuthenticationStore>(
+              create: (context) => AuthenticationStore(),
+            ),
             Provider<CancelStore>(create: (context) => CancelStore()),
             Provider<BlockStore>(create: (context) => BlockStore()),
             Provider<ReservationStore>(create: (context) => ReservationStore()),
@@ -91,6 +95,7 @@ class MyApp extends StatelessWidget {
             // preferred ThemeMode (light, dark, or system default) from the
             // SettingsController to display the correct theme.
             theme: ThemeData(
+              fontFamily: 'Lato',
               primaryColorDark: const Color(0xFF006D77),
               primaryColor: const Color(0xFF83C5BE),
               primaryColorLight: const Color(0xFFEDF6F9),

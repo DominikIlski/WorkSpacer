@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:work_spacer/screens/home/home_screen.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/screens/login/login_form.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/';
@@ -10,7 +15,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
+    final authStore = Provider.of<AuthenticationStore>(context);
     return KeyboardHideWrapper(
       child: Scaffold(
         body: Padding(
@@ -46,13 +51,36 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const LoginForm(),
+                  Observer(
+                    builder: (context) => authStore.inProgress
+                        ? const CircularProgressIndicator()
+                        : const LoginForm(),
+                  ),
+                  _LoginSuccessfulReaction(),
                 ],
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _LoginSuccessfulReaction extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final authStore = Provider.of<AuthenticationStore>(context);
+    return ReactionBuilder(
+      builder: (context) => reaction((_) => authStore.userId, (int? userId) {
+        if (userId != null) {
+          Navigator.restorablePushReplacementNamed(
+            context,
+            HomeScreen.routeName,
+          );
+        }
+      }),
+      child: const SizedBox.shrink(),
     );
   }
 }

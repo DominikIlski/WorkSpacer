@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:work_spacer/screens/home/home_screen.dart';
-import 'package:work_spacer/stores/notification_store.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -66,15 +65,7 @@ class _LoginFormState extends State<LoginForm> {
   _loginProcessor() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState!.validate()) {
-      if (!isAdmin) {
-        final notifications =
-            Provider.of<NotificationStore>(context, listen: false);
-        notifications.fetchNotifications();
-      }
-      Navigator.restorablePushReplacementNamed(
-        context,
-        HomeScreen.routeName,
-      );
+      Provider.of<AuthenticationStore>(context, listen: false).logIn();
     }
   }
 }
