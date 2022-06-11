@@ -94,7 +94,10 @@ class ReservationListItem extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            ElevatedButton(
+            ElevatedButton.icon(
+              onPressed: onCancel,
+              label: const Text('Cancel'),
+              icon: const Icon(Icons.delete_outline_rounded),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
                   Theme.of(context).secondaryHeaderColor,
@@ -103,14 +106,6 @@ class ReservationListItem extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 8),
                 ),
               ),
-              child: Row(
-                children: const [
-                  Icon(Icons.delete_outline_rounded),
-                  SizedBox(width: 4),
-                  Text('Cancel'),
-                ],
-              ),
-              onPressed: onCancel,
             ),
           ],
         ),

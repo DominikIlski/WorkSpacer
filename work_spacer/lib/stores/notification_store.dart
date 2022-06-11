@@ -39,6 +39,7 @@ abstract class _NotificationStore with Store {
   readNotifications() {
     _notifications?.forEach((notification) {
       if (notification.isNew) {
+        //handle backend notification: isNew -> false
         notification.readNotification();
       }
     });

@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:work_spacer/models/filter.dart';
-import 'package:work_spacer/screens/admin/block/components/workspace_grid.dart';
+import 'package:work_spacer/screens/widgets/workspace_grid.dart';
 import 'package:work_spacer/screens/widgets/rounded_button.dart';
 import 'package:work_spacer/screens/widgets/filterable_workspace_list.dart';
 import 'package:work_spacer/screens/widgets/make_reservation_dialog.dart';

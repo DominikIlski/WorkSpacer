@@ -11,7 +11,8 @@ class BlockDialog extends StatefulWidget {
   }) : super(key: key);
 
   final Workspace workspace;
-  final Function(Workspace workspace) onBlock;
+  final Function(Workspace workspace, DateTime startDate, DateTime endDate)
+      onBlock;
 
   @override
   State<BlockDialog> createState() => _BlockDialogState();
@@ -20,49 +21,6 @@ class BlockDialog extends StatefulWidget {
 class _BlockDialogState extends State<BlockDialog> {
   DateTime? _startDate, _endDate;
   String _startDateText = 'Select start date', _endDateText = 'Select end date';
-
-  void _setStartDate(DateTime? date) {
-    if (date == null) {
-      return;
-    }
-    setState(() {
-      _startDate = date;
-      _startDateText = DateFormat('dd.MM.yyyy').format(_startDate!);
-      if (_endDate?.compareTo(_startDate!) == -1) {
-        _endDate = null;
-        _endDateText = 'Select end date';
-      }
-    });
-  }
-
-  void _setEndDate(DateTime? date) {
-    if (date == null) {
-      return;
-    }
-    setState(() {
-      _endDate = date;
-      _endDateText = DateFormat('dd.MM.yyyy').format(_endDate!);
-    });
-  }
-
-  void _startDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: _startDate ?? DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
-    ).then((start) => _setStartDate(start));
-  }
-
-  void _endDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: _startDate ?? DateTime.now(),
-      firstDate: _startDate ?? DateTime.now(),
-      lastDate: _startDate?.add(const Duration(days: 365)) ??
-          DateTime.now().add(const Duration(days: 365)),
-    ).then((end) => _setEndDate(end));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +52,8 @@ class _BlockDialogState extends State<BlockDialog> {
             ),
         ],
       ),
-      actionsAlignment: MainAxisAlignment.spaceAround,
+      actionsAlignment: MainAxisAlignment.spaceBetween,
+      actionsPadding: const EdgeInsets.symmetric(horizontal: 24),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
@@ -103,35 +62,61 @@ class _BlockDialogState extends State<BlockDialog> {
             style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
           ),
         ),
-        ElevatedButton(
+        ElevatedButton.icon(
           onPressed: _startDate == null || _endDate == null
               ? null
               : () {
-                  widget.onBlock(widget.workspace);
+                  widget.onBlock(widget.workspace, _startDate!, _endDate!);
                   Navigator.pop(context);
                 },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Icon(
-                  Icons.block,
-                  color: Colors.white,
-                ),
-                SizedBox(width: 8),
-                Text(
-                  'Block',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          label: const Text('Block'),
+          icon: const Icon(Icons.block),
+          //
         ),
       ],
     );
+  }
+
+  void _startDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: _startDate ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    ).then((start) => _setStartDate(start));
+  }
+
+  void _endDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: _startDate ?? DateTime.now(),
+      firstDate: _startDate ?? DateTime.now(),
+      lastDate: _startDate?.add(const Duration(days: 365)) ??
+          DateTime.now().add(const Duration(days: 365)),
+    ).then((end) => _setEndDate(end));
+  }
+
+  void _setStartDate(DateTime? date) {
+    if (date == null) {
+      return;
+    }
+    setState(() {
+      _startDate = date;
+      _startDateText = DateFormat('dd.MM.yyyy').format(_startDate!);
+      if (_endDate?.compareTo(_startDate!) == -1) {
+        _endDate = null;
+        _endDateText = 'Select end date';
+      }
+    });
+  }
+
+  void _setEndDate(DateTime? date) {
+    if (date == null) {
+      return;
+    }
+    setState(() {
+      _endDate = date;
+      _endDateText = DateFormat('dd.MM.yyyy').format(_endDate!);
+    });
   }
 }

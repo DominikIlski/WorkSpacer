@@ -52,6 +52,12 @@ abstract class _RoleManagementStore with Store {
     );
     inProgress = false;
   }
+
+  @action
+  setUserRole(User user, Role role) {
+    //TODO handle backend
+    _users?.singleWhere((element) => element == user).setRole(role);
+  }
 }
 
 final List<User> usersDummy = [

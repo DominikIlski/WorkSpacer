@@ -15,6 +15,7 @@ abstract class _DesksStore with Store {
     FilterParameter.floor,
     FilterParameter.date,
     FilterParameter.time,
+    FilterParameter.duration,
     FilterParameter.secondMonitor,
   ]);
 
@@ -24,23 +25,18 @@ abstract class _DesksStore with Store {
   @observable
   List<Desk>? _desks;
 
-  //TODO discuss if we want to actually filter list manually or do we want to have endpoint to fetch them with filters as arguments
   @computed
   ObservableList<Desk> get desks => ObservableList.of(
         (_desks ?? []).where((desk) {
           final isFloorValid =
               _checkFilterEqual(FilterParameter.floor, desk.floor);
 
-          const isDateValid = true; //TODO check availability for date
-          const isTimeValid = true; //TODO check availability for time
+          final isAvailable = _checkAvailability();
 
           final isSecondMonitorValid = _checkFilterEqual(
               FilterParameter.secondMonitor, desk.secondMonitor);
 
-          return isFloorValid &&
-              isDateValid &&
-              isTimeValid &&
-              isSecondMonitorValid;
+          return isFloorValid && isAvailable && isSecondMonitorValid;
         }).toList(),
       );
 
@@ -51,6 +47,52 @@ abstract class _DesksStore with Store {
     } else {
       return true;
     }
+  }
+
+  bool _checkAvailability() {
+    DateTime? date = filterStore.filters[FilterParameter.date];
+    TimeOfDay? time = filterStore.filters[FilterParameter.time];
+    int? hours = filterStore.filters[FilterParameter.duration];
+    //TODO handle backend
+    //ALL COMBINATIONS ARE POSSIBLE:
+    if (date != null) {
+      if (time != null) {
+        if (hours != null) {
+          //CHECK ALL THREE
+          //return
+        } else {
+          //CHECK DATE AND TIME
+          //return
+        }
+      } else {
+        if (hours != null) {
+          //CHECK DATE AND HOURS
+          //return
+        } else {
+          //CHECK DATE
+        }
+      }
+    } else {
+      if (time != null) {
+        if (hours != null) {
+          //CHECK TIME AND HOURS
+          //return
+        } else {
+          //CHECK TIME
+          //return
+        }
+      } else {
+        if (hours != null) {
+          //CHECK HOURS
+          //return
+        } else {
+          return true;
+        }
+      }
+    }
+
+    return true;
+    //REMOVE ^ WHEN IMPLEMENTED ABOVE
   }
 
   @action
@@ -66,13 +108,8 @@ abstract class _DesksStore with Store {
   reserveDesk(
       Workspace deskAsWorkspace, DateTime date, TimeOfDay time, int hours) {
     final Desk desk = deskAsWorkspace as Desk;
-    print('$desk, $date, $time, $hours');
-    print(TimeOfDay.now());
     //TODO handle backend
+    //WE ARE NOT VALIDATING DATE TIME NOR HOURS SO IT NEEDS TO BE DONE AT BACKEND
+    //IF POSSIBLE MAKE A RESERVATION, IF NOT IGNORE XD
   }
-
-  // Future<List<int>> _getAvailableDeskIdsByDate(DateTime date) async {
-  //   await Future.delayed(const Duration(milliseconds: 500));
-  //   return [1,81];
-  // }
 }

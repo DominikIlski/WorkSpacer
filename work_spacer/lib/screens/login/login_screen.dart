@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_spacer/misc/keyboard_hide_wrapper.dart';
+import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/screens/login/login_form.dart';
 
 class LoginScreen extends StatelessWidget {

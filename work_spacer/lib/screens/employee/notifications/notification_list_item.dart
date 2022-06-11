@@ -28,9 +28,7 @@ class NotificationListItem extends StatelessWidget {
             notification.isNew ? Theme.of(context).colorScheme.secondary : null,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),
-          side: BorderSide(
-            color: leadingColor,
-          ),
+          side: BorderSide(color: leadingColor),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),

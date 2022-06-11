@@ -75,11 +75,15 @@ abstract class _BlockStore with Store {
   }
 
   @action
-  void block(Workspace workspace) {
+  void block(Workspace workspace, DateTime startDate, DateTime endDate) {
+    //WE ARE NOT VALIDATING DATES SO WE NEED TO HANDLE BLOCK OVERLAPS ON BACKEND
+    //IF WORKSPACE IS ALREADY BLOCKED FOR THIS RANGE OR MORE -> IGNORE
+    //IF BLOCK ONLY OVERLAPS PARTLY, TAKE ONLY THE NON-OVERLAPPING PART
+    //EG. IF THERE ALREADY IS BLOCK 15.06.-18.06. AND NEW BLOCK IS 17.06.-21.06, ADD NEW BLOCK 19.06.-21.06.
     if (workspace is Desk) {
-      //TODO handle backend as Desk
+      //TODO handle backend with workspace as Desk
     } else {
-      //TODO handle backend as Room
+      //TODO handle backend with workspace as Room
     }
   }
 }

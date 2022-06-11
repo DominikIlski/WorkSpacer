@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/models/workspace.dart';
-import 'package:work_spacer/screens/admin/block/components/block_dialog.dart';
-import 'package:work_spacer/screens/admin/block/components/workspace_grid.dart';
+import 'package:work_spacer/screens/admin/block/block_dialog.dart';
+import 'package:work_spacer/screens/widgets/workspace_grid.dart';
 import 'package:work_spacer/screens/widgets/rounded_button.dart';
 import 'package:work_spacer/screens/widgets/filterable_workspace_list.dart';
 import 'package:work_spacer/screens/widgets/filter_dialog.dart';
@@ -107,7 +107,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
   Widget _getGrid(
     bool inProgress,
     List<Workspace> workspaces,
-    Function(Workspace workspace) onBlock,
+    Function(Workspace workspace, DateTime startDate, DateTime endDate) onBlock,
   ) {
     if (inProgress) {
       return const Center(child: CircularProgressIndicator());

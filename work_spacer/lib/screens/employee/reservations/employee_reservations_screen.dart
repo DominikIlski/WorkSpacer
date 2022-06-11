@@ -36,7 +36,6 @@ class EmployeeReservationsScreen extends StatelessWidget {
                               store.cancel,
                               store.reservations[index],
                             ),
-                            showDateOnly: true,
                           ),
                         ),
                       ),
@@ -69,8 +68,8 @@ class EmployeeReservationsScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
               onCancel(reservation);
+              Navigator.pop(context);
             },
             child: Text(
               'Yes',

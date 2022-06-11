@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:work_spacer/misc/keyboard_hide_wrapper.dart';
+import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/screens/widgets/picker_tile.dart';
 

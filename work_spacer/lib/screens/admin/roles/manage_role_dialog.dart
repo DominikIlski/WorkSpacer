@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
-import '../../../../models/user.dart';
+import 'package:work_spacer/models/user.dart';
 
 class ManageRoleDialog extends StatefulWidget {
   const ManageRoleDialog({
     Key? key,
-    required this.currentRole,
+    required this.user,
     required this.onEditRole,
   }) : super(key: key);
 
-  final Role currentRole;
-  final Function(Role role) onEditRole;
+  final User user;
+  final Function(User user, Role role) onEditRole;
 
   @override
   State<ManageRoleDialog> createState() => _ManageRoleDialog();
@@ -22,7 +21,7 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
   @override
   void initState() {
     super.initState();
-    _role = widget.currentRole;
+    _role = widget.user.role;
   }
 
   @override
@@ -43,19 +42,15 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
                 borderSide: BorderSide(
                   color: Theme.of(context).primaryColorDark,
                 ),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(8),
-                ),
               ),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 4,
+              ),
               iconColor: Theme.of(context).primaryColorDark,
               border: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Theme.of(context).primaryColorDark,
-                ),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(8),
                 ),
               ),
             ),
@@ -89,14 +84,12 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
         ),
         TextButton(
           onPressed: () {
-            widget.onEditRole(_role!);
+            widget.onEditRole(widget.user, _role!);
             Navigator.pop(context);
           },
           child: const Text(
             'Confirm',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],

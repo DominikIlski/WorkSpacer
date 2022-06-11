@@ -62,7 +62,10 @@ class UserListItem extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              ElevatedButton(
+              ElevatedButton.icon(
+                onPressed: onEditClicked,
+                label: const Text('Edit'),
+                icon: const Icon(Icons.edit_outlined),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                     Theme.of(context).secondaryHeaderColor,
@@ -71,14 +74,6 @@ class UserListItem extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 8),
                   ),
                 ),
-                child: Row(
-                  children: const [
-                    Icon(Icons.edit_outlined),
-                    SizedBox(width: 4),
-                    Text('Edit'),
-                  ],
-                ),
-                onPressed: onEditClicked,
               ),
             ],
           ),

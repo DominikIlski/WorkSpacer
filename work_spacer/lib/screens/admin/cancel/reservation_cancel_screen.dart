@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:work_spacer/misc/keyboard_hide_wrapper.dart';
+import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
 import '../../widgets/reservation_list_item.dart';
@@ -139,15 +139,17 @@ class _WorkspaceSearchTextFieldState extends State<_WorkspaceSearchTextField> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
           border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              borderSide: BorderSide(
-                color: Theme.of(context).secondaryHeaderColor,
-              )),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            borderSide: BorderSide(
+              color: Theme.of(context).secondaryHeaderColor,
+            ),
+          ),
           enabledBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              borderSide: BorderSide(
-                color: Theme.of(context).secondaryHeaderColor,
-              )),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            borderSide: BorderSide(
+              color: Theme.of(context).secondaryHeaderColor,
+            ),
+          ),
           prefixIcon: Icon(
             Icons.search,
             color: Theme.of(context).secondaryHeaderColor,
