@@ -4,10 +4,11 @@
   "info": {
     "singularName": "cr-cancellation",
     "pluralName": "cr-cancellations",
-    "displayName": "CRCancellation"
+    "displayName": "CRCancellation",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -21,7 +22,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::cr-reservation.cr-reservation",
-      "inversedBy": "idCRCancellation"
+      "mappedBy": "idCRCancellation"
     }
   }
 }

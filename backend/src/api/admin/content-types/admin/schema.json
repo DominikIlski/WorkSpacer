@@ -40,7 +40,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::cr-cancellation.cr-cancellation",
-      "inversedBy": "idAdmin"
+      "mappedBy": "idAdmin"
     }
   }
 }
