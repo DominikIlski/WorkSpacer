@@ -44,7 +44,7 @@ class _BlockDialogState extends State<BlockDialog> {
             const SizedBox(height: 16),
           if (_startDate == null || _endDate == null)
             Text(
-              translate.specifyDateTimeError,
+              translate.specifyDateError,
               style: TextStyle(
                 color: Theme.of(context).secondaryHeaderColor,
                 fontSize: 14,
