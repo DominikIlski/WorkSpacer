@@ -17,7 +17,7 @@ class NotificationsScreen extends StatelessWidget {
     final store = Provider.of<NotificationStore>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notifications'),
+        title: const Text(translate.notifications),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),

@@ -18,7 +18,7 @@ class EmployeeHomeContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         HomeScreenButton(
-          title: "My reservations",
+          title: translate.myRes,
           onTap: () {
             final store = Provider.of<ReservationStore>(context, listen: false);
             store.fetchReservations();
@@ -33,7 +33,7 @@ class EmployeeHomeContent extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
-          title: "Desks",
+          title: translate.desks,
           onTap: () {
             final store = Provider.of<DesksStore>(context, listen: false);
             store.fetchDesks();
@@ -48,7 +48,7 @@ class EmployeeHomeContent extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
-          title: "Conference rooms",
+          title: translate.confRooms,
           onTap: () {
             final store = Provider.of<RoomsStore>(context, listen: false);
             store.fetchRooms();

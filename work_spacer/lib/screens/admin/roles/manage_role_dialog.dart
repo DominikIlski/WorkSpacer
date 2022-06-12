@@ -28,7 +28,7 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        'Edit role',
+        translate.editRole,
         style: TextStyle(
           color: Theme.of(context).primaryColorDark,
         ),
@@ -78,7 +78,7 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(
-            'Cancel',
+            translate.cancel,
             style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
           ),
         ),
@@ -88,7 +88,7 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
             Navigator.pop(context);
           },
           child: const Text(
-            'Confirm',
+            translate.confirm,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

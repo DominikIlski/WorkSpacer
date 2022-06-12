@@ -22,23 +22,23 @@ class WorkspaceDetailsList extends StatelessWidget {
     if (workspace is Desk) {
       final desk = workspace as Desk;
       return [
-        _getRow(context, 'Floor', '${desk.floor}'),
+        _getRow(context, translate.floor, '${desk.floor}'),
         const SizedBox(height: 8),
-        _getRow(context, 'Second monitor', desk.secondMonitor ? 'Yes' : 'No'),
+        _getRow(context, translate.monitor, desk.secondMonitor ? translate.yes : translate.no),
       ];
     } else {
       final room = workspace as Room;
       return [
-        _getRow(context, 'Floor', '${room.floor}'),
+        _getRow(context, translate.floor, '${room.floor}'),
         const SizedBox(height: 8),
-        _getRow(context, 'Capacity', '${room.capacity}'),
+        _getRow(context, translate.capacity, '${room.capacity}'),
         const SizedBox(height: 8),
-        _getRow(context, 'Whiteboard', room.hasWhiteboard ? 'Yes' : 'No'),
+        _getRow(context, translate.whiteboard, room.hasWhiteboard ? translate.yes : translate.no),
         const SizedBox(height: 8),
-        _getRow(context, 'Projector', room.hasProjector ? 'Yes' : 'No'),
+        _getRow(context, translate.projector, room.hasProjector ? translate.yes : translate.no),
         const SizedBox(height: 8),
-        _getRow(context, 'Teleconference system',
-            room.hasTeleconference ? 'Yes' : 'No'),
+        _getRow(context, translate.teleconf,
+            room.hasTeleconference ? translate.yes : translate.no),
       ];
     }
   }

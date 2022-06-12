@@ -30,32 +30,32 @@ class _LoginFormState extends State<LoginForm> {
           TextFormField(
             controller: loginController,
             validator: (value) => value == null || value.isEmpty
-                ? 'Please enter your login.'
+                ? translate.enterLogin
                 : null,
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.zero,
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.login_rounded),
-              hintText: 'Login',
+              hintText: translate.login,
             ),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: passwordController,
             validator: (value) => value == null || value.isEmpty
-                ? 'Please enter your password.'
+                ? translate.enterPassword
                 : null,
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.zero,
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.key_rounded),
-              hintText: 'Password',
+              hintText: translate.password,
             ),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: _loginProcessor,
-            child: const Text('Login'),
+            child: const Text(translate.login),
           ),
         ],
       ),

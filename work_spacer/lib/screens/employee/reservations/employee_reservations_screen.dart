@@ -15,7 +15,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
     final store = Provider.of<ReservationStore>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My reservations'),
+        title: const Text(translate.myRes),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -56,7 +56,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'Do you want to cancel?',
+          translate.cancelQ,
           style: TextStyle(
             color: Theme.of(context).primaryColorDark,
           ),
@@ -64,7 +64,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('No'),
+            child: const Text(translate.no),
           ),
           TextButton(
             onPressed: () {
@@ -72,7 +72,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
               Navigator.pop(context);
             },
             child: Text(
-              'Yes',
+              translate.yes,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).secondaryHeaderColor,

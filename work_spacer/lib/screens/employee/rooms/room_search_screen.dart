@@ -21,7 +21,7 @@ class RoomSearchScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Rooms'),
+        title: const Text(translate.rooms),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

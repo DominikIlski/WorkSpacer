@@ -31,7 +31,7 @@ class ReservationListItem extends StatelessWidget {
         color: iconColor,
         size: 28,
       );
-      title = 'Desk #${(reservation as DeskReservation).desk.id}';
+      title = '${translate.desk} #${(reservation as DeskReservation).desk.id}';
     } else {
       leadingColor = Theme.of(context).secondaryHeaderColor;
       iconColor = leadingColor;
@@ -40,7 +40,7 @@ class ReservationListItem extends StatelessWidget {
         color: iconColor,
         size: 28,
       );
-      title = 'Room #${(reservation as RoomReservation).room.id}';
+      title = '${translate.room} #${(reservation as RoomReservation).room.id}';
     }
 
     return Card(
@@ -89,14 +89,14 @@ class ReservationListItem extends StatelessWidget {
                     context,
                     Icons.hourglass_empty,
                     iconColor,
-                    '${reservation.duration} hours',
+                    '${reservation.duration} ${translate.hours}',
                   ),
               ],
             ),
             const Spacer(),
             ElevatedButton.icon(
               onPressed: onCancel,
-              label: const Text('Cancel'),
+              label: const Text(translate.cancel),
               icon: const Icon(Icons.delete_outline_rounded),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(

@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text('Company XYZ'),
+          title: const Text(translate.company),
           actions: _getActions(context, authStore.isAdmin),
         ),
         body: Padding(
@@ -67,12 +67,12 @@ class HomeScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Please confirm'),
-        content: const Text('Do you want to log out?'),
+        title: const Text(translate.pleaseConfirm),
+        content: const Text(translate.logOutQ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: const Text(translate.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
               );
             },
             child: const Text(
-              'Confirm',
+              translate.confirm,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),

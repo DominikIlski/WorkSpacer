@@ -34,7 +34,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
     final blockStore = Provider.of<BlockStore>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Block a workspace'),
+        title: const Text(translate.blockWS),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -132,11 +132,11 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.desktop_windows_outlined),
-          label: 'Desks',
+          label: translate.desks,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.meeting_room_outlined),
-          label: 'Rooms',
+          label: translate.rooms,
         ),
       ],
       backgroundColor: Theme.of(context).primaryColorDark,

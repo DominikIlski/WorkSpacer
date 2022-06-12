@@ -21,7 +21,7 @@ class DeskSearchScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Desks'),
+        title: const Text(translate.desks),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

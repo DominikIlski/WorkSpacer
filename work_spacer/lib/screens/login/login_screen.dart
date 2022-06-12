@@ -35,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Center(
                     child: Text(
-                      'Company XYZ',
+                      translate.company,
                       style: textTheme.titleLarge,
                     ),
                   ),
@@ -46,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Center(
                     child: Text(
-                      'Welcome.',
+                      translate.welcome,
                       style: textTheme.titleLarge,
                     ),
                   ),

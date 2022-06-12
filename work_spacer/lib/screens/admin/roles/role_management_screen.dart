@@ -20,7 +20,7 @@ class RoleManagementScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Manage roles'),
+        title: const Text(translate.manageRoles),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -64,7 +64,7 @@ class UserListItem extends StatelessWidget {
               const Spacer(),
               ElevatedButton.icon(
                 onPressed: onEditClicked,
-                label: const Text('Edit'),
+                label: const Text(translate.edit),
                 icon: const Icon(Icons.edit_outlined),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
