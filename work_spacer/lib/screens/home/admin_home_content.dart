@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/admin/block/workspace_block_screen.dart';
 import 'package:work_spacer/screens/admin/cancel/reservation_cancel_screen.dart';
 import 'package:work_spacer/screens/admin/roles/role_management_screen.dart';
@@ -18,7 +19,7 @@ class AdminHomeContent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         HomeScreenButton(
-          title: 'Cancel a reservation',
+          title: translate.cancelRes,
           onTap: () {
             Provider.of<CancelStore>(context, listen: false)
                 .fetchReservations();
@@ -33,7 +34,7 @@ class AdminHomeContent extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
-          title: "Block a workspace",
+          title: translate.blockWS,
           onTap: () {
             final store = Provider.of<BlockStore>(context, listen: false);
             store.fetchDesks();
@@ -50,7 +51,7 @@ class AdminHomeContent extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
-          title: "Manage roles",
+          title: translate.manageRoles,
           onTap: () {
             final store =
                 Provider.of<RoleManagementStore>(context, listen: false);

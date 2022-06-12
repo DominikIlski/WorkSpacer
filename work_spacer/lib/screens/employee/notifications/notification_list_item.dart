@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk.dart';
 import 'package:work_spacer/models/notification.dart' as custom;
 import 'package:work_spacer/models/room.dart';
@@ -42,7 +43,7 @@ class NotificationListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Reservation #${notification.reservation.id} cancelled!',
+                      '${translate.reservation} #${notification.reservation.id} ${translate.cancelled}',
                       style: TextStyle(
                         color: leadingColor,
                         fontSize: 20,
@@ -52,13 +53,13 @@ class NotificationListItem extends StatelessWidget {
                     _getDetails(context, leadingColor),
                     const SizedBox(height: 16),
                     Text(
-                      'Possible replacements:',
+                      translate.replacements,
                       style: TextStyle(color: leadingColor),
                     ),
                     const SizedBox(height: 6),
                     if (notification.replacements.isEmpty)
                       Text(
-                        'No replacements found.',
+                        translate.noReplacements,
                         style: TextStyle(
                           color: leadingColor,
                           fontStyle: FontStyle.italic,
@@ -75,9 +76,9 @@ class NotificationListItem extends StatelessWidget {
                             (workspace) {
                               String text;
                               if (workspace is Desk) {
-                                text = 'Desk';
+                                text = translate.desk;
                               } else {
-                                text = 'Room';
+                                text = translate.room;
                               }
                               return RoundedButton(
                                 title: '$text #${workspace.id}',
@@ -123,7 +124,7 @@ class NotificationListItem extends StatelessWidget {
           context,
           leadingColor,
           Icons.hourglass_empty,
-          '${notification.reservation.duration} hours',
+          '${notification.reservation.duration} ${translate.hours}',
         ),
       ],
     );

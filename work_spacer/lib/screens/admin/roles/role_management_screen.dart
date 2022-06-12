@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/screens/admin/roles/manage_role_dialog.dart';
 import 'package:work_spacer/screens/admin/roles/user_list_item.dart';
@@ -20,7 +21,7 @@ class RoleManagementScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Manage roles'),
+        title: Text(translate.manageRoles),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

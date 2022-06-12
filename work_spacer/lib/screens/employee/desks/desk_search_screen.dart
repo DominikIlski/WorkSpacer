@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/screens/widgets/workspace_grid.dart';
 import 'package:work_spacer/screens/widgets/make_reservation_dialog.dart';
@@ -21,7 +22,7 @@ class DeskSearchScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Desks'),
+        title: Text(translate.desks),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

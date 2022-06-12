@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/home/home_screen.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/screens/login/login_form.dart';
@@ -35,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Center(
                     child: Text(
-                      'Company XYZ',
+                      translate.company,
                       style: textTheme.titleLarge,
                     ),
                   ),
@@ -46,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Center(
                     child: Text(
-                      'Welcome.',
+                      translate.welcome,
                       style: textTheme.titleLarge,
                     ),
                   ),

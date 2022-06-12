@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/user.dart';
 
 class UserListItem extends StatelessWidget {
@@ -64,7 +65,7 @@ class UserListItem extends StatelessWidget {
               const Spacer(),
               ElevatedButton.icon(
                 onPressed: onEditClicked,
-                label: const Text('Edit'),
+                label: Text(translate.edit),
                 icon: const Icon(Icons.edit_outlined),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/widgets/picker_tile.dart';
 
@@ -20,12 +21,13 @@ class BlockDialog extends StatefulWidget {
 
 class _BlockDialogState extends State<BlockDialog> {
   DateTime? _startDate, _endDate;
-  String _startDateText = 'Select start date', _endDateText = 'Select end date';
+  String _startDateText = translate.selectStartDate,
+      _endDateText = translate.selectEndDate;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Enter duration'),
+      title: Text(translate.enterDuration),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -44,7 +46,7 @@ class _BlockDialogState extends State<BlockDialog> {
             const SizedBox(height: 16),
           if (_startDate == null || _endDate == null)
             Text(
-              'Dates must be selected!',
+              translate.specifyDateTimeError,
               style: TextStyle(
                 color: Theme.of(context).secondaryHeaderColor,
                 fontSize: 14,
@@ -58,7 +60,7 @@ class _BlockDialogState extends State<BlockDialog> {
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(
-            'Cancel',
+            translate.cancel,
             style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
           ),
         ),
@@ -69,7 +71,7 @@ class _BlockDialogState extends State<BlockDialog> {
                   widget.onBlock(widget.workspace, _startDate!, _endDate!);
                   Navigator.pop(context);
                 },
-          label: const Text('Block'),
+          label: Text(translate.block),
           icon: const Icon(Icons.block),
           //
         ),
@@ -105,7 +107,7 @@ class _BlockDialogState extends State<BlockDialog> {
       _startDateText = DateFormat('dd.MM.yyyy').format(_startDate!);
       if (_endDate?.compareTo(_startDate!) == -1) {
         _endDate = null;
-        _endDateText = 'Select end date';
+        _endDateText = translate.selectEndDate;
       }
     });
   }

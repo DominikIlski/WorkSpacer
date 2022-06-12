@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 
 import 'settings_controller.dart';
 
@@ -17,7 +18,7 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(translate.settings),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -30,18 +31,18 @@ class SettingsView extends StatelessWidget {
           value: controller.themeMode,
           // Call the updateThemeMode method any time the user selects a theme.
           onChanged: controller.updateThemeMode,
-          items: const [
+          items: [
             DropdownMenuItem(
               value: ThemeMode.system,
-              child: Text('System Theme'),
+              child: Text(translate.sysTheme),
             ),
             DropdownMenuItem(
               value: ThemeMode.light,
-              child: Text('Light Theme'),
+              child: Text(translate.lightTheme),
             ),
             DropdownMenuItem(
               value: ThemeMode.dark,
-              child: Text('Dark Theme'),
+              child: Text(translate.darkTheme),
             )
           ],
         ),

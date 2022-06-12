@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/screens/widgets/picker_tile.dart';
@@ -25,9 +26,9 @@ class FilterDialog extends StatefulWidget {
 class _FilterDialogState extends State<FilterDialog> {
   final _controller = TextEditingController();
   DateTime? _date;
-  String _dateText = 'Select date';
+  String _dateText = translate.selectDate;
   TimeOfDay? _time;
-  String _timeText = 'Select start hour';
+  String _timeText = translate.selectHour;
 
   @override
   void initState() {
@@ -72,7 +73,7 @@ class _FilterDialogState extends State<FilterDialog> {
     return KeyboardHideWrapper(
       child: AlertDialog(
         title: Text(
-          'Enter the value',
+          translate.enterValue,
           style: TextStyle(
             color: Theme.of(context).primaryColorDark,
           ),
@@ -112,7 +113,7 @@ class _FilterDialogState extends State<FilterDialog> {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              'Cancel',
+              translate.cancel,
               style: TextStyle(
                 color: Theme.of(context).secondaryHeaderColor,
               ),
@@ -123,7 +124,7 @@ class _FilterDialogState extends State<FilterDialog> {
               widget.onReset(widget.filter);
               Navigator.pop(context);
             },
-            child: const Text('Reset'),
+            child: Text(translate.reset),
           ),
           TextButton(
             onPressed: () {
@@ -140,7 +141,7 @@ class _FilterDialogState extends State<FilterDialog> {
               Navigator.pop(context);
             },
             child: Text(
-              'Confirm',
+              translate.confirm,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColorDark,

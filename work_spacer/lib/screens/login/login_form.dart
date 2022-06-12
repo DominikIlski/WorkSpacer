@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/stores/authentication_store.dart';
 
 class LoginForm extends StatefulWidget {
@@ -29,33 +30,31 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           TextFormField(
             controller: loginController,
-            validator: (value) => value == null || value.isEmpty
-                ? 'Please enter your login.'
-                : null,
-            decoration: const InputDecoration(
+            validator: (value) =>
+                value == null || value.isEmpty ? translate.enterLogin : null,
+            decoration: InputDecoration(
               contentPadding: EdgeInsets.zero,
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.login_rounded),
-              hintText: 'Login',
+              border: const OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.login_rounded),
+              hintText: translate.login,
             ),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: passwordController,
-            validator: (value) => value == null || value.isEmpty
-                ? 'Please enter your password.'
-                : null,
-            decoration: const InputDecoration(
+            validator: (value) =>
+                value == null || value.isEmpty ? translate.enterPassword : null,
+            decoration: InputDecoration(
               contentPadding: EdgeInsets.zero,
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.key_rounded),
-              hintText: 'Password',
+              border: const OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.key_rounded),
+              hintText: translate.password,
             ),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: _loginProcessor,
-            child: const Text('Login'),
+            child: Text(translate.login),
           ),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
@@ -18,7 +19,7 @@ class ReservationCancelScreen extends StatelessWidget {
     return KeyboardHideWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Cancel a reservation'),
+          title: Text(translate.cancelRes),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -73,7 +74,7 @@ class ReservationCancelScreen extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'Do you want to cancel?',
+          translate.cancelQ,
           style: TextStyle(
             color: Theme.of(context).primaryColorDark,
           ),
@@ -81,7 +82,7 @@ class ReservationCancelScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('No'),
+            child: Text(translate.no),
           ),
           TextButton(
             onPressed: () {
@@ -89,7 +90,7 @@ class ReservationCancelScreen extends StatelessWidget {
               Navigator.pop(context);
             },
             child: Text(
-              'Yes',
+              translate.yes,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).secondaryHeaderColor,
@@ -154,7 +155,7 @@ class _WorkspaceSearchTextFieldState extends State<_WorkspaceSearchTextField> {
             Icons.search,
             color: Theme.of(context).secondaryHeaderColor,
           ),
-          hintText: "Workspace ID",
+          hintText: translate.wsID,
           hintStyle: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
       ),

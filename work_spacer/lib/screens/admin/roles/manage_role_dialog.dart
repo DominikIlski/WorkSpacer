@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/user.dart';
 
 class ManageRoleDialog extends StatefulWidget {
@@ -28,7 +29,7 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        'Edit role',
+        translate.editRole,
         style: TextStyle(
           color: Theme.of(context).primaryColorDark,
         ),
@@ -78,7 +79,7 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(
-            'Cancel',
+            translate.cancel,
             style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
           ),
         ),
@@ -87,9 +88,9 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
             widget.onEditRole(widget.user, _role!);
             Navigator.pop(context);
           },
-          child: const Text(
-            'Confirm',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          child: Text(
+            translate.confirm,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],
