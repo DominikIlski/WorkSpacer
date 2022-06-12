@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk_reservation.dart';
 import 'package:work_spacer/screens/employee/notifications/notification_list_item.dart';
 import 'package:work_spacer/stores/desks_store.dart';
@@ -17,7 +18,7 @@ class NotificationsScreen extends StatelessWidget {
     final store = Provider.of<NotificationStore>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text(translate.notifications),
+        title: Text(translate.notifications),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),

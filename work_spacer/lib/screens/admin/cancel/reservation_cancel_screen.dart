@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
@@ -18,7 +19,7 @@ class ReservationCancelScreen extends StatelessWidget {
     return KeyboardHideWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(translate.cancelRes),
+          title: Text(translate.cancelRes),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -81,7 +82,7 @@ class ReservationCancelScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(translate.no),
+            child: Text(translate.no),
           ),
           TextButton(
             onPressed: () {

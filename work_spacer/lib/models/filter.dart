@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 
 @immutable
 class Filter {
@@ -51,7 +52,7 @@ const Map<FilterParameter, FilterDataType> filterParameterDataTypes = {
   FilterParameter.surname: FilterDataType.text,
 };
 
-const Map<FilterParameter, String> filterParameterNames = {
+final Map<FilterParameter, String> filterParameterNames = {
   FilterParameter.id: translate.id,
   FilterParameter.floor: translate.floor,
   FilterParameter.date: translate.date,

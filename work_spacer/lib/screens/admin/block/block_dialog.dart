@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/widgets/picker_tile.dart';
 
@@ -20,12 +21,13 @@ class BlockDialog extends StatefulWidget {
 
 class _BlockDialogState extends State<BlockDialog> {
   DateTime? _startDate, _endDate;
-  String _startDateText = translate.selectStartDate, _endDateText = translate.selectEndDate;
+  String _startDateText = translate.selectStartDate,
+      _endDateText = translate.selectEndDate;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(translate.enterDuration),
+      title: Text(translate.enterDuration),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -44,7 +46,7 @@ class _BlockDialogState extends State<BlockDialog> {
             const SizedBox(height: 16),
           if (_startDate == null || _endDate == null)
             Text(
-              translate.specifyDateError,
+              translate.specifyDateTimeError,
               style: TextStyle(
                 color: Theme.of(context).secondaryHeaderColor,
                 fontSize: 14,
@@ -69,7 +71,7 @@ class _BlockDialogState extends State<BlockDialog> {
                   widget.onBlock(widget.workspace, _startDate!, _endDate!);
                   Navigator.pop(context);
                 },
-          label: const Text(translate.block),
+          label: Text(translate.block),
           icon: const Icon(Icons.block),
           //
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/employee/desks/desk_search_screen.dart';
 import 'package:work_spacer/screens/employee/reservations/employee_reservations_screen.dart';
 import 'package:work_spacer/screens/employee/rooms/room_search_screen.dart';

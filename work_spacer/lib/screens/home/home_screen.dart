@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/employee/notifications/notifications_screen.dart';
 import 'package:work_spacer/screens/home/admin_home_content.dart';
 import 'package:work_spacer/screens/home/employee_home_content.dart';
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text(translate.company),
+          title: Text(translate.company),
           actions: _getActions(context, authStore.isAdmin),
         ),
         body: Padding(
@@ -67,12 +68,12 @@ class HomeScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text(translate.pleaseConfirm),
-        content: const Text(translate.logOutQ),
+        title: Text(translate.pleaseConfirm),
+        content: Text(translate.logOutQ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(translate.cancel),
+            child: Text(translate.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -83,9 +84,9 @@ class HomeScreen extends StatelessWidget {
                 LoginScreen.routeName,
               );
             },
-            child: const Text(
+            child: Text(
               translate.confirm,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],

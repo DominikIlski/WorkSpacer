@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/screens/widgets/reservation_list_item.dart';
 import 'package:work_spacer/stores/reservation_store.dart';
@@ -15,7 +16,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
     final store = Provider.of<ReservationStore>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text(translate.myRes),
+        title: Text(translate.myRes),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -64,7 +65,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(translate.no),
+            child: Text(translate.no),
           ),
           TextButton(
             onPressed: () {

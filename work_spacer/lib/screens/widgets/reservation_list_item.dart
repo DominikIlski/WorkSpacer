@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk_reservation.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/models/room_reservation.dart';
@@ -96,7 +97,7 @@ class ReservationListItem extends StatelessWidget {
             const Spacer(),
             ElevatedButton.icon(
               onPressed: onCancel,
-              label: const Text(translate.cancel),
+              label: Text(translate.cancel),
               icon: const Icon(Icons.delete_outline_rounded),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(

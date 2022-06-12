@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/screens/widgets/picker_tile.dart';
@@ -123,7 +124,7 @@ class _FilterDialogState extends State<FilterDialog> {
               widget.onReset(widget.filter);
               Navigator.pop(context);
             },
-            child: const Text(translate.reset),
+            child: Text(translate.reset),
           ),
           TextButton(
             onPressed: () {

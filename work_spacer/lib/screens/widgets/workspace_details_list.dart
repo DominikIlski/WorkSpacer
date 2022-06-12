@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk.dart';
 import 'package:work_spacer/models/room.dart';
 import 'package:work_spacer/models/workspace.dart';
@@ -24,7 +25,8 @@ class WorkspaceDetailsList extends StatelessWidget {
       return [
         _getRow(context, translate.floor, '${desk.floor}'),
         const SizedBox(height: 8),
-        _getRow(context, translate.monitor, desk.secondMonitor ? translate.yes : translate.no),
+        _getRow(context, translate.monitor,
+            desk.secondMonitor ? translate.yes : translate.no),
       ];
     } else {
       final room = workspace as Room;
@@ -33,9 +35,11 @@ class WorkspaceDetailsList extends StatelessWidget {
         const SizedBox(height: 8),
         _getRow(context, translate.capacity, '${room.capacity}'),
         const SizedBox(height: 8),
-        _getRow(context, translate.whiteboard, room.hasWhiteboard ? translate.yes : translate.no),
+        _getRow(context, translate.whiteboard,
+            room.hasWhiteboard ? translate.yes : translate.no),
         const SizedBox(height: 8),
-        _getRow(context, translate.projector, room.hasProjector ? translate.yes : translate.no),
+        _getRow(context, translate.projector,
+            room.hasProjector ? translate.yes : translate.no),
         const SizedBox(height: 8),
         _getRow(context, translate.teleconf,
             room.hasTeleconference ? translate.yes : translate.no),

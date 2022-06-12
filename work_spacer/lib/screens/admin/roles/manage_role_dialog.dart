@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/user.dart';
 
 class ManageRoleDialog extends StatefulWidget {
@@ -87,9 +88,9 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
             widget.onEditRole(widget.user, _role!);
             Navigator.pop(context);
           },
-          child: const Text(
+          child: Text(
             translate.confirm,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],

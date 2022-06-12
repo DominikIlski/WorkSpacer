@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/widgets/number_selector.dart';
@@ -112,9 +113,9 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
                       _time!, _hours);
                   Navigator.pop(context);
                 },
-          child: const Text(
+          child: Text(
             translate.makeRes,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
