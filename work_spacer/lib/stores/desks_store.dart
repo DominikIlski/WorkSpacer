@@ -99,6 +99,8 @@ abstract class _DesksStore with Store {
   fetchDesks() async {
     inProgress = true;
     //TODO handle backend
+    //IMPORTANT! we need to limit this list based on the role (see User.dart -> enum), so strapi model should implement something like a list of roles that can acces each workspace,
+    // e.g. Desk #3 should have a list [Mid, Senior] and when fetching data here, only fetch workspaces that the user can actually access
     await Future.delayed(const Duration(milliseconds: 500));
     _desks = desksDummy..sort((desk1, desk2) => desk1.id.compareTo(desk2.id));
     inProgress = false;

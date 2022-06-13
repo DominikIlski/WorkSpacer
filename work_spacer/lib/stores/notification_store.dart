@@ -24,6 +24,8 @@ abstract class _NotificationStore with Store {
   fetchNotifications() async {
     inProgress = true;
     //TODO handle backend
+    //IMPORTANT! Remember to fetch possible replacements!! Let;s say we set a max of 5
+    //e.g. when a reservation for desk is cancelled, the notification must be sent and in it there must be a list of max.5 desks that are available the same day time and duration, might be empty
     await Future.delayed(const Duration(milliseconds: 500));
     _notifications = ObservableList.of(
       notificationsDummy
