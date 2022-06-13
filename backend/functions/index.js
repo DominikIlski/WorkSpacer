@@ -7,30 +7,35 @@ const admin = require("firebase-admin");
 //   functions.logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
-
+admin.initializeApp()
+const auth = admin.auth();
 exports.proxy = functions.https.onCall((data, context) => {
-return '';
+    // const method = data.method;
+    // const data = data.data;
+    // const route = data.route;
+    return '';
 });
 
 exports.createUser = functions.https.onRequest((req, res) => {
-    console.log(req);
-    // const result = await fetch('https://work-spacer.herokuapp.com/api/employees/');
-    // admin.auth().createUser({
-    //   email: "user@example.com",
-    //   emailVerified: false,
-    //   phoneNumber: "+11234567890",
-    //   password: "secretPassword",
-    //   displayName: "John Doe",
-    //   photoURL: "http://www.example.com/12345678/photo.png",
-    //   disabled: false,
-    //   bre
-    // })
-    //   .then(function(userRecord) {
-    //     // See the UserRecord reference doc for the contents of userRecord.
-    //     console.log("Successfully created new user:", userRecord.uid);
-    //   })
-    //   .catch(function(error) {
-    //     console.log("Error creating new user:", error);
-    //   });
-    res.send(req);
+    functions.logger.log(req);
+    const body = req.body;
+    const email = body.email;
+    const passwd = body.passwd;
+    const isAdmin = body?.isAdmin;
+    const strapiId = body.strapiId;
+    const name = body?.name;
+    return auth.createUser({
+      email: email,
+      emailVerified: true,
+      password: passwd,
+      displayName: name ?? email.split('@')[0],
+      disabled: false,
+    }).then(function(userRecord) {
+        auth.setCustomUserClaims(userRecord.uid, { admin: isAdmin, strapiId: strapiId });
+        res.status(200).send('user created');
+        return 'done';
+      }).catch(function(error) {
+        functions.logger.log("Error creating new user:", error);
+        res.status(500).send(error);
+      });
 });

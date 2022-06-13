@@ -5,7 +5,8 @@ module.exports = {
         var res = await axios.post('https://us-central1-workspacer-c329e.cloudfunctions.net/createUser', {
           "email": result.login,
           "passwd": result.password,
-          "isAdmin": true,
+          "name": `${result.name} ${result.surname}`,
+          "isAdmin": false,
           "strapiId": result.id
       })
       },
