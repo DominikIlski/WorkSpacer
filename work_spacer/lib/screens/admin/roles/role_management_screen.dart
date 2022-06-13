@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/filter.dart';
-import 'package:work_spacer/screens/admin/roles/components/manage_role_dialog.dart';
-import 'package:work_spacer/screens/admin/roles/components/user_list_item.dart';
+import 'package:work_spacer/screens/admin/roles/manage_role_dialog.dart';
+import 'package:work_spacer/screens/admin/roles/user_list_item.dart';
 import 'package:work_spacer/screens/widgets/filter_dialog.dart';
 import 'package:work_spacer/screens/widgets/filterable_workspace_list.dart';
 import 'package:work_spacer/screens/widgets/rounded_button.dart';
@@ -20,7 +21,7 @@ class RoleManagementScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Manage roles'),
+        title: Text(translate.manageRoles),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -29,43 +30,6 @@ class RoleManagementScreen extends StatelessWidget {
           child: _getContent(context, roleStore),
         ),
       ),
-      // body: Container(
-      //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      //   alignment: Alignment.center,
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.center,
-      //     children: [
-      //       Container(
-      //         alignment: Alignment.center,
-      //         padding: const EdgeInsets.only(top: 8),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           mainAxisSize: MainAxisSize.min,
-      //           children: const [
-      //             //TODO add filter butons
-      //           ],
-      //         ),
-      //       ),
-      //       const SizedBox(height: 16),
-      //       Divider(
-      //         height: 0,
-      //         thickness: 1,
-      //         color: Theme.of(context).secondaryHeaderColor,
-      //       ),
-      //       const SizedBox(height: 8),
-      //       Expanded(
-      //         child: ListView.builder(
-      //           itemCount: users.length,
-      //           itemBuilder: (context, index) => UserListItem(
-      //             user: users[index],
-      //             onEditClicked: () =>
-      //                 _showManageRoleDialog(context, users[index], index),
-      //           ),
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      // ),
     );
   }
 
@@ -129,8 +93,8 @@ class RoleManagementScreen extends StatelessWidget {
                 onEditClicked: () => showDialog(
                   context: context,
                   builder: (context) => ManageRoleDialog(
-                    currentRole: roleStore.users[index].role,
-                    onEditRole: roleStore.users[index].setRole,
+                    user: roleStore.users[index],
+                    onEditRole: roleStore.setUserRole,
                   ),
                 ),
               ),

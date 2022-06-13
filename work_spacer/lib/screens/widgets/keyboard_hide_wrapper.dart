@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class KeyboardHideWrapper extends StatelessWidget {
+class UnfocusWrapper extends StatelessWidget {
   final Widget child;
 
-  const KeyboardHideWrapper({super.key, required this.child});
+  const UnfocusWrapper({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

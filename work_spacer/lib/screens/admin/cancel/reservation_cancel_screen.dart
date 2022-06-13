@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:work_spacer/misc/keyboard_hide_wrapper.dart';
+import 'package:work_spacer/i18n.dart';
+import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
 import '../../widgets/reservation_list_item.dart';
@@ -15,10 +17,10 @@ class ReservationCancelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cancelStore = Provider.of<CancelStore>(context);
 
-    return KeyboardHideWrapper(
+    return UnfocusWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Cancel a reservation'),
+          title: Text(translate.cancelRes),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -32,11 +34,7 @@ class ReservationCancelScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Divider(
-                height: 0,
-                thickness: 1,
-                color: Theme.of(context).secondaryHeaderColor,
-              ),
+              const Divider(),
               const SizedBox(height: 16),
               Expanded(
                 child: Observer(
@@ -44,13 +42,16 @@ class ReservationCancelScreen extends StatelessWidget {
                       ? const Center(child: CircularProgressIndicator())
                       : ListView.builder(
                           itemCount: cancelStore.filteredReservations.length,
-                          itemBuilder: (context, index) => ReservationListItem(
-                            reservation:
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: ReservationListItem(
+                              reservation:
+                                  cancelStore.filteredReservations[index],
+                              onCancel: () => _cancelReservation(
+                                context,
+                                cancelStore.cancel,
                                 cancelStore.filteredReservations[index],
-                            onCancel: () => _cancelReservation(
-                              context,
-                              cancelStore.cancel,
-                              cancelStore.filteredReservations[index],
+                              ),
                             ),
                           ),
                         ),
@@ -72,16 +73,11 @@ class ReservationCancelScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(
-          'Do you want to cancel?',
-          style: TextStyle(
-            color: Theme.of(context).primaryColorDark,
-          ),
-        ),
+        title: Text(translate.cancelQ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('No'),
+            child: Text(translate.no),
           ),
           TextButton(
             onPressed: () {
@@ -89,11 +85,8 @@ class ReservationCancelScreen extends StatelessWidget {
               Navigator.pop(context);
             },
             child: Text(
-              'Yes',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).secondaryHeaderColor,
-              ),
+              translate.yes,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -134,26 +127,14 @@ class _WorkspaceSearchTextFieldState extends State<_WorkspaceSearchTextField> {
     return Observer(
       builder: (_) => TextField(
         controller: _controller,
-        keyboardType: TextInputType.number,
+        keyboardType: const TextInputType.numberWithOptions(),
         onChanged: (value) => widget.onChanged.call(value),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+        ],
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
-          border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              borderSide: BorderSide(
-                color: Theme.of(context).secondaryHeaderColor,
-              )),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              borderSide: BorderSide(
-                color: Theme.of(context).secondaryHeaderColor,
-              )),
-          prefixIcon: Icon(
-            Icons.search,
-            color: Theme.of(context).secondaryHeaderColor,
-          ),
-          hintText: "Workspace ID",
-          hintStyle: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+          prefixIcon: const Icon(Icons.search),
+          labelText: translate.wsID,
         ),
       ),
     );

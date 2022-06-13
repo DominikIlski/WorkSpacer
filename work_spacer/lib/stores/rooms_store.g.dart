@@ -60,12 +60,12 @@ mixin _$RoomsStore on _RoomsStore, Store {
       ActionController(name: '_RoomsStore', context: context);
 
   @override
-  dynamic reserveRoom(
-      Workspace roomAsWorkspace, DateTime date, TimeOfDay time, int hours) {
+  dynamic reserveRoom(int? userId, Workspace roomAsWorkspace, DateTime date,
+      TimeOfDay time, int hours) {
     final _$actionInfo = _$_RoomsStoreActionController.startAction(
         name: '_RoomsStore.reserveRoom');
     try {
-      return super.reserveRoom(roomAsWorkspace, date, time, hours);
+      return super.reserveRoom(userId, roomAsWorkspace, date, time, hours);
     } finally {
       _$_RoomsStoreActionController.endAction(_$actionInfo);
     }

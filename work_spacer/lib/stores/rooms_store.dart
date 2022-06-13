@@ -13,6 +13,9 @@ class RoomsStore = _RoomsStore with _$RoomsStore;
 abstract class _RoomsStore with Store {
   final FilterStore filterStore = FilterStore([
     FilterParameter.floor,
+    FilterParameter.date,
+    FilterParameter.time,
+    FilterParameter.duration,
     FilterParameter.capacity,
     FilterParameter.whiteboard,
     FilterParameter.projector,
@@ -25,7 +28,6 @@ abstract class _RoomsStore with Store {
   @observable
   List<Room>? _rooms;
 
-  //TODO discuss if we want to actually filter list manually or do we want to have endpoint to fetch them with filters as arguments
   @computed
   ObservableList<Room> get rooms => ObservableList.of(
         (_rooms ?? []).where((room) {
@@ -40,16 +42,14 @@ abstract class _RoomsStore with Store {
           final isTeleconferenceValid = _checkFilterEqual(
               FilterParameter.teleconference, room.hasTeleconference);
 
-          const isDateValid = true; //TODO check availability for date
-          const isTimeValid = true; //TODO check availability for time
+          final isAvailable = _checkAvailability();
 
           return isFloorValid &&
               isCapacityValid &&
               isWhiteboardValid &&
               isProjectorValid &&
               isTeleconferenceValid &&
-              isDateValid &&
-              isTimeValid;
+              isAvailable;
         }).toList(),
       );
 
@@ -71,20 +71,70 @@ abstract class _RoomsStore with Store {
     }
   }
 
+  bool _checkAvailability() {
+    DateTime? date = filterStore.filters[FilterParameter.date];
+    TimeOfDay? time = filterStore.filters[FilterParameter.time];
+    int? hours = filterStore.filters[FilterParameter.duration];
+    //TODO handle backend
+    //ALL COMBINATIONS ARE POSSIBLE:
+    if (date != null) {
+      if (time != null) {
+        if (hours != null) {
+          //CHECK ALL THREE
+          //return
+        } else {
+          //CHECK DATE AND TIME
+          //return
+        }
+      } else {
+        if (hours != null) {
+          //CHECK DATE AND HOURS
+          //return
+        } else {
+          //CHECK DATE
+        }
+      }
+    } else {
+      if (time != null) {
+        if (hours != null) {
+          //CHECK TIME AND HOURS
+          //return
+        } else {
+          //CHECK TIME
+          //return
+        }
+      } else {
+        if (hours != null) {
+          //CHECK HOURS
+          //return
+        } else {
+          return true;
+        }
+      }
+    }
+
+    return true;
+    //REMOVE ^ WHEN IMPLEMENTED ABOVE
+  }
+
   @action
   fetchRooms() async {
     inProgress = true;
     //TODO handle backend
+    //IMPORTANT! we need to limit this list based on the role (see User.dart -> enum), so strapi model should implement something like a list of roles that can acces each workspace,
+    // e.g. Room #3 should have a list [Mid, Senior] and when fetching data here, only fetch workspaces that the user can actually access
     await Future.delayed(const Duration(milliseconds: 500));
     _rooms = roomsDummy..sort((room1, room2) => room1.id.compareTo(room2.id));
     inProgress = false;
   }
 
   @action
-  reserveRoom(
-      Workspace roomAsWorkspace, DateTime date, TimeOfDay time, int hours) {
+  reserveRoom(int? userId, Workspace roomAsWorkspace, DateTime date,
+      TimeOfDay time, int hours) {
+    if (userId == null) {
+      return;
+    }
     final Room room = roomAsWorkspace as Room;
-    print('$room, $date, $time, $hours');
     //TODO handle backend
   }
 }

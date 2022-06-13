@@ -15,8 +15,8 @@ class FilterableWorkspaceList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 32,
+        Flexible(
+          flex: 1,
           child: ListView(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -26,13 +26,10 @@ class FilterableWorkspaceList extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Divider(
-          height: 0,
-          thickness: 1,
-          color: Theme.of(context).secondaryHeaderColor,
-        ),
+        const Divider(),
         const SizedBox(height: 12),
-        Expanded(
+        Flexible(
+          flex: 15,
           child: child,
         ),
       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/screens/widgets/reservation_list_item.dart';
 import 'package:work_spacer/stores/reservation_store.dart';
@@ -15,7 +16,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
     final store = Provider.of<ReservationStore>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My reservations'),
+        title: Text(translate.myRes),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -36,7 +37,6 @@ class EmployeeReservationsScreen extends StatelessWidget {
                               store.cancel,
                               store.reservations[index],
                             ),
-                            showDateOnly: true,
                           ),
                         ),
                       ),
@@ -56,27 +56,21 @@ class EmployeeReservationsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(
-          'Do you want to cancel?',
-          style: TextStyle(
-            color: Theme.of(context).primaryColorDark,
-          ),
-        ),
+        title: Text(translate.cancelQ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('No'),
+            child: Text(translate.no),
           ),
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
               onCancel(reservation);
+              Navigator.pop(context);
             },
             child: Text(
-              'Yes',
-              style: TextStyle(
+              translate.yes,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).secondaryHeaderColor,
               ),
             ),
           ),

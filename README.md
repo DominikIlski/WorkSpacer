@@ -6,6 +6,7 @@
 In order to run your application, type:
 ```
   $ cd work_spacer
+  $ flutter gen-l10n
   $ flutter run
 ```
 To start backend run:

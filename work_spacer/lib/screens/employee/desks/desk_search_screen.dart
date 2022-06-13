@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/filter.dart';
-import 'package:work_spacer/screens/admin/block/components/workspace_grid.dart';
+import 'package:work_spacer/screens/widgets/workspace_grid.dart';
 import 'package:work_spacer/screens/widgets/make_reservation_dialog.dart';
 import 'package:work_spacer/screens/widgets/rounded_button.dart';
 import 'package:work_spacer/screens/widgets/filterable_workspace_list.dart';
@@ -20,16 +21,15 @@ class DeskSearchScreen extends StatelessWidget {
     final desksStore = Provider.of<DesksStore>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Desks'),
-      ),
+      appBar: AppBar(title: Text(translate.desks)),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
         child: FilterableWorkspaceList(
           observerFilterButtons: _getObserverFilterButtons(desksStore),
           child: _getContent(context, desksStore),
         ),
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 
@@ -90,6 +90,21 @@ class DeskSearchScreen extends StatelessWidget {
               valueAsString,
             );
           },
+        ),
+      ),
+      Observer(
+        builder: (context) => RoundedButton(
+          title: filterParameterNames[FilterParameter.duration] ?? '',
+          isSelected:
+              desksStore.filterStore.filters[FilterParameter.duration] != null,
+          onTap: () => _showFilterDialog(
+            context,
+            FilterParameter.duration,
+            desksStore.filterStore.toggleValueFilter,
+            desksStore.filterStore.resetFilter,
+            desksStore.filterStore.filters[FilterParameter.duration]
+                ?.toString(),
+          ),
         ),
       ),
       Observer(

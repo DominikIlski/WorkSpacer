@@ -53,7 +53,7 @@ abstract class _CancelStore with Store {
 
   @action
   void cancel(Reservation reservation) {
-    //TODO handle backend
+    //TODO handle backend and notification
     _reservations?.remove(reservation);
   }
 }

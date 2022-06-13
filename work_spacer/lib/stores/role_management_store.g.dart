@@ -57,6 +57,20 @@ mixin _$RoleManagementStore on _RoleManagementStore, Store {
     return _$fetchUsersAsyncAction.run(() => super.fetchUsers());
   }
 
+  late final _$_RoleManagementStoreActionController =
+      ActionController(name: '_RoleManagementStore', context: context);
+
+  @override
+  dynamic setUserRole(User user, Role role) {
+    final _$actionInfo = _$_RoleManagementStoreActionController.startAction(
+        name: '_RoleManagementStore.setUserRole');
+    try {
+      return super.setUserRole(user, role);
+    } finally {
+      _$_RoleManagementStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

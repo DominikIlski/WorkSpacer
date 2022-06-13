@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/user.dart';
 
 class UserListItem extends StatelessWidget {
@@ -14,22 +15,17 @@ class UserListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Observer(
       builder: (_) => Card(
-        color: Theme.of(context).primaryColorLight,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Theme.of(context).primaryColorDark),
-        ),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
                 Icons.account_circle_outlined,
-                color: Theme.of(context).primaryColor,
-                size: 32,
+                color: theme.colorScheme.tertiary,
+                size: 36,
               ),
               const SizedBox(width: 20),
               Column(
@@ -38,47 +34,30 @@ class UserListItem extends StatelessWidget {
                 children: [
                   Text(
                     "${user.name} ${user.surname}",
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColorDark,
-                      fontSize: 20,
-                    ),
+                    style: theme.textTheme.headline6,
                   ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
                       Icon(
                         Icons.manage_accounts_outlined,
-                        color: Theme.of(context).primaryColor,
+                        color: theme.colorScheme.tertiary,
                         size: 20,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         roleNames[user.role]!,
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColorDark),
+                        style: theme.textTheme.bodyText1,
                       ),
                     ],
                   ),
                 ],
               ),
               const Spacer(),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    Theme.of(context).secondaryHeaderColor,
-                  ),
-                  padding: MaterialStateProperty.all(
-                    const EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                ),
-                child: Row(
-                  children: const [
-                    Icon(Icons.edit_outlined),
-                    SizedBox(width: 4),
-                    Text('Edit'),
-                  ],
-                ),
+              ElevatedButton.icon(
                 onPressed: onEditClicked,
+                label: Text(translate.edit),
+                icon: const Icon(Icons.edit_outlined),
               ),
             ],
           ),

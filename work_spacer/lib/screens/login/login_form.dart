@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:work_spacer/screens/home/home_screen.dart';
-import 'package:work_spacer/stores/notification_store.dart';
+import 'package:work_spacer/i18n.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -29,34 +29,43 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           TextFormField(
+             key: const Key('login_form_field'),
             controller: loginController,
-            validator: (value) => value == null || value.isEmpty
-                ? 'Please enter your login.'
-                : null,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.zero,
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.login_rounded),
-              hintText: 'Login',
+            validator: (value) =>
+                value == null || value.isEmpty ? translate.enterLogin : null,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.login_rounded),
+              labelText: translate.login,
             ),
           ),
           const SizedBox(height: 16),
           TextFormField(
+            key: const Key('password_form_field'),
             controller: passwordController,
-            validator: (value) => value == null || value.isEmpty
-                ? 'Please enter your password.'
-                : null,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.zero,
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.key_rounded),
-              hintText: 'Password',
+            validator: (value) =>
+                value == null || value.isEmpty ? translate.enterPassword : null,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.key_rounded),
+              labelText: translate.password,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
           ElevatedButton(
+             key: const Key('login_btn'),
             onPressed: _loginProcessor,
-            child: const Text('Login'),
+            child: Text(translate.login),
+            style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
+                  padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(horizontal: 28, vertical: 10),
+                  ),
+                  textStyle: MaterialStateProperty.all<TextStyle>(
+                    const TextStyle(
+                      fontFamily: 'Lato',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
           ),
         ],
       ),
@@ -66,15 +75,7 @@ class _LoginFormState extends State<LoginForm> {
   _loginProcessor() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState!.validate()) {
-      if (!isAdmin) {
-        final notifications =
-            Provider.of<NotificationStore>(context, listen: false);
-        notifications.fetchNotifications();
-      }
-      Navigator.restorablePushReplacementNamed(
-        context,
-        HomeScreen.routeName,
-      );
+      Provider.of<AuthenticationStore>(context, listen: false).logIn();
     }
   }
 }

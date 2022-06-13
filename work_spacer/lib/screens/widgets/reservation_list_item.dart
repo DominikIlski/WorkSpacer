@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk_reservation.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/models/room_reservation.dart';
@@ -18,99 +19,68 @@ class ReservationListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     String title;
     Icon? icon;
-    Color? leadingColor;
-    Color? iconColor;
 
     if (reservation is DeskReservation) {
-      leadingColor = Theme.of(context).primaryColorDark;
-      iconColor = Theme.of(context).primaryColor;
       icon = Icon(
         Icons.desktop_windows,
-        color: iconColor,
-        size: 28,
+        color: theme.colorScheme.tertiary,
+        size: 36,
       );
-      title = 'Desk #${(reservation as DeskReservation).desk.id}';
+      title = '${translate.desk} #${(reservation as DeskReservation).desk.id}';
     } else {
-      leadingColor = Theme.of(context).secondaryHeaderColor;
-      iconColor = leadingColor;
       icon = Icon(
         Icons.meeting_room_outlined,
-        color: iconColor,
-        size: 28,
+        color: theme.colorScheme.tertiary,
+        size: 36,
       );
-      title = 'Room #${(reservation as RoomReservation).room.id}';
+      title = '${translate.room} #${(reservation as RoomReservation).room.id}';
     }
 
     return Card(
-      color: Theme.of(context).primaryColorLight,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(6),
-        side: BorderSide(
-          color: leadingColor,
-        ),
-      ),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(24),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             icon,
-            const SizedBox(width: 20),
+            const SizedBox(width: 24),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    color: leadingColor,
-                    fontSize: 20,
-                  ),
+                  style: theme.textTheme.headline6,
                 ),
                 const SizedBox(height: 12),
                 _getIconText(
-                  context,
+                  theme,
                   Icons.calendar_month_outlined,
-                  iconColor,
                   DateFormat('dd.MM.yyyy').format(reservation.startDate),
                 ),
                 if (!showDateOnly) const SizedBox(height: 8),
                 if (!showDateOnly)
                   _getIconText(
-                    context,
+                    theme,
                     Icons.timer_outlined,
-                    iconColor,
                     DateFormat.jm().format(reservation.startDate),
                   ),
                 if (!showDateOnly) const SizedBox(height: 8),
                 if (!showDateOnly)
                   _getIconText(
-                    context,
+                    theme,
                     Icons.hourglass_empty,
-                    iconColor,
-                    '${reservation.duration} hours',
+                    '${reservation.duration} ${translate.hours}',
                   ),
               ],
             ),
             const Spacer(),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  Theme.of(context).secondaryHeaderColor,
-                ),
-                padding: MaterialStateProperty.all(
-                  const EdgeInsets.symmetric(horizontal: 8),
-                ),
-              ),
-              child: Row(
-                children: const [
-                  Icon(Icons.delete_outline_rounded),
-                  SizedBox(width: 4),
-                  Text('Cancel'),
-                ],
-              ),
+            ElevatedButton.icon(
               onPressed: onCancel,
+              label: Text(translate.cancel),
+              icon: const Icon(Icons.delete_outline_rounded),
             ),
           ],
         ),
@@ -118,14 +88,18 @@ class ReservationListItem extends StatelessWidget {
     );
   }
 
-  _getIconText(context, IconData iconData, Color iconColor, String text) {
+  _getIconText(ThemeData theme, IconData iconData, String text) {
     return Row(
       children: [
-        Icon(iconData, color: iconColor),
+        Icon(
+          iconData,
+          color: theme.colorScheme.tertiary,
+          size: 20,
+        ),
         const SizedBox(width: 6),
         Text(
           text,
-          style: TextStyle(color: Theme.of(context).primaryColorDark),
+          style: theme.textTheme.bodyText1,
         ),
       ],
     );

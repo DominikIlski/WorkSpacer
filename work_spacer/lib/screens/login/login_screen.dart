@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:work_spacer/misc/keyboard_hide_wrapper.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
+import 'package:work_spacer/screens/home/home_screen.dart';
+import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/screens/login/login_form.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/';
@@ -9,9 +15,9 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return KeyboardHideWrapper(
+    final theme = Theme.of(context);
+    final authStore = Provider.of<AuthenticationStore>(context);
+    return UnfocusWrapper(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 64.0, vertical: 32),
@@ -22,16 +28,16 @@ class LoginScreen extends StatelessWidget {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    Icons.workspaces_rounded,
-                    size: 40,
-                    color: Theme.of(context).primaryColorDark,
+                  const Icon(
+                    Icons.image,
+                    size: 64,
+                    color: Colors.amber,
                   ),
                   const SizedBox(height: 8),
                   Center(
                     child: Text(
                       'Company XYZ',
-                      style: textTheme.titleLarge,
+                      style: theme.textTheme.headline6,
                     ),
                   ),
                 ],
@@ -41,18 +47,41 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Center(
                     child: Text(
-                      'Welcome.',
-                      style: textTheme.titleLarge,
+                      translate.welcome,
+                      style: theme.textTheme.headline6,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  const LoginForm(),
+                  const SizedBox(height: 24),
+                  Observer(
+                    builder: (context) => authStore.inProgress
+                        ? const CircularProgressIndicator()
+                        : const LoginForm(),
+                  ),
+                  _LoginSuccessfulReaction(),
                 ],
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _LoginSuccessfulReaction extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final authStore = Provider.of<AuthenticationStore>(context);
+    return ReactionBuilder(
+      builder: (context) => reaction((_) => authStore.userId, (int? userId) {
+        if (userId != null) {
+          Navigator.restorablePushReplacementNamed(
+            context,
+            HomeScreen.routeName,
+          );
+        }
+      }),
+      child: const SizedBox.shrink(),
     );
   }
 }

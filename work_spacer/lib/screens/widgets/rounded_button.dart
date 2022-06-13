@@ -14,33 +14,33 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Wrap(
       children: [
         Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
-            side: BorderSide(
-              color: Theme.of(context).secondaryHeaderColor,
-            ),
+            side: BorderSide(color: theme.colorScheme.primary),
           ),
           color: isSelected == null
-              ? Colors.white
+              ? theme.cardTheme.color
               : isSelected!
-                  ? Theme.of(context).secondaryHeaderColor
-                  : Colors.white,
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.background,
           child: InkWell(
             onTap: onTap,
             borderRadius: BorderRadius.circular(16),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
               child: Text(
                 title,
                 style: TextStyle(
                   color: isSelected == null
-                      ? Theme.of(context).secondaryHeaderColor
+                      ? theme.colorScheme.primary
                       : isSelected!
-                          ? Colors.white
-                          : Theme.of(context).secondaryHeaderColor,
+                          ? theme.colorScheme.onPrimary
+                          : theme.colorScheme.primary,
                 ),
               ),
             ),

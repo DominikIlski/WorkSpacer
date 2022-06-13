@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/widgets/number_selector.dart';
 import 'package:work_spacer/screens/widgets/picker_tile.dart';
 import 'package:work_spacer/screens/widgets/workspace_details_list.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 
 class MakeReservationDialog extends StatefulWidget {
   const MakeReservationDialog({
@@ -14,8 +17,8 @@ class MakeReservationDialog extends StatefulWidget {
   }) : super(key: key);
 
   final Workspace workspace;
-  final Function(Workspace workspace, DateTime date, TimeOfDay time, int hours)
-      onConfirm;
+  final Function(int? userId, Workspace workspace, DateTime date,
+      TimeOfDay time, int hours) onConfirm;
 
   @override
   State<MakeReservationDialog> createState() => _MakeReservationDialogState();
@@ -23,24 +26,26 @@ class MakeReservationDialog extends StatefulWidget {
 
 class _MakeReservationDialogState extends State<MakeReservationDialog> {
   DateTime? _date;
-  String _dateText = 'Select date';
+  String _dateText = translate.selectDate;
   TimeOfDay? _time;
-  String _timeText = 'Select start hour';
+  String _timeText = translate.selectHour;
   int _hours = 1;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return AlertDialog(
       contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
       title: Row(
         children: [
           Icon(
             Icons.desktop_windows_outlined,
-            color: Theme.of(context).primaryColorDark,
+            color: theme.colorScheme.primary,
           ),
           const SizedBox(width: 12),
           Text(
-              '${widget.workspace is Desk ? 'Desk' : 'Room'} #${widget.workspace.id}'),
+              '${widget.workspace is Desk ? translate.desk : translate.room} #${widget.workspace.id}'),
         ],
       ),
       content: Column(
@@ -64,8 +69,8 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Select duration',
-            style: TextStyle(color: Theme.of(context).primaryColorDark),
+            translate.selectDuration,
+            style: theme.textTheme.subtitle1,
           ),
           NumberSelector(
             value: _hours,
@@ -83,9 +88,9 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
           if (_date == null || _time == null) const SizedBox(height: 16),
           if (_date == null || _time == null)
             Text(
-              'Date and time must be specified!',
+              translate.specifyDateTimeError,
               style: TextStyle(
-                color: Theme.of(context).secondaryHeaderColor,
+                color: theme.colorScheme.error,
                 fontSize: 14,
               ),
             ),
@@ -95,21 +100,21 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(
-            'Cancel',
-            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
-          ),
+          child: Text(translate.cancel),
         ),
         TextButton(
           onPressed: _date == null || _time == null
               ? null
               : () {
-                  widget.onConfirm(widget.workspace, _date!, _time!, _hours);
+                  final authStore =
+                      Provider.of<AuthenticationStore>(context, listen: false);
+                  widget.onConfirm(authStore.userId, widget.workspace, _date!,
+                      _time!, _hours);
                   Navigator.pop(context);
                 },
-          child: const Text(
-            'Make a reservation',
-            style: TextStyle(
+          child: Text(
+            translate.makeRes,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -124,6 +129,8 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
       initialDate: _date ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
+      confirmText: translate.confirm,
+      cancelText: translate.cancel,
     ).then((date) => _setDate(date));
   }
 
@@ -131,6 +138,8 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
     showTimePicker(
       context: context,
       initialTime: _time ?? TimeOfDay.now(),
+      confirmText: translate.confirm,
+      cancelText: translate.cancel,
     ).then((time) => _setTime(time));
   }
 
