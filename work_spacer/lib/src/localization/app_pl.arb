@@ -66,5 +66,6 @@
   "executive": "Dyrektor",
   "mid": "Mid",
   "junior": "Junior",
-  "intern": "Stażysta"
+  "intern": "Stażysta",
+  "noWorkspacesFound": "Nie znaleziono dostępnych obszarów roboczych."
 }

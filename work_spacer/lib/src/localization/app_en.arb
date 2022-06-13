@@ -66,5 +66,6 @@
   "executive": "Executive",
   "mid": "Mid",
   "junior": "Junior",
-  "intern": "Intern"
+  "intern": "Intern",
+  "noWorkspacesFound": "No available workspaces."
 }

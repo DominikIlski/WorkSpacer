@@ -66,5 +66,6 @@
   "executive": "Exekutive",
   "mid": "Mid",
   "junior": "Junior",
-  "intern": "Intern"
+  "intern": "Intern",
+  "noWorkspacesFound": "Keine verfügbaren Arbeitsbereiche."
 }

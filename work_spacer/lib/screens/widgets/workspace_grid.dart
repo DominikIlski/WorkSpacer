@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk.dart';
 import 'package:work_spacer/models/workspace.dart';
 
@@ -33,7 +34,7 @@ class WorkspaceGrid extends StatelessWidget {
                 const Icon(Icons.search_off, size: 40),
                 const SizedBox(height: 8),
                 Text(
-                  'No available workspaces.',
+                  translate.noWorkspacesFound,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline6,
                 ),
