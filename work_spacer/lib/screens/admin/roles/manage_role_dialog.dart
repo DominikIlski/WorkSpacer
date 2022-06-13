@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_spacer/models/user.dart';
+import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 
 class ManageRoleDialog extends StatefulWidget {
   const ManageRoleDialog({
@@ -26,73 +27,54 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(
-        'Edit role',
-        style: TextStyle(
-          color: Theme.of(context).primaryColorDark,
-        ),
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          DropdownButtonFormField(
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).primaryColorDark,
-                ),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 4,
-              ),
-              iconColor: Theme.of(context).primaryColorDark,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).primaryColorDark,
-                ),
-              ),
-            ),
-            value: _role,
-            items: Role.values
-                .map(
-                  (role) => DropdownMenuItem<Role>(
-                    child: Text(
-                      roleNames[role]!,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+    return UnfocusWrapper(
+      child: AlertDialog(
+        title: const Text('Edit role'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            DropdownButtonFormField(
+              value: _role,
+              isDense: false,
+              isExpanded: true,
+              items: Role.values
+                  .map(
+                    (role) => DropdownMenuItem<Role>(
+                      child: Text(
+                        roleNames[role]!,
+                        style: Theme.of(context).textTheme.subtitle1,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      value: role,
                     ),
-                    value: role,
-                  ),
-                )
-                .toList(),
-            onChanged: (Role? value) {
-              setState(() {
-                _role = value;
-              });
+                  )
+                  .toList(),
+              onChanged: (Role? value) {
+                setState(() {
+                  _role = value;
+                });
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              widget.onEditRole(widget.user, _role!);
+              Navigator.pop(context);
             },
+            child: const Text(
+              'Confirm',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text(
-            'Cancel',
-            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            widget.onEditRole(widget.user, _role!);
-            Navigator.pop(context);
-          },
-          child: const Text(
-            'Confirm',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-      ],
     );
   }
 }

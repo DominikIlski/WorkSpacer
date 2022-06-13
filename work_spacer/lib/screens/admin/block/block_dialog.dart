@@ -25,6 +25,7 @@ class _BlockDialogState extends State<BlockDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
       title: const Text('Enter duration'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -40,27 +41,23 @@ class _BlockDialogState extends State<BlockDialog> {
             hintText: _endDateText,
             onTap: _endDatePicker,
           ),
-          if (_startDate == null || _endDate == null)
-            const SizedBox(height: 16),
+          const SizedBox(height: 16),
           if (_startDate == null || _endDate == null)
             Text(
               'Dates must be selected!',
               style: TextStyle(
-                color: Theme.of(context).secondaryHeaderColor,
+                color: Theme.of(context).colorScheme.error,
                 fontSize: 14,
               ),
             ),
+          if (_startDate == null || _endDate == null) const SizedBox(height: 8),
         ],
       ),
-      actionsAlignment: MainAxisAlignment.spaceBetween,
-      actionsPadding: const EdgeInsets.symmetric(horizontal: 24),
+      actionsAlignment: MainAxisAlignment.spaceAround,
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(
-            'Cancel',
-            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
-          ),
+          child: const Text('Cancel'),
         ),
         ElevatedButton.icon(
           onPressed: _startDate == null || _endDate == null
@@ -71,7 +68,6 @@ class _BlockDialogState extends State<BlockDialog> {
                 },
           label: const Text('Block'),
           icon: const Icon(Icons.block),
-          //
         ),
       ],
     );
@@ -83,6 +79,8 @@ class _BlockDialogState extends State<BlockDialog> {
       initialDate: _startDate ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
+      confirmText: 'Confirm',
+      cancelText: 'Cancel',
     ).then((start) => _setStartDate(start));
   }
 
@@ -93,6 +91,8 @@ class _BlockDialogState extends State<BlockDialog> {
       firstDate: _startDate ?? DateTime.now(),
       lastDate: _startDate?.add(const Duration(days: 365)) ??
           DateTime.now().add(const Duration(days: 365)),
+      confirmText: 'Confirm',
+      cancelText: 'Cancel',
     ).then((end) => _setEndDate(end));
   }
 

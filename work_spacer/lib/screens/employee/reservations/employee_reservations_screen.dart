@@ -55,12 +55,7 @@ class EmployeeReservationsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(
-          'Do you want to cancel?',
-          style: TextStyle(
-            color: Theme.of(context).primaryColorDark,
-          ),
-        ),
+        title: const Text('Do you want to cancel?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -71,11 +66,10 @@ class EmployeeReservationsScreen extends StatelessWidget {
               onCancel(reservation);
               Navigator.pop(context);
             },
-            child: Text(
+            child: const Text(
               'Yes',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).secondaryHeaderColor,
               ),
             ),
           ),

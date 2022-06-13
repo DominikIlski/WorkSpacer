@@ -44,15 +44,21 @@ class WorkspaceDetailsList extends StatelessWidget {
   }
 
   _getRow(context, String title, String value) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('$title: '),
-        Text(value,
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold,
-            ))
+        Text(
+          '$title: ',
+          style: theme.textTheme.subtitle1,
+        ),
+        Text(
+          value,
+          style: theme.textTheme.subtitle1?.copyWith(
+            color: theme.colorScheme.primary,
+            fontWeight: FontWeight.bold,
+          ),
+        )
       ],
     );
   }

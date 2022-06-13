@@ -32,13 +32,15 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return AlertDialog(
       contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
       title: Row(
         children: [
           Icon(
             Icons.desktop_windows_outlined,
-            color: Theme.of(context).primaryColorDark,
+            color: theme.colorScheme.primary,
           ),
           const SizedBox(width: 12),
           Text(
@@ -67,7 +69,7 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
           const SizedBox(height: 8),
           Text(
             'Select duration',
-            style: TextStyle(color: Theme.of(context).primaryColorDark),
+            style: theme.textTheme.subtitle1,
           ),
           NumberSelector(
             value: _hours,
@@ -87,7 +89,7 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
             Text(
               'Date and time must be specified!',
               style: TextStyle(
-                color: Theme.of(context).secondaryHeaderColor,
+                color: theme.colorScheme.error,
                 fontSize: 14,
               ),
             ),
@@ -97,10 +99,7 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(
-            'Cancel',
-            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
-          ),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: _date == null || _time == null
@@ -129,6 +128,8 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
       initialDate: _date ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
+      confirmText: 'Confirm',
+      cancelText: 'Cancel',
     ).then((date) => _setDate(date));
   }
 
@@ -136,6 +137,8 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
     showTimePicker(
       context: context,
       initialTime: _time ?? TimeOfDay.now(),
+      confirmText: 'Confirm',
+      cancelText: 'Cancel',
     ).then((time) => _setTime(time));
   }
 

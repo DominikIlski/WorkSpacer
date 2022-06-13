@@ -20,7 +20,7 @@ abstract class _AuthenticationStore with Store {
     //TODO: handle backend
     await Future.delayed(const Duration(seconds: 2));
     userId = 1;
-    isAdmin = false;
+    isAdmin = true;
     //CHANGE ^ FROM BACKEND
     inProgress = false;
   }

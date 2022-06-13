@@ -19,6 +19,7 @@ class AdminHomeContent extends StatelessWidget {
       children: [
         HomeScreenButton(
           title: 'Cancel a reservation',
+          selected: true,
           onTap: () {
             Provider.of<CancelStore>(context, listen: false)
                 .fetchReservations();
@@ -28,8 +29,6 @@ class AdminHomeContent extends StatelessWidget {
             );
           },
           icon: Icons.free_cancellation_rounded,
-          backgroundColor: Theme.of(context).secondaryHeaderColor,
-          contentColor: Theme.of(context).colorScheme.onPrimary,
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
@@ -44,9 +43,6 @@ class AdminHomeContent extends StatelessWidget {
             );
           },
           icon: Icons.block,
-          backgroundColor: Theme.of(context).primaryColorLight,
-          contentColor: Theme.of(context).secondaryHeaderColor,
-          hasBorder: true,
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
@@ -61,8 +57,6 @@ class AdminHomeContent extends StatelessWidget {
             );
           },
           icon: Icons.lock_outline,
-          backgroundColor: Theme.of(context).primaryColor,
-          contentColor: Theme.of(context).primaryColorDark,
         ),
       ],
     );

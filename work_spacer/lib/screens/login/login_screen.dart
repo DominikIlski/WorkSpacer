@@ -14,9 +14,9 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
     final authStore = Provider.of<AuthenticationStore>(context);
-    return KeyboardHideWrapper(
+    return UnfocusWrapper(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 64.0, vertical: 32),
@@ -27,16 +27,16 @@ class LoginScreen extends StatelessWidget {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    Icons.workspaces_rounded,
-                    size: 40,
-                    color: Theme.of(context).primaryColorDark,
+                  const Icon(
+                    Icons.image,
+                    size: 64,
+                    color: Colors.amber,
                   ),
                   const SizedBox(height: 8),
                   Center(
                     child: Text(
                       'Company XYZ',
-                      style: textTheme.titleLarge,
+                      style: theme.textTheme.headline6,
                     ),
                   ),
                 ],
@@ -47,10 +47,10 @@ class LoginScreen extends StatelessWidget {
                   Center(
                     child: Text(
                       'Welcome.',
-                      style: textTheme.titleLarge,
+                      style: theme.textTheme.headline6,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
                   Observer(
                     builder: (context) => authStore.inProgress
                         ? const CircularProgressIndicator()

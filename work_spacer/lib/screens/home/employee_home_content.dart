@@ -19,6 +19,7 @@ class EmployeeHomeContent extends StatelessWidget {
       children: [
         HomeScreenButton(
           title: "My reservations",
+          selected: true,
           onTap: () {
             final store = Provider.of<ReservationStore>(context, listen: false);
             store.fetchReservations();
@@ -28,8 +29,6 @@ class EmployeeHomeContent extends StatelessWidget {
             );
           },
           icon: Icons.event_available_rounded,
-          backgroundColor: Theme.of(context).secondaryHeaderColor,
-          contentColor: Theme.of(context).colorScheme.onPrimary,
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
@@ -43,8 +42,6 @@ class EmployeeHomeContent extends StatelessWidget {
             );
           },
           icon: Icons.desktop_windows_outlined,
-          backgroundColor: Theme.of(context).primaryColor,
-          contentColor: Theme.of(context).primaryColorDark,
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
@@ -58,8 +55,6 @@ class EmployeeHomeContent extends StatelessWidget {
             );
           },
           icon: Icons.meeting_room_outlined,
-          backgroundColor: Theme.of(context).primaryColor,
-          contentColor: Theme.of(context).primaryColorDark,
         ),
       ],
     );

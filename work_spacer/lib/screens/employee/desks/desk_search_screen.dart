@@ -20,16 +20,15 @@ class DeskSearchScreen extends StatelessWidget {
     final desksStore = Provider.of<DesksStore>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Desks'),
-      ),
+      appBar: AppBar(title: const Text('Desks')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
         child: FilterableWorkspaceList(
           observerFilterButtons: _getObserverFilterButtons(desksStore),
           child: _getContent(context, desksStore),
         ),
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 

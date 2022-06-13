@@ -126,22 +126,49 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
   }
 
   Widget _getNavBar() {
-    return BottomNavigationBar(
-      currentIndex: _selectedIndex,
-      onTap: _onNavBarItemTapped,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.desktop_windows_outlined),
-          label: 'Desks',
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _getNavBarItem(
+            theme,
+            Icons.desktop_windows_outlined,
+            0,
+          ),
+          _getNavBarItem(
+            theme,
+            Icons.meeting_room_outlined,
+            1,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getNavBarItem(ThemeData theme, IconData icon, int index) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(32),
+      onTap: () => _onNavBarItemTapped(index),
+      child: Ink(
+        decoration: BoxDecoration(
+          color: _selectedIndex == index
+              ? theme.colorScheme.primary
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(32),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.meeting_room_outlined),
-          label: 'Rooms',
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+          child: Icon(
+            icon,
+            color: _selectedIndex == index
+                ? theme.colorScheme.onPrimary
+                : theme.colorScheme.primary,
+            size: 32,
+          ),
         ),
-      ],
-      backgroundColor: Theme.of(context).primaryColorDark,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Theme.of(context).primaryColor,
+      ),
     );
   }
 

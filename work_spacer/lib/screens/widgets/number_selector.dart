@@ -18,17 +18,21 @@ class NumberSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
           onPressed: value > minValue ? onDecrement : null,
           icon: const Icon(Icons.remove_circle_outline),
+          color: theme.colorScheme.onBackground,
         ),
         const SizedBox(width: 12),
         Text(
           '$value',
-          style: TextStyle(color: Theme.of(context).primaryColorDark),
+          style: theme.textTheme.subtitle1
+              ?.copyWith(color: theme.colorScheme.primary),
         ),
         const SizedBox(width: 12),
         IconButton(
