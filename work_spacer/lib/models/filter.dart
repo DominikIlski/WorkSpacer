@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 
 @immutable
 class Filter {
@@ -51,17 +52,17 @@ const Map<FilterParameter, FilterDataType> filterParameterDataTypes = {
   FilterParameter.surname: FilterDataType.text,
 };
 
-const Map<FilterParameter, String> filterParameterNames = {
-  FilterParameter.id: 'ID',
-  FilterParameter.floor: 'Floor',
-  FilterParameter.date: 'Date',
-  FilterParameter.time: 'Time',
-  FilterParameter.duration: 'Duration',
-  FilterParameter.secondMonitor: 'Extra monitor',
-  FilterParameter.projector: 'Projector',
-  FilterParameter.whiteboard: 'Whiteboard',
-  FilterParameter.teleconference: 'Teleconference system',
-  FilterParameter.capacity: 'Capacity',
-  FilterParameter.name: 'Name',
-  FilterParameter.surname: 'Surname',
+final Map<FilterParameter, String> filterParameterNames = {
+  FilterParameter.id: translate.id,
+  FilterParameter.floor: translate.floor,
+  FilterParameter.date: translate.date,
+  FilterParameter.time: translate.time,
+  FilterParameter.duration: translate.duration,
+  FilterParameter.secondMonitor: translate.monitor,
+  FilterParameter.projector: translate.projector,
+  FilterParameter.whiteboard: translate.whiteboard,
+  FilterParameter.teleconference: translate.teleconf,
+  FilterParameter.capacity: translate.capacity,
+  FilterParameter.name: translate.name,
+  FilterParameter.surname: translate.surname,
 };

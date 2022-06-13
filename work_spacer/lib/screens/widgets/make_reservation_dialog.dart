@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/widgets/number_selector.dart';
@@ -25,9 +26,9 @@ class MakeReservationDialog extends StatefulWidget {
 
 class _MakeReservationDialogState extends State<MakeReservationDialog> {
   DateTime? _date;
-  String _dateText = 'Select date';
+  String _dateText = translate.selectDate;
   TimeOfDay? _time;
-  String _timeText = 'Select start hour';
+  String _timeText = translate.selectHour;
   int _hours = 1;
 
   @override
@@ -44,7 +45,7 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
           ),
           const SizedBox(width: 12),
           Text(
-              '${widget.workspace is Desk ? 'Desk' : 'Room'} #${widget.workspace.id}'),
+              '${widget.workspace is Desk ? translate.desk : translate.room} #${widget.workspace.id}'),
         ],
       ),
       content: Column(
@@ -68,7 +69,7 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Select duration',
+            translate.selectDuration,
             style: theme.textTheme.subtitle1,
           ),
           NumberSelector(
@@ -87,7 +88,7 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
           if (_date == null || _time == null) const SizedBox(height: 16),
           if (_date == null || _time == null)
             Text(
-              'Date and time must be specified!',
+              translate.specifyDateTimeError,
               style: TextStyle(
                 color: theme.colorScheme.error,
                 fontSize: 14,
@@ -99,7 +100,7 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(translate.cancel),
         ),
         TextButton(
           onPressed: _date == null || _time == null
@@ -111,9 +112,9 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
                       _time!, _hours);
                   Navigator.pop(context);
                 },
-          child: const Text(
-            'Make a reservation',
-            style: TextStyle(
+          child: Text(
+            translate.makeRes,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -128,8 +129,8 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
       initialDate: _date ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      confirmText: 'Confirm',
-      cancelText: 'Cancel',
+      confirmText: translate.confirm,
+      cancelText: translate.cancel,
     ).then((date) => _setDate(date));
   }
 
@@ -137,8 +138,8 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
     showTimePicker(
       context: context,
       initialTime: _time ?? TimeOfDay.now(),
-      confirmText: 'Confirm',
-      cancelText: 'Cancel',
+      confirmText: translate.confirm,
+      cancelText: translate.cancel,
     ).then((time) => _setTime(time));
   }
 

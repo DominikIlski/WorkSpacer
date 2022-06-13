@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/user.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 
@@ -29,7 +30,7 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
   Widget build(BuildContext context) {
     return UnfocusWrapper(
       child: AlertDialog(
-        title: const Text('Edit role'),
+        title: Text(translate.editRole),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -61,16 +62,16 @@ class _ManageRoleDialog extends State<ManageRoleDialog> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(translate.cancel),
           ),
           TextButton(
             onPressed: () {
               widget.onEditRole(widget.user, _role!);
               Navigator.pop(context);
             },
-            child: const Text(
-              'Confirm',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: Text(
+              translate.confirm,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],

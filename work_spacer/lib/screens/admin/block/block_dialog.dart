@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/widgets/picker_tile.dart';
 
@@ -20,13 +21,14 @@ class BlockDialog extends StatefulWidget {
 
 class _BlockDialogState extends State<BlockDialog> {
   DateTime? _startDate, _endDate;
-  String _startDateText = 'Select start date', _endDateText = 'Select end date';
+  String _startDateText = translate.selectStartDate,
+      _endDateText = translate.selectEndDate;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
-      title: const Text('Enter duration'),
+      title: Text(translate.enterDuration),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -44,7 +46,7 @@ class _BlockDialogState extends State<BlockDialog> {
           const SizedBox(height: 16),
           if (_startDate == null || _endDate == null)
             Text(
-              'Dates must be selected!',
+              translate.specifyDateTimeError,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.error,
                 fontSize: 14,
@@ -57,7 +59,7 @@ class _BlockDialogState extends State<BlockDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(translate.cancel),
         ),
         ElevatedButton.icon(
           onPressed: _startDate == null || _endDate == null
@@ -66,7 +68,7 @@ class _BlockDialogState extends State<BlockDialog> {
                   widget.onBlock(widget.workspace, _startDate!, _endDate!);
                   Navigator.pop(context);
                 },
-          label: const Text('Block'),
+          label: Text(translate.block),
           icon: const Icon(Icons.block),
         ),
       ],
@@ -79,8 +81,8 @@ class _BlockDialogState extends State<BlockDialog> {
       initialDate: _startDate ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      confirmText: 'Confirm',
-      cancelText: 'Cancel',
+      confirmText: translate.confirm,
+      cancelText: translate.cancel,
     ).then((start) => _setStartDate(start));
   }
 
@@ -91,8 +93,8 @@ class _BlockDialogState extends State<BlockDialog> {
       firstDate: _startDate ?? DateTime.now(),
       lastDate: _startDate?.add(const Duration(days: 365)) ??
           DateTime.now().add(const Duration(days: 365)),
-      confirmText: 'Confirm',
-      cancelText: 'Cancel',
+      confirmText: translate.confirm,
+      cancelText: translate.cancel,
     ).then((end) => _setEndDate(end));
   }
 
@@ -105,7 +107,7 @@ class _BlockDialogState extends State<BlockDialog> {
       _startDateText = DateFormat('dd.MM.yyyy').format(_startDate!);
       if (_endDate?.compareTo(_startDate!) == -1) {
         _endDate = null;
-        _endDateText = 'Select end date';
+        _endDateText = translate.selectEndDate;
       }
     });
   }

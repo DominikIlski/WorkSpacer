@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/screens/widgets/picker_tile.dart';
@@ -26,9 +27,9 @@ class FilterDialog extends StatefulWidget {
 class _FilterDialogState extends State<FilterDialog> {
   final _controller = TextEditingController();
   DateTime? _date;
-  String _dateText = 'Select date';
+  String _dateText = translate.selectDate;
   TimeOfDay? _time;
-  String _timeText = 'Select start hour';
+  String _timeText = translate.selectHour;
 
   @override
   void initState() {
@@ -72,7 +73,7 @@ class _FilterDialogState extends State<FilterDialog> {
     final filterDataType = filterParameterDataTypes[widget.filter];
     return UnfocusWrapper(
       child: AlertDialog(
-        title: const Text('Enter the value'),
+        title: Text(translate.enterValue),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -112,13 +113,13 @@ class _FilterDialogState extends State<FilterDialog> {
               Navigator.pop(context);
             },
             child: Text(
-              'Reset',
+              translate.reset,
               style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(translate.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -134,9 +135,9 @@ class _FilterDialogState extends State<FilterDialog> {
               }
               Navigator.pop(context);
             },
-            child: const Text(
-              'Confirm',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: Text(
+              translate.confirm,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -150,8 +151,8 @@ class _FilterDialogState extends State<FilterDialog> {
       initialDate: _date ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      confirmText: 'Confirm',
-      cancelText: 'Cancel',
+      confirmText: translate.confirm,
+      cancelText: translate.cancel,
     ).then((date) => _setDate(date));
   }
 
@@ -159,8 +160,8 @@ class _FilterDialogState extends State<FilterDialog> {
     showTimePicker(
       context: context,
       initialTime: _time ?? TimeOfDay.now(),
-      confirmText: 'Confirm',
-      cancelText: 'Cancel',
+      confirmText: translate.confirm,
+      cancelText: translate.cancel,
     ).then((time) => _setTime(time));
   }
 

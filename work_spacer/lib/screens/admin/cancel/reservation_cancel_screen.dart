@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
@@ -19,7 +20,7 @@ class ReservationCancelScreen extends StatelessWidget {
     return UnfocusWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Cancel a reservation'),
+          title: Text(translate.cancelRes),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -72,20 +73,20 @@ class ReservationCancelScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Do you want to cancel?'),
+        title: Text(translate.cancelQ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('No'),
+            child: Text(translate.no),
           ),
           TextButton(
             onPressed: () {
               onCancel(reservation);
               Navigator.pop(context);
             },
-            child: const Text(
-              'Yes',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: Text(
+              translate.yes,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -131,9 +132,9 @@ class _WorkspaceSearchTextFieldState extends State<_WorkspaceSearchTextField> {
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
         ],
-        decoration: const InputDecoration(
-          prefixIcon: Icon(Icons.search),
-          labelText: "Workspace ID",
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.search),
+          labelText: translate.wsID,
         ),
       ),
     );

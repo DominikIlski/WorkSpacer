@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:work_spacer/i18n.dart';
 
 part 'user.g.dart';
 
@@ -46,11 +47,11 @@ enum Role {
   intern,
 }
 
-const Map<Role, String> roleNames = {
-  Role.senior: 'Senior',
-  Role.officeAdministrator: 'Office Administrator',
-  Role.executive: 'Executive',
-  Role.mid: 'Mid',
-  Role.junior: 'Junior',
-  Role.intern: 'Intern',
+final Map<Role, String> roleNames = {
+  Role.senior: translate.senior,
+  Role.officeAdministrator: translate.offAdmin,
+  Role.executive: translate.executive,
+  Role.mid: translate.mid,
+  Role.junior: translate.junior,
+  Role.intern: translate.intern,
 };

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/employee/notifications/notifications_screen.dart';
 import 'package:work_spacer/screens/home/admin_home_content.dart';
 import 'package:work_spacer/screens/home/employee_home_content.dart';
@@ -89,12 +90,12 @@ class HomeScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Please confirm'),
-        content: const Text('Do you want to log out?'),
+        title: Text(translate.pleaseConfirm),
+        content: Text(translate.logOutQ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(translate.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -105,9 +106,9 @@ class HomeScreen extends StatelessWidget {
                 LoginScreen.routeName,
               );
             },
-            child: const Text(
-              'Confirm',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: Text(
+              translate.confirm,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],

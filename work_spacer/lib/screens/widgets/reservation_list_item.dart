@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/desk_reservation.dart';
 import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/models/room_reservation.dart';
@@ -29,14 +30,14 @@ class ReservationListItem extends StatelessWidget {
         color: theme.colorScheme.tertiary,
         size: 36,
       );
-      title = 'Desk #${(reservation as DeskReservation).desk.id}';
+      title = '${translate.desk} #${(reservation as DeskReservation).desk.id}';
     } else {
       icon = Icon(
         Icons.meeting_room_outlined,
         color: theme.colorScheme.tertiary,
         size: 36,
       );
-      title = 'Room #${(reservation as RoomReservation).room.id}';
+      title = '${translate.room} #${(reservation as RoomReservation).room.id}';
     }
 
     return Card(
@@ -71,14 +72,14 @@ class ReservationListItem extends StatelessWidget {
                   _getIconText(
                     theme,
                     Icons.hourglass_empty,
-                    '${reservation.duration} hours',
+                    '${reservation.duration} ${translate.hours}',
                   ),
               ],
             ),
             const Spacer(),
             ElevatedButton.icon(
               onPressed: onCancel,
-              label: const Text('Cancel'),
+              label: Text(translate.cancel),
               icon: const Icon(Icons.delete_outline_rounded),
             ),
           ],

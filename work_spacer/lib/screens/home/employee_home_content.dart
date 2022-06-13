@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/employee/desks/desk_search_screen.dart';
 import 'package:work_spacer/screens/employee/reservations/employee_reservations_screen.dart';
 import 'package:work_spacer/screens/employee/rooms/room_search_screen.dart';
@@ -18,7 +19,7 @@ class EmployeeHomeContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         HomeScreenButton(
-          title: "My reservations",
+          title: translate.myRes,
           selected: true,
           onTap: () {
             final store = Provider.of<ReservationStore>(context, listen: false);
@@ -32,7 +33,7 @@ class EmployeeHomeContent extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
-          title: "Desks",
+          title: translate.desks,
           onTap: () {
             final store = Provider.of<DesksStore>(context, listen: false);
             store.fetchDesks();
@@ -45,7 +46,7 @@ class EmployeeHomeContent extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         HomeScreenButton(
-          title: "Conference rooms",
+          title: translate.confRooms,
           onTap: () {
             final store = Provider.of<RoomsStore>(context, listen: false);
             store.fetchRooms();

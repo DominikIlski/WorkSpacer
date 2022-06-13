@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/screens/admin/block/block_dialog.dart';
@@ -34,7 +35,7 @@ class _WorkspaceBlockScreenState extends State<WorkspaceBlockScreen> {
     final blockStore = Provider.of<BlockStore>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Block a workspace'),
+        title: Text(translate.blockWS),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

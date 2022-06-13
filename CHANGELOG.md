@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [0.10.1] - 2022-06-12
+# [0.10.2] - 2022-06-12
+### Added
+* English, Polish and German language support.
+
+## [0.10.1] - 2022-06-12
 ### Added
 * Prepared loccalizations support. Implemented a global singleton 'translate' to use everywhere in the app in order to access translated text.
 
