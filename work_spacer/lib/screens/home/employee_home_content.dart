@@ -4,6 +4,7 @@ import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/employee/desks/desk_search_screen.dart';
 import 'package:work_spacer/screens/employee/reservations/employee_reservations_screen.dart';
 import 'package:work_spacer/screens/employee/rooms/room_search_screen.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 import 'package:work_spacer/stores/desks_store.dart';
 import 'package:work_spacer/stores/reservation_store.dart';
 import 'package:work_spacer/stores/rooms_store.dart';
@@ -23,7 +24,9 @@ class EmployeeHomeContent extends StatelessWidget {
           selected: true,
           onTap: () {
             final store = Provider.of<ReservationStore>(context, listen: false);
-            store.fetchReservations();
+            final user = Provider.of<AuthenticationStore>(context, listen: false);
+
+            store.fetchReservations(user.userId!);
             Navigator.restorablePushNamed(
               context,
               EmployeeReservationsScreen.routeName,

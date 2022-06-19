@@ -53,8 +53,9 @@ mixin _$ReservationStore on _ReservationStore, Store {
       AsyncAction('_ReservationStore.fetchReservations', context: context);
 
   @override
-  Future fetchReservations() {
-    return _$fetchReservationsAsyncAction.run(() => super.fetchReservations());
+  Future fetchReservations(int userId) {
+    return _$fetchReservationsAsyncAction
+        .run(() => super.fetchReservations(userId));
   }
 
   late final _$_ReservationStoreActionController =
