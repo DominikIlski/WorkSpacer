@@ -12,14 +12,20 @@ part 'room_reservation.g.dart';
 class RoomReservation extends Reservation {
   @JsonKey(fromJson: _roomFromJson, name: 'idConferenceRoom')
   final Room room;
-
+  @JsonKey(name: "idCRCancellation", fromJson: _cancelationFromJson)
+  final bool isCancelled;
   const RoomReservation({
+    this.isCancelled = false,
     required this.room,
     required super.id,
     required super.startDate,
     required super.duration,
     required super.idEmployee,
   });
+
+  @override
+  bool get canceled => isCancelled;
+
   factory RoomReservation.fromJson(Map<String, dynamic> json) =>
       _$RoomReservationFromJson(json);
   Map<String, dynamic> toJson() => _$RoomReservationToJson(this);
@@ -37,4 +43,9 @@ Room _roomFromJson(dynamic data) {
 int _employeeFromJson(dynamic data) {
   var json = Map<String, dynamic>.from(data);
   return json['data']['id'];
+}
+
+bool _cancelationFromJson(dynamic data) {
+  var json = Map<String, dynamic>.from(data);
+  return json['data'] != null ;
 }

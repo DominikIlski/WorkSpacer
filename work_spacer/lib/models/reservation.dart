@@ -19,8 +19,9 @@ abstract class Reservation {
     required this.idEmployee,
   });
 
-  
+  bool get canceled => false;
 }
+
 
 
 int _employeeFromJson(dynamic data) {

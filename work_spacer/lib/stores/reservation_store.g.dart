@@ -58,18 +58,12 @@ mixin _$ReservationStore on _ReservationStore, Store {
         .run(() => super.fetchReservations(userId));
   }
 
-  late final _$_ReservationStoreActionController =
-      ActionController(name: '_ReservationStore', context: context);
+  late final _$cancelAsyncAction =
+      AsyncAction('_ReservationStore.cancel', context: context);
 
   @override
-  void cancel(Reservation reservation) {
-    final _$actionInfo = _$_ReservationStoreActionController.startAction(
-        name: '_ReservationStore.cancel');
-    try {
-      return super.cancel(reservation);
-    } finally {
-      _$_ReservationStoreActionController.endAction(_$actionInfo);
-    }
+  Future cancel(Reservation reservation) {
+    return _$cancelAsyncAction.run(() => super.cancel(reservation));
   }
 
   @override

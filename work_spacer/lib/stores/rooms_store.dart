@@ -147,10 +147,10 @@ abstract class _RoomsStore with Store {
     }
     final Room room = roomAsWorkspace as Room;
     var combinedDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
-    var res = await Proxy.data('cr-reservation', method: "POST", body: {
+    var res = await Proxy.data('cr-reservations', method: "POST", body: {
       "startDate": combinedDate.toIso8601String(),
       "duration": hours,
-      "idDesk": room.id,
+      "idConferenceRoom": room.id,
       "idEmployee": userId
     });
   }

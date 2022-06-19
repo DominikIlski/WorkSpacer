@@ -8,6 +8,9 @@ part of 'room_reservation.dart';
 
 RoomReservation _$RoomReservationFromJson(Map<String, dynamic> json) =>
     RoomReservation(
+      isCancelled: json['idCRCancellation'] == null
+          ? false
+          : _cancelationFromJson(json['idCRCancellation']),
       room: _roomFromJson(json['idConferenceRoom']),
       id: json['id'] as int,
       startDate: DateTime.parse(json['startDate'] as String),
@@ -22,4 +25,5 @@ Map<String, dynamic> _$RoomReservationToJson(RoomReservation instance) =>
       'duration': instance.duration,
       'idEmployee': instance.idEmployee,
       'idConferenceRoom': instance.room,
+      'idCRCancellation': instance.isCancelled,
     };

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:work_spacer/i18n.dart';
 import 'package:work_spacer/screens/widgets/keyboard_hide_wrapper.dart';
 import 'package:work_spacer/models/reservation.dart';
+import 'package:work_spacer/stores/authentication_store.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
 import '../../widgets/reservation_list_item.dart';
 
@@ -16,7 +17,7 @@ class ReservationCancelScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cancelStore = Provider.of<CancelStore>(context);
-
+    final user = Provider.of<AuthenticationStore>(context);
     return UnfocusWrapper(
       child: Scaffold(
         appBar: AppBar(
@@ -51,6 +52,7 @@ class ReservationCancelScreen extends StatelessWidget {
                                 context,
                                 cancelStore.cancel,
                                 cancelStore.filteredReservations[index],
+                                user.userId!
                               ),
                             ),
                           ),
@@ -66,8 +68,9 @@ class ReservationCancelScreen extends StatelessWidget {
 
   void _cancelReservation(
     context,
-    Function(Reservation) onCancel,
+    Function(Reservation, int) onCancel,
     Reservation reservation,
+    int adminId
   ) {
     FocusManager.instance.primaryFocus?.unfocus();
     showDialog(
@@ -81,7 +84,7 @@ class ReservationCancelScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              onCancel(reservation);
+              onCancel(reservation, adminId);
               Navigator.pop(context);
             },
             child: Text(

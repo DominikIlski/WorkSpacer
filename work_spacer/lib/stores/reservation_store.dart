@@ -23,7 +23,6 @@ abstract class _ReservationStore with Store {
 
   @action
   fetchReservations(int userId) async {
-    // desk-reservation
     inProgress = true;
     //TODO handle backend
 
@@ -46,9 +45,9 @@ abstract class _ReservationStore with Store {
         .toList() as List<RoomReservation>;
 
     var reservationsData = <Reservation>[...dReservations, ...rReservations]
-      ..shuffle()
-      ..where((element) => element.idEmployee == userId)
-      ..toList();
+      .where((element) => !element.canceled)
+      .where((element) => element.idEmployee == userId)
+      .toList();
 
     _reservations = ObservableList.of(
       reservationsData
@@ -61,8 +60,10 @@ abstract class _ReservationStore with Store {
   }
 
   @action
-  void cancel(Reservation reservation) {
-    //TODO handle backend
+  cancel(Reservation reservation) async {
+    var res = await Proxy.data('desk-reservations/${reservation.id}', method: "DELETE");
+    var res1 = await Proxy.data('cr-reservations/${reservation.id}', method: "DELETE");
+
     _reservations?.remove(reservation);
   }
 }

@@ -12,14 +12,20 @@ part 'desk_reservation.g.dart';
 class DeskReservation extends Reservation {
   @JsonKey(fromJson: _deskFromJson, name: 'idDesk')
   final Desk desk;
-
+@JsonKey(name: "idDeskCancellation", fromJson: _cancelationFromJson)
+  final bool isCancelled;
   const DeskReservation({
+    this.isCancelled = false,
     required this.desk,
     required super.id,
     required super.startDate,
     required super.duration,
     required super.idEmployee,
   });
+
+  @override
+  bool get canceled => isCancelled;
+
   factory DeskReservation.fromJson(Map<String, dynamic> json) => _$DeskReservationFromJson(json);
   Map<String, dynamic> toJson() => _$DeskReservationToJson(this);
 }
@@ -38,4 +44,8 @@ int _employeeFromJson(dynamic data) {
   return json['data']['id'];
 }
 
+bool _cancelationFromJson(dynamic data) {
+  var json = Map<String, dynamic>.from(data);
+  return json['data'] != null ;
+}
 // jsonDecode(json)['idDesk']['data']['id']

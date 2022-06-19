@@ -74,6 +74,14 @@ mixin _$CancelStore on _CancelStore, Store {
     return _$fetchReservationsAsyncAction.run(() => super.fetchReservations());
   }
 
+  late final _$cancelAsyncAction =
+      AsyncAction('_CancelStore.cancel', context: context);
+
+  @override
+  Future cancel(Reservation reservation, int adminId) {
+    return _$cancelAsyncAction.run(() => super.cancel(reservation, adminId));
+  }
+
   late final _$_CancelStoreActionController =
       ActionController(name: '_CancelStore', context: context);
 
@@ -83,17 +91,6 @@ mixin _$CancelStore on _CancelStore, Store {
         name: '_CancelStore.setSearchWorkspaceId');
     try {
       return super.setSearchWorkspaceId(value);
-    } finally {
-      _$_CancelStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void cancel(Reservation reservation) {
-    final _$actionInfo =
-        _$_CancelStoreActionController.startAction(name: '_CancelStore.cancel');
-    try {
-      return super.cancel(reservation);
     } finally {
       _$_CancelStoreActionController.endAction(_$actionInfo);
     }
