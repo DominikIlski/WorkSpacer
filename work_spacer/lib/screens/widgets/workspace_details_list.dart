@@ -36,13 +36,13 @@ class WorkspaceDetailsList extends StatelessWidget {
         _getRow(context, translate.capacity, '${room.capacity}'),
         const SizedBox(height: 8),
         _getRow(context, translate.whiteboard,
-            room.hasWhiteboard ? translate.yes : translate.no),
+            room.whiteboard ? translate.yes : translate.no),
         const SizedBox(height: 8),
         _getRow(context, translate.projector,
-            room.hasProjector ? translate.yes : translate.no),
+            room.projector ? translate.yes : translate.no),
         const SizedBox(height: 8),
         _getRow(context, translate.teleconf,
-            room.hasTeleconference ? translate.yes : translate.no),
+            room.teleconferenceSystem ? translate.yes : translate.no),
       ];
     }
   }

@@ -1,6 +1,10 @@
 import 'package:mobx/mobx.dart';
+import 'package:work_spacer/models/desk_reservation.dart';
 import 'package:work_spacer/models/reservation.dart';
+import 'package:work_spacer/models/room_reservation.dart';
 import 'package:work_spacer/stores/cancel_store.dart';
+
+import '../src/helpers/proxy.dart';
 
 part 'reservation_store.g.dart';
 
@@ -18,12 +22,36 @@ abstract class _ReservationStore with Store {
       ObservableList.of(_reservations ?? []);
 
   @action
-  fetchReservations() async {
+  fetchReservations(int userId) async {
+    // desk-reservation
     inProgress = true;
     //TODO handle backend
-    await Future.delayed(const Duration(milliseconds: 500));
+
+    var res = await Proxy.data('desk-reservations');
+    var jsonDeskR = res['data'].map((e) {
+      return <String, dynamic>{"id": e['id'], ...e['attributes']};
+    }).toList();
+
+    var dReservations = jsonDeskR
+        .map<DeskReservation>((e) => DeskReservation.fromJson(e))
+        .toList() as List<DeskReservation>;
+
+    var res1 = await Proxy.data('cr-reservations');
+    var jsonRoomsR = res1['data'].map((e) {
+      return <String, dynamic>{"id": e['id'], ...e['attributes']};
+    }).toList();
+
+    var rReservations = jsonRoomsR
+        .map<RoomReservation>((e) => RoomReservation.fromJson(e))
+        .toList() as List<RoomReservation>;
+
+    var reservationsData = <Reservation>[...dReservations, ...rReservations]
+      ..shuffle()
+      ..where((element) => element.idEmployee == userId)
+      ..toList();
+
     _reservations = ObservableList.of(
-      reservationsDummy
+      reservationsData
         ..sort(
           (reservation1, reservation2) =>
               reservation1.startDate.compareTo(reservation2.startDate),

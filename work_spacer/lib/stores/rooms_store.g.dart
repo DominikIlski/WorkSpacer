@@ -56,19 +56,14 @@ mixin _$RoomsStore on _RoomsStore, Store {
     return _$fetchRoomsAsyncAction.run(() => super.fetchRooms());
   }
 
-  late final _$_RoomsStoreActionController =
-      ActionController(name: '_RoomsStore', context: context);
+  late final _$reserveRoomAsyncAction =
+      AsyncAction('_RoomsStore.reserveRoom', context: context);
 
   @override
-  dynamic reserveRoom(int? userId, Workspace roomAsWorkspace, DateTime date,
+  Future reserveRoom(int? userId, Workspace roomAsWorkspace, DateTime date,
       TimeOfDay time, int hours) {
-    final _$actionInfo = _$_RoomsStoreActionController.startAction(
-        name: '_RoomsStore.reserveRoom');
-    try {
-      return super.reserveRoom(userId, roomAsWorkspace, date, time, hours);
-    } finally {
-      _$_RoomsStoreActionController.endAction(_$actionInfo);
-    }
+    return _$reserveRoomAsyncAction.run(
+        () => super.reserveRoom(userId, roomAsWorkspace, date, time, hours));
   }
 
   @override
