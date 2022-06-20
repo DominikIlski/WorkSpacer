@@ -80,7 +80,7 @@ class NotificationListItem extends StatelessWidget {
                       ),
                     if (notification.replacements.isNotEmpty)
                       SizedBox(
-                        height: 36,
+                        height: 40,
                         child: ListView(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,

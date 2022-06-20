@@ -60,6 +60,11 @@ ThemeData prepareLightTheme() {
             fontSize: 16,
           ),
         ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(

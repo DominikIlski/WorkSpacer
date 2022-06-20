@@ -62,6 +62,7 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
             hintText: _dateText,
             onTap: _datePicker,
           ),
+          const SizedBox(height: 4),
           PickerTile(
             pickerType: PickerType.time,
             hintText: _timeText,
@@ -89,6 +90,7 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
           if (_date == null || _time == null)
             Text(
               translate.specifyDateTimeError,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: theme.colorScheme.error,
                 fontSize: 14,

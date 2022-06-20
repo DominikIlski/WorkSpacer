@@ -47,36 +47,39 @@ class ReservationListItem extends StatelessWidget {
           children: [
             icon,
             const SizedBox(width: 24),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: theme.textTheme.headline6,
-                ),
-                const SizedBox(height: 12),
-                _getIconText(
-                  theme,
-                  Icons.calendar_month_outlined,
-                  DateFormat('dd.MM.yyyy').format(reservation.startDate),
-                ),
-                if (!showDateOnly) const SizedBox(height: 8),
-                if (!showDateOnly)
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: theme.textTheme.headline6,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 12),
                   _getIconText(
                     theme,
-                    Icons.timer_outlined,
-                    DateFormat.jm().format(reservation.startDate),
+                    Icons.calendar_month_outlined,
+                    DateFormat('dd.MM.yyyy').format(reservation.startDate),
                   ),
-                if (!showDateOnly) const SizedBox(height: 8),
-                if (!showDateOnly)
-                  _getIconText(
-                    theme,
-                    Icons.hourglass_empty,
-                    '${reservation.duration} ${translate.hours}',
-                  ),
-              ],
+                  if (!showDateOnly) const SizedBox(height: 8),
+                  if (!showDateOnly)
+                    _getIconText(
+                      theme,
+                      Icons.timer_outlined,
+                      DateFormat.jm().format(reservation.startDate),
+                    ),
+                  if (!showDateOnly) const SizedBox(height: 8),
+                  if (!showDateOnly)
+                    _getIconText(
+                      theme,
+                      Icons.hourglass_empty,
+                      '${reservation.duration} ${translate.hours}',
+                    ),
+                ],
+              ),
             ),
-            const Spacer(),
             ElevatedButton.icon(
               onPressed: onCancel,
               label: Text(translate.cancel),

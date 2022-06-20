@@ -29,7 +29,7 @@ class FilterableWorkspaceList extends StatelessWidget {
         const Divider(),
         const SizedBox(height: 12),
         Flexible(
-          flex: 15,
+          flex: 12,
           child: child,
         ),
       ],

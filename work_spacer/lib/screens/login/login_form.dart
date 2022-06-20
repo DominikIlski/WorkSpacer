@@ -29,7 +29,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           TextFormField(
-             key: const Key('login_form_field'),
+            key: const Key('login_form_field'),
             controller: loginController,
             validator: (value) =>
                 value == null || value.isEmpty ? translate.enterLogin : null,
@@ -44,6 +44,7 @@ class _LoginFormState extends State<LoginForm> {
             controller: passwordController,
             validator: (value) =>
                 value == null || value.isEmpty ? translate.enterPassword : null,
+            obscureText: true,
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.key_rounded),
               labelText: translate.password,
@@ -51,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-             key: const Key('login_btn'),
+            key: const Key('login_btn'),
             onPressed: _loginProcessor,
             child: Text(translate.login),
             style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
@@ -61,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
                   textStyle: MaterialStateProperty.all<TextStyle>(
                     const TextStyle(
                       fontFamily: 'Lato',
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
