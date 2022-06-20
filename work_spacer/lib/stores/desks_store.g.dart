@@ -56,19 +56,14 @@ mixin _$DesksStore on _DesksStore, Store {
     return _$fetchDesksAsyncAction.run(() => super.fetchDesks());
   }
 
-  late final _$_DesksStoreActionController =
-      ActionController(name: '_DesksStore', context: context);
+  late final _$reserveDeskAsyncAction =
+      AsyncAction('_DesksStore.reserveDesk', context: context);
 
   @override
-  dynamic reserveDesk(int? userId, Workspace deskAsWorkspace, DateTime date,
+  Future reserveDesk(int? userId, Workspace deskAsWorkspace, DateTime date,
       TimeOfDay time, int hours) {
-    final _$actionInfo = _$_DesksStoreActionController.startAction(
-        name: '_DesksStore.reserveDesk');
-    try {
-      return super.reserveDesk(userId, deskAsWorkspace, date, time, hours);
-    } finally {
-      _$_DesksStoreActionController.endAction(_$actionInfo);
-    }
+    return _$reserveDeskAsyncAction.run(
+        () => super.reserveDesk(userId, deskAsWorkspace, date, time, hours));
   }
 
   @override

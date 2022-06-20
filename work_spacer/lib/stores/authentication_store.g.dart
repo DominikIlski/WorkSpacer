@@ -61,8 +61,8 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
       AsyncAction('_AuthenticationStore.logIn', context: context);
 
   @override
-  Future logIn() {
-    return _$logInAsyncAction.run(() => super.logIn());
+  Future logIn(String email, String password) {
+    return _$logInAsyncAction.run(() => super.logIn(email, password));
   }
 
   late final _$_AuthenticationStoreActionController =

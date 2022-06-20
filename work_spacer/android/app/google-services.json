@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "778412087452",
+    "project_id": "workspacer-c329e",
+    "storage_bucket": "workspacer-c329e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778412087452:android:5bdcab28e380e9f2daf559",
+        "android_client_info": {
+          "package_name": "eu.work_spacer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778412087452-hlaa3nnpqgr88t779p1h4gpich2fj09k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG2QOwDqNwSWfGx3s--gr4OYtuGIRkyRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778412087452-hlaa3nnpqgr88t779p1h4gpich2fj09k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

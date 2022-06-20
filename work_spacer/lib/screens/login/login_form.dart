@@ -53,7 +53,8 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 24),
           ElevatedButton(
             key: const Key('login_btn'),
-            onPressed: _loginProcessor,
+            onPressed: () => _loginProcessor(
+                loginController.value.text, passwordController.value.text),
             child: Text(translate.login),
             style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
                   padding: MaterialStateProperty.all(
@@ -73,10 +74,11 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  _loginProcessor() {
+  _loginProcessor(String email, String password) {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState!.validate()) {
-      Provider.of<AuthenticationStore>(context, listen: false).logIn();
+      Provider.of<AuthenticationStore>(context, listen: false)
+          .logIn(email, password);
     }
   }
 }
