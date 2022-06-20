@@ -5,10 +5,8 @@
 // https://flutter.dev/docs/cookbook/testing/unit/introduction
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:work_spacer/models/desk.dart';
 import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/models/user.dart';
-import 'package:work_spacer/stores/block_store.dart';
 import 'package:work_spacer/stores/desks_store.dart';
 import 'package:work_spacer/stores/reservation_store.dart';
 import 'package:work_spacer/stores/role_management_store.dart';
@@ -41,8 +39,8 @@ void main() {
       final desksStore = DesksStore();
       await desksStore.fetchDesks();
       desksStore.filterStore.toggleSimpleFilter(FilterParameter.secondMonitor);
-      var isTrue = desksStore.desks.every((element) =>
-      element.secondMonitor == true);
+      var isTrue =
+          desksStore.desks.every((element) => element.secondMonitor == true);
       expect(isTrue, true);
     });
   });
@@ -73,48 +71,46 @@ void main() {
       final roomsStore = RoomsStore();
       await roomsStore.fetchRooms();
       roomsStore.filterStore.toggleSimpleFilter(FilterParameter.projector);
-      var isTrue = roomsStore.rooms.every((element) =>
-      element.hasProjector == true);
+      var isTrue =
+          roomsStore.rooms.every((element) => element.projector == true);
       expect(isTrue, true);
     });
   });
 
-
   group('reservation tests', () {
     test('fetch', () async {
       final deskResStore = ReservationStore();
-      await deskResStore.fetchReservations();
+      await deskResStore.fetchReservations(2);
 
       expect(deskResStore.reservations.isNotEmpty, true);
     });
     test('cancel reservation', () async {
       final deskResStore = ReservationStore();
-      await deskResStore.fetchReservations();
+      await deskResStore.fetchReservations(2);
       int initialListLength = deskResStore.reservations.length;
       deskResStore.cancel(deskResStore.reservations.first);
       expect(deskResStore.reservations.length, initialListLength - 1);
     });
   });
 
-    group('user tests', () {
-      test('fetch', () async {
-        final roleMagStore = RoleManagementStore();
-        await roleMagStore.fetchUsers();
+  group('user tests', () {
+    test('fetch', () async {
+      final roleMagStore = RoleManagementStore();
+      await roleMagStore.fetchUsers();
 
-        expect(roleMagStore.users.isNotEmpty, true);
-      });
-      test('change role', () async {
-        final roleMagStore = RoleManagementStore();
-        await roleMagStore.fetchUsers();
-        int index = 0;
-        if (roleMagStore.users[index].role == Role.senior) {
-          index++;
-        }
-        else {
-          roleMagStore.users[index].setRole(Role.senior);
-        }
-
-        expect(roleMagStore.users[index].role, Role.senior);
-      });
+      expect(roleMagStore.users.isNotEmpty, true);
     });
-  }
+    test('change role', () async {
+      final roleMagStore = RoleManagementStore();
+      await roleMagStore.fetchUsers();
+      int index = 0;
+      if (roleMagStore.users[index].role == Role.senior) {
+        index++;
+      } else {
+        roleMagStore.users[index].setRole(Role.senior);
+      }
+
+      expect(roleMagStore.users[index].role, Role.senior);
+    });
+  });
+}
