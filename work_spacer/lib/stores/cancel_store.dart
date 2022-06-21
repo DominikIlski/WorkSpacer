@@ -36,7 +36,6 @@ abstract class _CancelStore with Store {
   @action
   fetchReservations() async {
     inProgress = true;
-    //TODO handle backend
     var res = await Proxy.data('desk-reservations');
     var jsonDeskR = res['data'].map((e) {
       return <String, dynamic>{"id": e['id'], ...e['attributes']};
@@ -74,13 +73,16 @@ abstract class _CancelStore with Store {
 
   @action
   cancel(Reservation reservation, int adminId) async {
-    var res = await Proxy.data(reservation.runtimeType == RoomReservation ? 'cr-cancellations' : 'desk-cancellations', method: 'POST', body: {
+    var isDesk = reservation.runtimeType == DeskReservation;
+    var res = await Proxy.data(!isDesk ? 'cr-cancellations' : 'desk-cancellations', method: 'POST', body: {
       "idAdmin": adminId,
-      if(reservation.runtimeType == RoomReservation)
+      if(!isDesk)
       "idCRReservation": reservation.id,
-      if(reservation.runtimeType == DeskReservation)
+      if(isDesk)
       "idDeskReservation": reservation.id
     });
+    var res1 = await Proxy.notifyUser(isDesk,  reservation.id);
+    
     _reservations?.remove(reservation);
   }
 }

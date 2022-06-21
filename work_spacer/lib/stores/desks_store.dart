@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:work_spacer/models/desk.dart';
@@ -105,13 +107,25 @@ abstract class _DesksStore with Store {
     // await Future.delayed(const Duration(milliseconds: 500));
     var res = await Proxy.data('desks');
     var jsonDesks = res['data'].map((e) {
-      return <String, dynamic>{
-        "id": e['id'],
-        ...e['attributes']
-      };
-    }).toList();
+      return <String, dynamic>{"id": e['id'], ...e['attributes']};
+    })
+    .where((e) {
+      var blockages = (e?['deskBlockages']?['data'] as List<dynamic>);
+      var isBlocked = false;
+      blockages.forEach((e) { 
+        var sd = DateTime.parse(e['attributes']['startDate']);
+        var ed = DateTime.parse(e['attributes']['endDate']);
+        var now = DateTime.now();
+        if(now.isBefore(ed) && now.isAfter(sd) || now.isAfter(sd) && now.isBefore(ed)){
+          isBlocked = true;
+        }
+      });
+      return !isBlocked;
+    })
+    .toList();
 
-    var desks = jsonDesks.map<Desk>((e)=> Desk.fromJson(e)).toList() as List<Desk>;
+    var desks =
+        jsonDesks.map<Desk>((e) => Desk.fromJson(e)).toList() as List<Desk>;
     _desks = desks..sort((desk1, desk2) => desk1.id.compareTo(desk2.id));
     inProgress = false;
   }
@@ -123,16 +137,17 @@ abstract class _DesksStore with Store {
       return;
     }
     final Desk desk = deskAsWorkspace as Desk;
-    var combinedDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
-    var res = await Proxy.data('desk-reservations', method: "POST", body: {
-      "startDate": combinedDate.toIso8601String(),
-      "duration": hours,
-      "idDesk": desk.id,
-      "idEmployee": userId
-    });
-    
-    //TODO handle backend
-    //WE ARE NOT VALIDATING DATE TIME NOR HOURS SO IT NEEDS TO BE DONE AT BACKEND
-    //IF POSSIBLE MAKE A RESERVATION, IF NOT IGNORE XD
+    var combinedDate =
+        DateTime(date.year, date.month, date.day, time.hour, time.minute);
+    var isOverlaping = (await Proxy.isDateAvailable(
+        true, combinedDate.toIso8601String(), hours, deskAsWorkspace.id))['msg'] as bool;
+    if (!isOverlaping) {
+      var res = await Proxy.data('desk-reservations', method: "POST", body: {
+        "startDate": combinedDate.toIso8601String(),
+        "duration": hours,
+        "idDesk": desk.id,
+        "idEmployee": userId
+      });
+    }
   }
 }

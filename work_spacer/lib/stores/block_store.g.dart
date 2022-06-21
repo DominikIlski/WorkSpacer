@@ -102,18 +102,13 @@ mixin _$BlockStore on _BlockStore, Store {
     return _$fetchRoomsAsyncAction.run(() => super.fetchRooms());
   }
 
-  late final _$_BlockStoreActionController =
-      ActionController(name: '_BlockStore', context: context);
+  late final _$blockAsyncAction =
+      AsyncAction('_BlockStore.block', context: context);
 
   @override
-  void block(Workspace workspace, DateTime startDate, DateTime endDate) {
-    final _$actionInfo =
-        _$_BlockStoreActionController.startAction(name: '_BlockStore.block');
-    try {
-      return super.block(workspace, startDate, endDate);
-    } finally {
-      _$_BlockStoreActionController.endAction(_$actionInfo);
-    }
+  Future block(Workspace workspace, DateTime startDate, DateTime endDate) {
+    return _$blockAsyncAction
+        .run(() => super.block(workspace, startDate, endDate));
   }
 
   @override

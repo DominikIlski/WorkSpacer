@@ -5,6 +5,8 @@ import 'package:work_spacer/models/room.dart';
 import 'package:work_spacer/models/workspace.dart';
 import 'package:work_spacer/stores/filter_store.dart';
 
+import '../src/helpers/proxy.dart';
+
 part 'block_store.g.dart';
 
 class BlockStore = _BlockStore with _$BlockStore;
@@ -59,31 +61,51 @@ abstract class _BlockStore with Store {
   @action
   fetchDesks() async {
     inProgressDesks = true;
-    //TODO handle backend
-    await Future.delayed(const Duration(milliseconds: 500));
-    _desks = desksDummy..sort((desk1, desk2) => desk1.id.compareTo(desk2.id));
+    var res = await Proxy.data('desks');
+    var jsonDesks = res['data'].map((e) {
+      return <String, dynamic>{"id": e['id'], ...e['attributes']};
+    }).toList();
+
+    var desks =
+        jsonDesks.map<Desk>((e) => Desk.fromJson(e)).toList() as List<Desk>;
+    _desks = desks..sort((desk1, desk2) => desk1.id.compareTo(desk2.id));
     inProgressDesks = false;
   }
 
   @action
   fetchRooms() async {
     inProgressRooms = true;
-    //TODO handle backend
-    await Future.delayed(const Duration(seconds: 1));
-    _rooms = roomsDummy..sort((room1, room2) => room1.id.compareTo(room2.id));
+    var res = await Proxy.data('conference-rooms');
+    var jsonRooms = res['data'].map((e) {
+      return <String, dynamic>{"id": e['id'], ...e['attributes']};
+    }).toList();
+
+    var rooms =
+        jsonRooms.map<Room>((e) => Room.fromJson(e)).toList() as List<Room>;
+
+    _rooms = rooms..sort((room1, room2) => room1.id.compareTo(room2.id));
     inProgressRooms = false;
   }
 
   @action
-  void block(Workspace workspace, DateTime startDate, DateTime endDate) {
+  block(Workspace workspace, DateTime startDate, DateTime endDate) async {
     //WE ARE NOT VALIDATING DATES SO WE NEED TO HANDLE BLOCK OVERLAPS ON BACKEND
     //IF WORKSPACE IS ALREADY BLOCKED FOR THIS RANGE OR MORE -> IGNORE
     //IF BLOCK ONLY OVERLAPS PARTLY, TAKE ONLY THE NON-OVERLAPPING PART
     //EG. IF THERE ALREADY IS BLOCK 15.06.-18.06. AND NEW BLOCK IS 17.06.-21.06, ADD NEW BLOCK 19.06.-21.06.
     if (workspace is Desk) {
-      //TODO handle backend with workspace as Desk
-    } else {
-      //TODO handle backend with workspace as Room
+      Proxy.data('desk-blockages', method: "POST", body: {
+        "startDate": startDate.toIso8601String(),
+        "endDate": endDate,
+        "idDesk": workspace.id,
+      });
+    }
+    else {
+      Proxy.data('cr-blockages', method: "POST", body: {
+        "startDate": startDate.toIso8601String(),
+        "endDate": endDate,
+        "idDesk": workspace.id,
+      });
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 
+
 @immutable
 abstract class Reservation {
   final int id;
@@ -20,8 +21,8 @@ abstract class Reservation {
   });
 
   bool get canceled => false;
-}
 
+}
 
 
 int _employeeFromJson(dynamic data) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
+
 
 @immutable
 abstract class Workspace {
@@ -9,4 +11,5 @@ abstract class Workspace {
     required this.id,
     required this.floor,
   });
+
 }
