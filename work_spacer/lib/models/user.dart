@@ -1,9 +1,22 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:work_spacer/i18n.dart';
 
 part 'user.g.dart';
+// ignore: invalid_annotation_target
+@JsonSerializable(explicitToJson: true)
+class User extends _User with _$User{
+  User({
+    required super.id,
+    required super.name,
+    required super.surname,
+    required super.role,
+  });
+   factory User.fromJson(Map<String, dynamic> json) =>
+      _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
-class User = _User with _$User;
+}
 
 abstract class _User with Store {
   _User({
@@ -18,6 +31,7 @@ abstract class _User with Store {
   final String surname;
 
   @observable
+  @JsonKey(name: 'position')
   Role role;
 
   @action
@@ -39,12 +53,12 @@ abstract class _User with Store {
 }
 
 enum Role {
-  senior,
-  officeAdministrator,
-  executive,
-  mid,
-  junior,
-  intern,
+  @JsonValue('senior') senior,
+  @JsonValue('officeAdministrator') officeAdministrator,
+  @JsonValue('executive') executive,
+  @JsonValue('mid') mid,
+  @JsonValue('junior') junior,
+  @JsonValue('intern') intern,
 }
 
 final Map<Role, String> roleNames = {

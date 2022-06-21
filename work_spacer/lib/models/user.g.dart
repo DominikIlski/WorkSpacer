@@ -3,6 +3,33 @@
 part of 'user.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+User _$UserFromJson(Map<String, dynamic> json) => User(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      surname: json['surname'] as String,
+      role: $enumDecode(_$RoleEnumMap, json['position']),
+    );
+
+Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'surname': instance.surname,
+      'position': _$RoleEnumMap[instance.role],
+    };
+
+const _$RoleEnumMap = {
+  Role.senior: 'senior',
+  Role.officeAdministrator: 'officeAdministrator',
+  Role.executive: 'executive',
+  Role.mid: 'mid',
+  Role.junior: 'junior',
+  Role.intern: 'intern',
+};
+
+// **************************************************************************
 // StoreGenerator
 // **************************************************************************
 
