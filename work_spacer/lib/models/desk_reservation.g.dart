@@ -8,6 +8,9 @@ part of 'desk_reservation.dart';
 
 DeskReservation _$DeskReservationFromJson(Map<String, dynamic> json) =>
     DeskReservation(
+      isCancelled: json['idDeskCancellation'] == null
+          ? false
+          : _cancelationFromJson(json['idDeskCancellation']),
       desk: _deskFromJson(json['idDesk']),
       id: json['id'] as int,
       startDate: DateTime.parse(json['startDate'] as String),
@@ -22,4 +25,5 @@ Map<String, dynamic> _$DeskReservationToJson(DeskReservation instance) =>
       'duration': instance.duration,
       'idEmployee': instance.idEmployee,
       'idDesk': instance.desk,
+      'idDeskCancellation': instance.isCancelled,
     };

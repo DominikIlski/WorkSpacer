@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notifications",
+  "info": {
+    "singularName": "notification",
+    "pluralName": "notifications",
+    "displayName": "notification"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "employee": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::employee.employee"
+    },
+    "isNew": {
+      "type": "boolean"
+    },
+    "cr_reservation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cr-reservation.cr-reservation"
+    },
+    "desk_reservation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::desk-reservation.desk-reservation"
+    },
+    "desks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::desk.desk"
+    },
+    "conference_rooms": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::conference-room.conference-room"
+    }
+  }
+}

@@ -130,6 +130,19 @@ abstract class _RoomsStore with Store {
     var res = await Proxy.data('conference-rooms');
     var jsonRooms = res['data'].map((e) {
       return <String, dynamic>{"id": e['id'], ...e['attributes']};
+    }).where((e) {
+      var blockages = (e?['crBlockages']?['data'] as List<dynamic>);
+      var isBlocked = false;
+      blockages.forEach((e) {
+        var sd = DateTime.parse(e['attributes']['startDate']);
+        var ed = DateTime.parse(e['attributes']['endDate']);
+        var now = DateTime.now();
+        if (now.isBefore(ed) && now.isAfter(sd) ||
+            now.isAfter(sd) && now.isBefore(ed)) {
+          isBlocked = true;
+        }
+      });
+      return !isBlocked;
     }).toList();
 
     var rooms =
@@ -140,18 +153,33 @@ abstract class _RoomsStore with Store {
   }
 
   @action
-  reserveRoom(int? userId, Workspace roomAsWorkspace, DateTime date,
+  Future<bool> reserveRoom(int? userId, Workspace roomAsWorkspace, DateTime date,
       TimeOfDay time, int hours) async {
     if (userId == null) {
-      return;
+      return false;
     }
     final Room room = roomAsWorkspace as Room;
-    var combinedDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
-    var res = await Proxy.data('cr-reservation', method: "POST", body: {
-      "startDate": combinedDate.toIso8601String(),
-      "duration": hours,
-      "idDesk": room.id,
-      "idEmployee": userId
-    });
+    var combinedDate =
+        DateTime(date.year, date.month, date.day, time.hour, time.minute);
+    var isOverlaping = (await Proxy.isDateAvailable(
+        false,
+        combinedDate.toIso8601String(),
+        hours,
+        roomAsWorkspace.id))['msg'] as bool;
+    if (!isOverlaping) {
+      var res = await Proxy.data('cr-reservations', method: "POST", body: {
+        "startDate": combinedDate.toIso8601String(),
+        "duration": hours,
+        "idConferenceRoom": room.id,
+        "idEmployee": userId
+      });
+      if(res['data'] != null){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    return false;
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 
+
 @immutable
 abstract class Reservation {
   final int id;
@@ -19,7 +20,8 @@ abstract class Reservation {
     required this.idEmployee,
   });
 
-  
+  bool get canceled => false;
+
 }
 
 

@@ -5,6 +5,8 @@ import 'package:work_spacer/models/reservation.dart';
 import 'package:work_spacer/models/room.dart';
 import 'package:work_spacer/models/room_reservation.dart';
 
+import '../src/helpers/proxy.dart';
+
 part 'cancel_store.g.dart';
 
 class CancelStore = _CancelStore with _$CancelStore;
@@ -34,10 +36,28 @@ abstract class _CancelStore with Store {
   @action
   fetchReservations() async {
     inProgress = true;
-    //TODO handle backend
-    await Future.delayed(const Duration(milliseconds: 500));
+    var res = await Proxy.data('desk-reservations');
+    var jsonDeskR = res['data'].map((e) {
+      return <String, dynamic>{"id": e['id'], ...e['attributes']};
+    }).toList();
+
+    var dReservations = jsonDeskR
+        .map<DeskReservation>((e) => DeskReservation.fromJson(e))
+        .toList() as List<DeskReservation>;
+
+    var res1 = await Proxy.data('cr-reservations');
+    var jsonRoomsR = res1['data'].map((e) {
+      return <String, dynamic>{"id": e['id'], ...e['attributes']};
+    }).toList();
+
+    var rReservations = jsonRoomsR
+        .map<RoomReservation>((e) => RoomReservation.fromJson(e))
+        .toList() as List<RoomReservation>;
+    var reservationsData = <Reservation>[...dReservations, ...rReservations]
+      .where((element) => !element.canceled)
+      .toList();
     _reservations = ObservableList.of(
-      reservationsDummy
+      reservationsData
         ..sort(
           (reservation1, reservation2) =>
               reservation1.startDate.compareTo(reservation2.startDate),
@@ -52,8 +72,17 @@ abstract class _CancelStore with Store {
   }
 
   @action
-  void cancel(Reservation reservation) {
-    //TODO handle backend and notification
+  cancel(Reservation reservation, int adminId) async {
+    var isDesk = reservation.runtimeType == DeskReservation;
+    var res = await Proxy.data(!isDesk ? 'cr-cancellations' : 'desk-cancellations', method: 'POST', body: {
+      "idAdmin": adminId,
+      if(!isDesk)
+      "idCRReservation": reservation.id,
+      if(isDesk)
+      "idDeskReservation": reservation.id
+    });
+    var res1 = await Proxy.notifyUser(isDesk,  reservation.id);
+    
     _reservations?.remove(reservation);
   }
 }

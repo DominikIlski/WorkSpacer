@@ -14,8 +14,41 @@ class Proxy {
       final result = await callable.call<JSON>({
         'route': ctdName,
         'method': method,
-        if(body.isNotEmpty)
-        'body': body
+        if (body.isNotEmpty) 'body': body
+      });
+      print(result);
+      return result.data;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static Future<JSON> isDateAvailable(
+    bool isDesk,
+    String startDate,
+    int duration,
+    int workspaceId
+  ) async {
+    var callable = FirebaseFunctions.instance.httpsCallable('isDateAvailable');
+    try {
+      final result = await callable.call<JSON>(
+          {'isDesk': isDesk, 'date': startDate, 'duration': duration, 'workspaceId': workspaceId});
+      print(result);
+      return result.data;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static Future<JSON> notifyUser(
+    bool isDesk,
+    int reservationId,
+  ) async {
+    var callable = FirebaseFunctions.instance.httpsCallable('notifyUser');
+    try {
+      final result = await callable.call<JSON>({
+        'isDesk': isDesk,
+        'reservationId': reservationId
       });
       print(result);
       return result.data;

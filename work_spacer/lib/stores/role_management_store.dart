@@ -3,6 +3,8 @@ import 'package:work_spacer/models/filter.dart';
 import 'package:work_spacer/models/user.dart';
 import 'package:work_spacer/stores/filter_store.dart';
 
+import '../src/helpers/proxy.dart';
+
 part 'role_management_store.g.dart';
 
 class RoleManagementStore = _RoleManagementStore with _$RoleManagementStore;
@@ -45,17 +47,22 @@ abstract class _RoleManagementStore with Store {
   @action
   fetchUsers() async {
     inProgress = true;
-    //TODO handle backend
+     var res = await Proxy.data('employees');
+    var jsonUsers = res['data'].map((e) {
+      return <String, dynamic>{"id": e['id'], ...e['attributes']};
+    });
+    var users = jsonUsers.map<User>((e) => User.fromJson(e)).toList() as List<User>;
     await Future.delayed(const Duration(milliseconds: 500));
     _users = ObservableList.of(
-      usersDummy..sort((user1, user2) => user1.compareTo(user2)),
+      users..sort((user1, user2) => user1.compareTo(user2)),
     );
     inProgress = false;
   }
 
   @action
   setUserRole(User user, Role role) {
-    //TODO handle backend
+    Proxy.data('employees/${user.id}',
+            method: 'PUT', body: {"position": role.name});
     _users?.singleWhere((element) => element == user).setRole(role);
   }
 }
