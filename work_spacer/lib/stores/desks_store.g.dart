@@ -60,8 +60,8 @@ mixin _$DesksStore on _DesksStore, Store {
       AsyncAction('_DesksStore.reserveDesk', context: context);
 
   @override
-  Future reserveDesk(int? userId, Workspace deskAsWorkspace, DateTime date,
-      TimeOfDay time, int hours) {
+  Future<bool> reserveDesk(int? userId, Workspace deskAsWorkspace,
+      DateTime date, TimeOfDay time, int hours) {
     return _$reserveDeskAsyncAction.run(
         () => super.reserveDesk(userId, deskAsWorkspace, date, time, hours));
   }

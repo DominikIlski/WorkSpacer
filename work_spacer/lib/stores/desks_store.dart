@@ -131,10 +131,10 @@ abstract class _DesksStore with Store {
   }
 
   @action
-  reserveDesk(int? userId, Workspace deskAsWorkspace, DateTime date,
+  Future<bool> reserveDesk(int? userId, Workspace deskAsWorkspace, DateTime date,
       TimeOfDay time, int hours) async {
     if (userId == null) {
-      return;
+      return false;
     }
     final Desk desk = deskAsWorkspace as Desk;
     var combinedDate =
@@ -147,7 +147,15 @@ abstract class _DesksStore with Store {
         "duration": hours,
         "idDesk": desk.id,
         "idEmployee": userId
+        
       });
+      if(res['data'] != null){
+        return true;
+      }
+      else {
+        return false;
+      }
     }
+    return false;
   }
 }

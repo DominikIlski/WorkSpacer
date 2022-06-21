@@ -105,11 +105,15 @@ class _MakeReservationDialogState extends State<MakeReservationDialog> {
         TextButton(
           onPressed: _date == null || _time == null
               ? null
-              : () {
+              : () async {
                   final authStore =
                       Provider.of<AuthenticationStore>(context, listen: false);
-                  widget.onConfirm(authStore.userId, widget.workspace, _date!,
-                      _time!, _hours);
+                  var res = await widget.onConfirm(authStore.userId,
+                      widget.workspace, _date!, _time!, _hours) as bool;
+                  final snackBar = SnackBar(
+                      content:
+                          Text(res ? translate.snackR : translate.snackRb));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   Navigator.pop(context);
                 },
           child: Text(

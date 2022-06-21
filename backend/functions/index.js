@@ -30,8 +30,8 @@ function addHours(numOfHours, date) {
 }
 
 function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
-  if (a_start < b_start && b_start < a_end) return true; // b starts in a
-  if (a_start < b_end && b_end < a_end) return true; // b ends in a
+  if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
+  if (a_start <= b_end && b_end <= a_end) return true; // b ends in a
   if (b_start < a_start && a_end < b_end) return true; // a in b
   return false;
 }
@@ -155,7 +155,7 @@ exports.notifyUser = functions.https.onCall((data, context) => {
 exports.isDateAvailable = functions.https.onCall((data, context) => {
   const isDesk = data.isDesk;
   const startDate = addHours(2, new Date(data.date));
-  const workspaceId = data.deskId;
+  const workspaceId = data.workspaceId;
   console.log(typeof startDate);
   const duration = data.duration;
   const endDate = addHours(duration, startDate);

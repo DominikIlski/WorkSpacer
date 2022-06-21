@@ -153,10 +153,10 @@ abstract class _RoomsStore with Store {
   }
 
   @action
-  reserveRoom(int? userId, Workspace roomAsWorkspace, DateTime date,
+  Future<bool> reserveRoom(int? userId, Workspace roomAsWorkspace, DateTime date,
       TimeOfDay time, int hours) async {
     if (userId == null) {
-      return;
+      return false;
     }
     final Room room = roomAsWorkspace as Room;
     var combinedDate =
@@ -173,6 +173,13 @@ abstract class _RoomsStore with Store {
         "idConferenceRoom": room.id,
         "idEmployee": userId
       });
+      if(res['data'] != null){
+        return true;
+      }
+      else {
+        return false;
+      }
     }
+    return false;
   }
 }

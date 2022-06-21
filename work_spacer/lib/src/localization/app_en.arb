@@ -3,6 +3,8 @@
   "@appTitle": {
     "description": "The title of the application"
   },
+  "snackR": "The booking was successful",
+  "snackRb": "The booking was unsuccessful",
   "desk": "Desk",
   "desks": "Desks",
   "room": "Room",
